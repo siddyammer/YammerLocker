@@ -335,33 +335,6 @@
     <resources>
         <image name="YammerBlueColorSliver.png" width="14" height="98"/>
     </resources>
-    <classes>
-        <class className="NSLayoutConstraint" superclassName="NSObject">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
-        </class>
-        <class className="YammerLockerViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/YammerLockerViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="establishConnection:"/>
-            </relationships>
-        </class>
-        <class className="YammerMessageDetailController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/YammerMessageDetailController.h"/>
-            <relationships>
-                <relationship kind="action" name="addCategories:"/>
-                <relationship kind="outlet" name="addCategoriesTxtFld" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="detailWebView" candidateClass="UIWebView"/>
-                <relationship kind="outlet" name="existingCategoriesLbl" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="YammerMessagesViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/YammerMessagesViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="messagesNavTable" candidateClass="UITableView"/>
-                <relationship kind="outlet" name="messagesTable" candidateClass="UITableView"/>
-            </relationships>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>

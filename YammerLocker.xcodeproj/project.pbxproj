@@ -27,6 +27,7 @@
 		98CD5A50177262340050C34B /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = 98CD5A4F177262340050C34B /* Message.m */; };
 		98CD5A8C1772B1350050C34B /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98CD5A8B1772B1350050C34B /* CoreData.framework */; };
 		98CD5A921773C8C10050C34B /* YammerBlueColorSliver.png in Resources */ = {isa = PBXBuildFile; fileRef = 98CD5A911773C8C10050C34B /* YammerBlueColorSliver.png */; };
+		98CD5AB4177540BE0050C34B /* README in Resources */ = {isa = PBXBuildFile; fileRef = 98CD5AB3177540BE0050C34B /* README */; };
 		98F425A2172622AF00E026D8 /* Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 98F425A1172622AF00E026D8 /* Category.m */; };
 /* End PBXBuildFile section */
 
@@ -84,6 +85,7 @@
 		98CD5A4F177262340050C34B /* Message.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Message.m; sourceTree = "<group>"; };
 		98CD5A8B1772B1350050C34B /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		98CD5A911773C8C10050C34B /* YammerBlueColorSliver.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = YammerBlueColorSliver.png; path = ../../Desktop/Images/YammerBlueColorSliver.png; sourceTree = "<group>"; };
+		98CD5AB3177540BE0050C34B /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
 		98F425A0172622AE00E026D8 /* Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Category.h; sourceTree = "<group>"; };
 		98F425A1172622AF00E026D8 /* Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Category.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -108,6 +110,7 @@
 		9838CA3A164B1260006C9C6A = {
 			isa = PBXGroup;
 			children = (
+				98CD5AB3177540BE0050C34B /* README */,
 				98CD5A8B1772B1350050C34B /* CoreData.framework */,
 				98C8568F16C9B78400B510BE /* Security.framework */,
 				98C517EB16C30985004C72D3 /* OAuth2Client.xcodeproj */,
@@ -265,6 +268,7 @@
 				9838CA60164B1260006C9C6A /* Default-568h@2x.png in Resources */,
 				9838CA63164B1260006C9C6A /* MainStoryboard.storyboard in Resources */,
 				98CD5A921773C8C10050C34B /* YammerBlueColorSliver.png in Resources */,
+				98CD5AB4177540BE0050C34B /* README in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
