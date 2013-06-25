@@ -11,6 +11,7 @@
 
 #import <UIKit/UIKit.h>
 @class Message;
+@class Category;
 @class YammerMessageDataController;
 
 @interface YammerMessageDetailController : UIViewController
@@ -33,7 +34,7 @@
 // Create new categories
 - (IBAction)addCategories:(id)sender;
 
-// Display added categories
+// Display the existing categories
 @property (weak, nonatomic) IBOutlet UITextField *showCategoriesTxtFld;
 
 @end

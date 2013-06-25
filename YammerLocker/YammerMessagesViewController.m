@@ -35,13 +35,13 @@
     
     // Initialize yamMsgDataController
     self.yamMsgDataController = [[YammerMessageDataController alloc] init];
-    NSLog(@"New Table View Loaded");
+    // NSLog(@"New Table View Loaded");
     
     // Register the listener
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(messageStoreChanged:)
                                                  name:@"MessageStoreUpdated" object:nil];
-    NSLog(@"Listener registered");
+    // NSLog(@"Listener registered");
 }
 
 - (void)didReceiveMemoryWarning
@@ -56,7 +56,7 @@
 // Get the number of sections in the table views
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    NSLog(@"Number of sections in table hit.");
+    // NSLog(@"Number of sections in table hit.");
     // Return the number of sections.
     return 1;
 }
@@ -64,10 +64,10 @@
 // Specify the number of rows.
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSLog(@"No of rows in table hit");
+    // NSLog(@"No of rows in table hit");
     // If its the navigation table
     if(tableView == self.messagesNavTable)
-        return [self.yamMsgDataController noOfAllCategories];
+        return ([self.yamMsgDataController noOfAllCategories]+1);
     
     // If its the messages table
     else
@@ -88,7 +88,7 @@
         }
         else {
             Category *categoryAtIndex = [self.yamMsgDataController getCategoryAtPositionFromAll:(indexPath.row)-1];
-            NSLog(@"Getting a category for diplay in cell with contents: %@", categoryAtIndex);
+            // NSLog(@"Getting a category for diplay in cell with contents: %@", categoryAtIndex);
             // Construct and display the categorye label e.g. Presentations
             NSString *categoryLabel = [[NSString alloc] initWithFormat:@"%@",categoryAtIndex.title];
             [[cell textLabel] setText:categoryLabel];
@@ -104,7 +104,7 @@
     
         // Configure cell to display a Yammer Message
         Message *messageAtIndex = [self.yamMsgDataController getMessageAtPositionFromAll:indexPath.row];
-        NSLog(@"Getting a message for diplay in cell with contents: %@", messageAtIndex);
+        // NSLog(@"Getting a message for diplay in cell with contents: %@", messageAtIndex);
         // Construct and display the message information label e.g. Sidd Singh
         NSString *msgLabel = [[NSString alloc] initWithFormat:@"%@",messageAtIndex.from];
         [[cell textLabel] setText:msgLabel];
@@ -119,7 +119,7 @@
 - (void)messageStoreChanged:(NSNotification *)notification {
     
     [self.messagesTable reloadData];
-    NSLog(@"Tried to refresh new table view");
+    // NSLog(@"Tried to refresh new table view");
 }
 
 // Transition to message detail view, when a row (message) in table is clicked.
@@ -133,7 +133,5 @@
         detailViewController.categoryDataController = self.yamMsgDataController;
     }
 }
-
-
 
 @end

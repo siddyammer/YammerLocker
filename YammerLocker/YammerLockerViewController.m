@@ -74,7 +74,7 @@
     [[NXOAuth2AccountStore sharedStore] requestAccessToAccountWithType:@"yammerOAuthService"
                                    withPreparedAuthorizationURLHandler:^(NSURL *preparedURL){
                                        // Open a web view or similar
-                                       NSLog(@"Hit the url handler code with preparedURL of %@",[preparedURL relativeString]);
+                                       // NSLog(@"Hit the url handler code with preparedURL of %@",[preparedURL relativeString]);
                                        UIWebView *webView = [[UIWebView alloc] initWithFrame:self.view.bounds];  //Change self.view.bounds to a smaller CGRect if you don't want it to take up the whole screen
                                        [webView setScalesPageToFit:TRUE];
                                        //webView.scalesPageToFit = YES;
@@ -91,7 +91,7 @@
     for (NXOAuth2Account *account in [[NXOAuth2AccountStore sharedStore] accounts]) {
         ++tokenCountDeleted;
         [[NXOAuth2AccountStore sharedStore] removeAccount:account];
-        NSLog(@"Deleted token %d",tokenCountDeleted);
+        // NSLog(@"Deleted token %d",tokenCountDeleted);
     }
 }
 

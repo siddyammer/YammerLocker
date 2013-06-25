@@ -138,6 +138,12 @@
     NSError *error;
     NSArray *fetchedMessages = [dataStoreContext executeFetchRequest:messageFetchRequest error:&error];
     
+    // NSLog(@"A fetched message before forcing fault: %@", [fetchedMessages objectAtIndex:position]);
+    
+    // NSSet* categories = [[fetchedMessages objectAtIndex:position] categories];
+    
+    // NSLog(@"A fetched message after forcing fault: %@", [fetchedMessages objectAtIndex:position]);
+    
     return [fetchedMessages objectAtIndex:position];
 }
 
@@ -198,11 +204,14 @@
 // Add a category to the data store
 - (void)insertCategoryWithTitle:(NSString *)categoryTitle Message:(Message *)associatedMessage;
 {
-    Category *category = [NSEntityDescription insertNewObjectForEntityForName:@"Category" inManagedObjectContext:associatedMessage.managedObjectContext];
+    NSManagedObjectContext *dataStoreContext = [self managedObjectContext];
+    
+    Category *category = [NSEntityDescription insertNewObjectForEntityForName:@"Category" inManagedObjectContext:dataStoreContext];
     category.title = categoryTitle;
+    [category addMessagesObject:associatedMessage];
     
     NSError *error;
-    if (![category.managedObjectContext save:&error]) {
+    if (![dataStoreContext save:&error]) {
         NSLog(@"Saving category to data store failed: %@",error.description);
     }
 }
@@ -281,7 +290,7 @@
         // Add messages to the initialized message store
         // TO DO: Remove hardcoded app type name.
         [self insertMessageWithContent:messageContent from:messageFrom app:@"Yammer" webUrl:messageWebUrl fromMugshotUrl:mugshotURL];
-        NSLog(@"message should have been added to the message table.");
+        // NSLog(@"message should have been added to the message table.");
     }
     
     // Send a notification that the store has been updated
@@ -292,7 +301,7 @@
 - (void)sendChangeNotification {
     
     [[NSNotificationCenter defaultCenter]postNotificationName:@"MessageStoreUpdated" object:self];
-    NSLog(@"Notification Sent that message store has been updated");
+    // NSLog(@"Notification Sent that message store has been updated");
 }
 
 @end
