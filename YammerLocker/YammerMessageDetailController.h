@@ -11,6 +11,7 @@
 
 #import <UIKit/UIKit.h>
 @class Message;
+@class YammerMessageDataController;
 
 @interface YammerMessageDetailController : UIViewController
 
@@ -20,6 +21,9 @@
 // Message being loaded
 @property (strong, nonatomic) Message *message;
 
+// Data Controller to add/access categories in the data store
+@property (strong, nonatomic) YammerMessageDataController *categoryDataController;
+
 // Display for the categories this message belongs to
 @property (weak, nonatomic) IBOutlet UILabel *existingCategoriesLbl;
 
@@ -28,5 +32,8 @@
 
 // Create new categories
 - (IBAction)addCategories:(id)sender;
+
+// Display added categories
+@property (weak, nonatomic) IBOutlet UITextField *showCategoriesTxtFld;
 
 @end

@@ -79,7 +79,7 @@
                                     <constraint firstAttribute="height" constant="620" id="MD8-x7-9dw"/>
                                 </constraints>
                             </webView>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="  Add Categories" borderStyle="line" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zDF-Mh-Sm5">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="  Add a Category" borderStyle="line" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zDF-Mh-Sm5">
                                 <color key="backgroundColor" red="0.83921568627450982" green="0.83921568627450982" blue="0.83921568627450982" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="307" id="jkd-6l-ezw"/>
@@ -89,7 +89,7 @@
                                 <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="16"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
-                                    <outlet property="delegate" destination="r8B-Sh-Q7P" id="5n6-0D-Ymm"/>
+                                    <outlet property="delegate" destination="r8B-Sh-Q7P" id="0Sd-pY-syS"/>
                                 </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lul-A1-zWJ">
@@ -126,7 +126,7 @@
                                 <color key="textColor" red="0.83921568627450982" green="0.83921568627450982" blue="0.83921568627450982" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Presentations,User Conference" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mqT-NY-mmn">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mqT-NY-mmn">
                                 <color key="backgroundColor" red="0.20784313725490194" green="0.20784313725490194" blue="0.20784313725490194" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="285" id="5oY-Cx-dom"/>
@@ -206,6 +206,7 @@
                     <connections>
                         <outlet property="addCategoriesTxtFld" destination="zDF-Mh-Sm5" id="mf2-qQ-139"/>
                         <outlet property="detailWebView" destination="KGP-L7-iOq" id="LZa-LT-0N6"/>
+                        <outlet property="showCategoriesTxtFld" destination="mqT-NY-mmn" id="JLe-qC-dcY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9as-bm-A58" userLabel="First Responder" sceneMemberID="firstResponder"/>

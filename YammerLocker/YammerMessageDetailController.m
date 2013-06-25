@@ -11,6 +11,7 @@
 
 #import "YammerMessageDetailController.h"
 #import "Message.h"
+#import "YammerMessageDataController.h"
 
 @interface YammerMessageDetailController ()
 
@@ -46,29 +47,44 @@
     // Dispose of any resources that can be recreated.
 }
 
-// On Clicking the Add Categories button, create and update the categories
-- (IBAction)addCategories:(id)sender {
+// Add Categories text field should dismiss the keyboard on hitting return. The
+// categories entered should be added to the data store and associated with the message.
+// TO DO: Add empty, same text as guidance text and other validation here.
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
     
-    [self.addCategoriesTxtFld resignFirstResponder];
-    [self createCategoriesUpdateUI:self.addCategoriesTxtFld.text];
+    if (textField == self.addCategoriesTxtFld) {
+        // Dismiss keyboard
+        [self.addCategoriesTxtFld resignFirstResponder];
+        
+        // Add category to the data store and associate with message
+        [self.categoryDataController insertCategoryWithTitle:self.addCategoriesTxtFld.text Message:self.message];
+        
+        // Show the recently added category in the existing categories text field
+        self.showCategoriesTxtFld.text = self.addCategoriesTxtFld.text;
+    }
+    
+    return YES;
 }
 
-// On hitting enter, the new categories text field should dismiss the keyboard
-// and also create and update categories
-- (BOOL)textFieldShouldReturn:(UITextField *)aTxtFld {
+// On Clicking the Add Categories button, The categories entered should be added to the data
+// store and associated with the message.
+- (IBAction)addCategories:(id)sender {
     
-    if (aTxtFld == self.addCategoriesTxtFld) {
-        [aTxtFld resignFirstResponder];
-        [self createCategoriesUpdateUI:self.addCategoriesTxtFld.text];
-    }
-    return YES;
+    // Dismiss keyboard from the category entry text field
+    [self.addCategoriesTxtFld resignFirstResponder];
+    
+    // Add category to the data store and associate with message
+    [self.categoryDataController insertCategoryWithTitle:self.addCategoriesTxtFld.text Message:self.message];
+    
+    // Show the recently added category in the existing categories text field
+    self.showCategoriesTxtFld.text = self.addCategoriesTxtFld.text;
 }
 
 // Create the new categories from the categories comma separated string entered
 // by the user. Associate the message with the categories and update the UI.
 - (void) createCategoriesUpdateUI:(NSString *)categoriesStr {
     
-    [self.existingCategoriesLbl setText:categoriesStr];
+  //  [self.existingCategoriesLbl setText:categoriesStr];
     
 }
 

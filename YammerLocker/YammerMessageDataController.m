@@ -2,7 +2,7 @@
 //  YammerMessageDataController.m
 //  YammerLocker
 // 
-//  Class stores and provides access to Yammer messages.
+//  Class stores and provides access to Yammer Messages and Categories, stored in core data.
 //
 //  Created by Sidd Singh on 12/11/12.
 //  Copyright (c) 2012 Sidd Singh. All rights reserved.
@@ -10,6 +10,7 @@
 
 #import "YammerMessageDataController.h"
 #import "Message.h"
+#import "Category.h"
 #import "NXOAuth2.h"
 
 @interface YammerMessageDataController ()
@@ -105,11 +106,11 @@
     return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
 }
 
-/// Data manipulation messages to get data from/to Core Data Store
+/// Data manipulation methods for Messages
 
 // Get number of all messages in the data store
-- (NSUInteger)noOfAllMessages {
-    
+- (NSUInteger)noOfAllMessages
+{
     NSManagedObjectContext *dataStoreContext = [self managedObjectContext];
     
     NSFetchRequest *messageFetchRequest = [[NSFetchRequest alloc] init];
@@ -126,8 +127,8 @@
 }
 
 // Get a message at a position in the result set from querying all messages
-- (Message *)getMessageAtPositionFromAll:(NSUInteger)position {
-    
+- (Message *)getMessageAtPositionFromAll:(NSUInteger)position
+{
     NSManagedObjectContext *dataStoreContext = [self managedObjectContext];
     
     NSFetchRequest *messageFetchRequest = [[NSFetchRequest alloc] init];
@@ -141,8 +142,8 @@
 }
 
 // Add a message to the data store
-- (void)insertMessageWithContent:(NSString *)messageContent from:(NSString *)messageFrom app:(NSString *)messageApp webUrl:(NSString *)messageWebUrl fromMugshotUrl:(NSString *)messageFromMugshotUrl {
-    
+- (void)insertMessageWithContent:(NSString *)messageContent from:(NSString *)messageFrom app:(NSString *)messageApp webUrl:(NSString *)messageWebUrl fromMugshotUrl:(NSString *)messageFromMugshotUrl
+{
     NSManagedObjectContext *dataStoreContext = [self managedObjectContext];
     
     Message *message = [NSEntityDescription insertNewObjectForEntityForName:@"Message" inManagedObjectContext:dataStoreContext];
@@ -156,6 +157,53 @@
     NSError *error;
     if (![dataStoreContext save:&error]) {
         NSLog(@"Saving message to data store failed: %@",error.description);
+    }
+}
+
+/// Data manipulation methods for Categories
+
+// Get number of all categories in the data store
+- (NSUInteger)noOfAllCategories
+{
+    NSManagedObjectContext *dataStoreContext = [self managedObjectContext];
+    
+    NSFetchRequest *categoryFetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *categoryEntity = [NSEntityDescription entityForName:@"Category" inManagedObjectContext:dataStoreContext];
+    [categoryFetchRequest setEntity:categoryEntity];
+    
+    NSError *error;
+    NSUInteger count = [dataStoreContext countForFetchRequest:categoryFetchRequest error:&error];
+    if (count == NSNotFound) {
+        NSLog(@"Getting number of all categories in the data store failed: %@",error.description);
+    }
+    
+    return count;
+}
+
+// Get a category at a position in the result set from querying all categories
+- (Category *)getCategoryAtPositionFromAll:(NSUInteger)position 
+{
+    NSManagedObjectContext *dataStoreContext = [self managedObjectContext];
+    
+    NSFetchRequest *categoryFetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *categoryEntity = [NSEntityDescription entityForName:@"Category" inManagedObjectContext:dataStoreContext];
+    [categoryFetchRequest setEntity:categoryEntity];
+    
+    NSError *error;
+    NSArray *fetchedCategories = [dataStoreContext executeFetchRequest:categoryFetchRequest error:&error];
+    
+    return [fetchedCategories objectAtIndex:position];
+}
+
+// Add a category to the data store
+- (void)insertCategoryWithTitle:(NSString *)categoryTitle Message:(Message *)associatedMessage;
+{
+    Category *category = [NSEntityDescription insertNewObjectForEntityForName:@"Category" inManagedObjectContext:associatedMessage.managedObjectContext];
+    category.title = categoryTitle;
+    
+    NSError *error;
+    if (![category.managedObjectContext save:&error]) {
+        NSLog(@"Saving category to data store failed: %@",error.description);
     }
 }
 
@@ -231,7 +279,7 @@
         // NSLog(@"Message Content: %@, From: %@, Web URL: %@",messageContent,messageFrom,messageWebUrl);
         
         // Add messages to the initialized message store
-        //// TO DO: Remove hardcoded app type name.
+        // TO DO: Remove hardcoded app type name.
         [self insertMessageWithContent:messageContent from:messageFrom app:@"Yammer" webUrl:messageWebUrl fromMugshotUrl:mugshotURL];
         NSLog(@"message should have been added to the message table.");
     }

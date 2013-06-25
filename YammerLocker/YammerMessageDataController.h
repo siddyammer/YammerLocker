@@ -2,7 +2,7 @@
 //  YammerMessageDataController.h
 //  YammerLocker
 //
-//  Class stores and provides access to Yammer messages.
+//  Class stores and provides access to Yammer Messages and Categories, stored in core data.
 //
 //  Created by Sidd Singh on 12/11/12.
 //  Copyright (c) 2012 Sidd Singh. All rights reserved.
@@ -10,6 +10,7 @@
 
 #import <Foundation/Foundation.h>
 @class Message;
+@class Category;
 
 @interface YammerMessageDataController : NSObject
 
@@ -25,6 +26,8 @@
 // Returns the URL to the application's Documents directory.
 - (NSURL *)applicationDocumentsDirectory;
 
+/// Data manipulation methods for Messages
+
 // Get number of all messages in the data store
 - (NSUInteger)noOfAllMessages;
 
@@ -33,5 +36,16 @@
 
 // Add a message to the data store
 - (void)insertMessageWithContent:(NSString *)messageContent from:(NSString *)messageFrom app:(NSString *)messageApp webUrl:(NSString *)messageWebUrl fromMugshotUrl:(NSString *)messageFromMugshotUrl;
+
+/// Data manipulation methods for Categories
+
+// Get number of all categories in the data store
+- (NSUInteger)noOfAllCategories;
+
+// Get a category at a position in the result set from querying all categories
+- (Category *)getCategoryAtPositionFromAll:(NSUInteger)position;
+
+// Add a category to the data store
+- (void)insertCategoryWithTitle:(NSString *)categoryTitle Message:(Message *)associatedMessage;
 
 @end

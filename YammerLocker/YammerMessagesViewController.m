@@ -9,6 +9,7 @@
 #import "YammerMessagesViewController.h"
 #import "YammerMessageDataController.h"
 #import "Message.h"
+#import "Category.h"
 #import "YammerMessageDetailController.h"
 
 @interface YammerMessagesViewController ()
@@ -66,7 +67,7 @@
     NSLog(@"No of rows in table hit");
     // If its the navigation table
     if(tableView == self.messagesNavTable)
-        return 1;
+        return [self.yamMsgDataController noOfAllCategories];
     
     // If its the messages table
     else
@@ -81,9 +82,18 @@
         static NSString *CellIdentifier = @"YammerMessageNavCell";
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
         
-        // Configure cell to display a Yammer Message Navigation item
-        [[cell textLabel] setText:@"All"];
-        
+        // Configure the first cell to display the "All" navigation item
+        if (indexPath.row == 0) {
+            [[cell textLabel] setText:@"All"];
+        }
+        else {
+            Category *categoryAtIndex = [self.yamMsgDataController getCategoryAtPositionFromAll:(indexPath.row)-1];
+            NSLog(@"Getting a category for diplay in cell with contents: %@", categoryAtIndex);
+            // Construct and display the categorye label e.g. Presentations
+            NSString *categoryLabel = [[NSString alloc] initWithFormat:@"%@",categoryAtIndex.title];
+            [[cell textLabel] setText:categoryLabel];
+        }
+            
         return cell;
     }
     
@@ -119,6 +129,8 @@
         YammerMessageDetailController *detailViewController = [segue destinationViewController];
         
         detailViewController.message = [self.yamMsgDataController getMessageAtPositionFromAll:[self.messagesTable indexPathForSelectedRow].row];
+        
+        detailViewController.categoryDataController = self.yamMsgDataController;
     }
 }
 
