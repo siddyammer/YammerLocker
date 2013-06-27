@@ -25,7 +25,7 @@
 - (void)formatAddMessages:(NSData *)response;
 
 // Send a notification that the list of messages has changed (updated)
-- (void)sendChangeNotification;
+- (void)sendMessagesChangeNotification;
 
 @end
 
@@ -195,22 +195,46 @@
     NSEntityDescription *categoryEntity = [NSEntityDescription entityForName:@"Category" inManagedObjectContext:dataStoreContext];
     [categoryFetchRequest setEntity:categoryEntity];
     
-    NSError *error;
+    NSError *error = nil;
     NSArray *fetchedCategories = [dataStoreContext executeFetchRequest:categoryFetchRequest error:&error];
+    if (error) {
+        NSLog(@"Getting all categories from data store failed: %@",error.description);
+    }
     
     return [fetchedCategories objectAtIndex:position];
 }
 
-// Add a category to the data store
-- (void)insertCategoryWithTitle:(NSString *)categoryTitle Message:(Message *)associatedMessage;
+// Add a category to the data store or update it, to link to the message, if it exists.
+- (void)upsertCategoryWithTitle:(NSString *)categoryTitle Message:(Message *)associatedMessage;
 {
     NSManagedObjectContext *dataStoreContext = [self managedObjectContext];
     
-    Category *category = [NSEntityDescription insertNewObjectForEntityForName:@"Category" inManagedObjectContext:dataStoreContext];
+    // Check to see if the category exists
+    NSFetchRequest *categoryFetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *categoryEntity = [NSEntityDescription entityForName:@"Category" inManagedObjectContext:dataStoreContext];
+    NSPredicate *categoryPredicate = [NSPredicate predicateWithFormat:@"title = %@",categoryTitle];
+    [categoryFetchRequest setEntity:categoryEntity];
+    [categoryFetchRequest setPredicate:categoryPredicate];
+    NSError *error;
+    Category *existingCategory = nil;
+    existingCategory  = [[dataStoreContext executeFetchRequest:categoryFetchRequest error:&error] lastObject];
+    if (error) {
+        NSLog(@"Getting a category from data store failed: %@",error.description);
+    }
+    
+    // If the category does not exist
+    else if (!existingCategory) {
+        Category *category = [NSEntityDescription insertNewObjectForEntityForName:@"Category" inManagedObjectContext:dataStoreContext];
     category.title = categoryTitle;
     [category addMessagesObject:associatedMessage];
+    }
     
-    NSError *error;
+    // If the category exists
+    else {
+        [existingCategory addMessagesObject:associatedMessage];
+    }
+    
+    // Insert or update the category
     if (![dataStoreContext save:&error]) {
         NSLog(@"Saving category to data store failed: %@",error.description);
     }
@@ -294,11 +318,11 @@
     }
     
     // Send a notification that the store has been updated
-    [self sendChangeNotification];
+    [self sendMessagesChangeNotification];
 }
 
 // Send a notification that the list of messages has changed (updated)
-- (void)sendChangeNotification {
+- (void)sendMessagesChangeNotification {
     
     [[NSNotificationCenter defaultCenter]postNotificationName:@"MessageStoreUpdated" object:self];
     // NSLog(@"Notification Sent that message store has been updated");

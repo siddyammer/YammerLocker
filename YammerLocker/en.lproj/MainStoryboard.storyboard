@@ -82,7 +82,7 @@
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="  Add a Category" borderStyle="line" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zDF-Mh-Sm5">
                                 <color key="backgroundColor" red="0.83921568627450982" green="0.83921568627450982" blue="0.83921568627450982" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="307" id="jkd-6l-ezw"/>
+                                    <constraint firstAttribute="width" constant="184" id="f4Q-CH-8da"/>
                                     <constraint firstAttribute="height" constant="30" id="sVS-Zo-5cT"/>
                                 </constraints>
                                 <color key="textColor" red="0.20784313725490194" green="0.20784313725490194" blue="0.20784313725490194" alpha="1" colorSpace="calibratedRGB"/>
@@ -129,8 +129,8 @@
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mqT-NY-mmn">
                                 <color key="backgroundColor" red="0.20784313725490194" green="0.20784313725490194" blue="0.20784313725490194" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="285" id="5oY-Cx-dom"/>
                                     <constraint firstAttribute="height" constant="30" id="MvT-jl-532"/>
+                                    <constraint firstAttribute="width" constant="387" id="Vzw-9U-ixf"/>
                                 </constraints>
                                 <color key="textColor" red="0.83921568627450982" green="0.83921568627450982" blue="0.83921568627450982" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="16"/>
@@ -336,6 +336,34 @@
     <resources>
         <image name="YammerBlueColorSliver.png" width="14" height="98"/>
     </resources>
+    <classes>
+        <class className="NSLayoutConstraint" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        </class>
+        <class className="YammerLockerViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/YammerLockerViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="establishConnection:"/>
+            </relationships>
+        </class>
+        <class className="YammerMessageDetailController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/YammerMessageDetailController.h"/>
+            <relationships>
+                <relationship kind="action" name="addCategories:"/>
+                <relationship kind="outlet" name="addCategoriesTxtFld" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="detailWebView" candidateClass="UIWebView"/>
+                <relationship kind="outlet" name="existingCategoriesLbl" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="showCategoriesTxtFld" candidateClass="UITextField"/>
+            </relationships>
+        </class>
+        <class className="YammerMessagesViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/YammerMessagesViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="messagesNavTable" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="messagesTable" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>

@@ -19,6 +19,9 @@
 // Show the categories associated with the message in the categories text field
 - (void) showCategories;
 
+// Send a notification that the list of categories has changed (updated)
+- (void)sendCategoriesChangeNotification;
+
 @end
 
 @implementation YammerMessageDetailController
@@ -63,10 +66,13 @@
         [self.addCategoriesTxtFld resignFirstResponder];
         
         // Add category to the data store and associate with message
-        [self.categoryDataController insertCategoryWithTitle:self.addCategoriesTxtFld.text Message:self.message];
+        [self.categoryDataController upsertCategoryWithTitle:self.addCategoriesTxtFld.text Message:self.message];
         
         // Show the recently added category in the existing categories text field
-        self.showCategoriesTxtFld.text = [NSString stringWithFormat:@"%@  %@", self.showCategoriesTxtFld.text, self.addCategoriesTxtFld.text];
+        self.showCategoriesTxtFld.text = [NSString stringWithFormat:@"%@,  %@", self.addCategoriesTxtFld.text, self.showCategoriesTxtFld.text];
+        
+        // Fire the list of categories changed notification
+        [self sendCategoriesChangeNotification];
     }
     
     return YES;
@@ -80,10 +86,15 @@
     [self.addCategoriesTxtFld resignFirstResponder];
     
     // Add category to the data store and associate with message
-    [self.categoryDataController insertCategoryWithTitle:self.addCategoriesTxtFld.text Message:self.message];
+    [self.categoryDataController upsertCategoryWithTitle:self.addCategoriesTxtFld.text Message:self.message];
     
     // Show the recently added category in the existing categories text field
-    self.showCategoriesTxtFld.text = self.addCategoriesTxtFld.text;
+    self.showCategoriesTxtFld.text = [NSString stringWithFormat:@"%@,  %@", self.addCategoriesTxtFld.text, self.showCategoriesTxtFld.text];
+    
+    // Fire the list of categories changed notification
+    [self sendCategoriesChangeNotification];
+    
+
 }
 
 // Show the categories associated with the message in the categories text field
@@ -92,16 +103,26 @@
     NSMutableString* categoryString = [NSMutableString string];
     
     NSSet* categories = self.message.categories;
-    // NSLog(@"Trying to loop through the set of categories associated with the message: %@", self.message);
-    // Loop through the set of categories associated with the message
+    NSInteger categoryIndex = (categories.count - 1);
+    
     for(Category* category in categories) {
-        // NSLog(@"Trying to append an associated category in which is: %@", category.title);
-        // Append the category title to the previous ones
-        [categoryString appendFormat:@"%@  ", category.title];
+        // Add a comma after each category except the last one, for display formatting
+        if (categoryIndex != 0) {
+            [categoryString appendFormat:@"%@,  ", category.title];
+        } else {
+            [categoryString appendFormat:@"%@", category.title];
+        }
+        -- categoryIndex;
     }
     
     // Update the categories text field
     self.showCategoriesTxtFld.text = categoryString;
+}
+
+// Send a notification that the list of categories has changed (updated)
+- (void)sendCategoriesChangeNotification {
+    
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"CategoryStoreUpdated" object:self];
 }
 
 @end

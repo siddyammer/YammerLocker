@@ -45,7 +45,7 @@
 // Get a category at a position in the result set from querying all categories
 - (Category *)getCategoryAtPositionFromAll:(NSUInteger)position;
 
-// Add a category to the data store
-- (void)insertCategoryWithTitle:(NSString *)categoryTitle Message:(Message *)associatedMessage;
+// Add a category to the data store or update it, to link to the message, if it exists.
+- (void)upsertCategoryWithTitle:(NSString *)categoryTitle Message:(Message *)associatedMessage;
 
 @end
