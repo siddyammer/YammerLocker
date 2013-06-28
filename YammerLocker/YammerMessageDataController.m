@@ -209,10 +209,10 @@
 {
     NSManagedObjectContext *dataStoreContext = [self managedObjectContext];
     
-    // Check to see if the category exists
+    // Check to see if the category exists by doing a case insensitive query on category title
     NSFetchRequest *categoryFetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *categoryEntity = [NSEntityDescription entityForName:@"Category" inManagedObjectContext:dataStoreContext];
-    NSPredicate *categoryPredicate = [NSPredicate predicateWithFormat:@"title = %@",categoryTitle];
+    NSPredicate *categoryPredicate = [NSPredicate predicateWithFormat:@"title =[c] %@",categoryTitle];
     [categoryFetchRequest setEntity:categoryEntity];
     [categoryFetchRequest setPredicate:categoryPredicate];
     NSError *error;

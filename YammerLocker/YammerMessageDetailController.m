@@ -19,6 +19,12 @@
 // Show the categories associated with the message in the categories text field
 - (void) showCategories;
 
+// Validate the category entry field input
+- (BOOL) categoryInputValid:(UITextField *)textField;
+
+// Show the recently added category in the existing categories text field
+- (void) updateCategoriesDisplay;
+
 // Send a notification that the list of categories has changed (updated)
 - (void)sendCategoriesChangeNotification;
 
@@ -65,14 +71,17 @@
         // Dismiss keyboard
         [self.addCategoriesTxtFld resignFirstResponder];
         
-        // Add category to the data store and associate with message
-        [self.categoryDataController upsertCategoryWithTitle:self.addCategoriesTxtFld.text Message:self.message];
-        
-        // Show the recently added category in the existing categories text field
-        self.showCategoriesTxtFld.text = [NSString stringWithFormat:@"%@,  %@", self.addCategoriesTxtFld.text, self.showCategoriesTxtFld.text];
-        
-        // Fire the list of categories changed notification
-        [self sendCategoriesChangeNotification];
+        // Check to see if entered category is valid. If Yes
+        if ([self categoryInputValid:self.addCategoriesTxtFld]) {
+            // Add category to the data store and associate with message
+            [self.categoryDataController upsertCategoryWithTitle:self.addCategoriesTxtFld.text Message:self.message];
+            
+            // Show the recently added category in the existing categories text field
+            [self updateCategoriesDisplay];
+            
+            // Fire the list of categories changed notification
+            [self sendCategoriesChangeNotification];
+        }
     }
     
     return YES;
@@ -85,22 +94,24 @@
     // Dismiss keyboard from the category entry text field
     [self.addCategoriesTxtFld resignFirstResponder];
     
-    // Add category to the data store and associate with message
-    [self.categoryDataController upsertCategoryWithTitle:self.addCategoriesTxtFld.text Message:self.message];
+    // Check to see if entered category is valid. If Yes
+    if ([self categoryInputValid:self.addCategoriesTxtFld]) {
+        // Add category to the data store and associate with message
+        [self.categoryDataController upsertCategoryWithTitle:self.addCategoriesTxtFld.text Message:self.message];
     
-    // Show the recently added category in the existing categories text field
-    self.showCategoriesTxtFld.text = [NSString stringWithFormat:@"%@,  %@", self.addCategoriesTxtFld.text, self.showCategoriesTxtFld.text];
+        // Show the recently added category in the existing categories text field
+        [self updateCategoriesDisplay];
     
-    // Fire the list of categories changed notification
-    [self sendCategoriesChangeNotification];
-    
-
+        // Fire the list of categories changed notification
+        [self sendCategoriesChangeNotification];
+    }
 }
 
-// Show the categories associated with the message in the categories text field
+// Show the categories currently associated with the message in the categories text field
 - (void) showCategories {
     
-    NSMutableString* categoryString = [NSMutableString string];
+    // The initial state of the categories
+    NSMutableString* categoryString = [NSMutableString stringWithFormat:@""];
     
     NSSet* categories = self.message.categories;
     NSInteger categoryIndex = (categories.count - 1);
@@ -117,6 +128,42 @@
     
     // Update the categories text field
     self.showCategoriesTxtFld.text = categoryString;
+}
+
+// Validate the category entry field input
+- (BOOL) categoryInputValid:(UITextField *)textField {
+    
+    NSString *inputString = textField.text;
+    
+    // If the entered category is the same as the default text
+    if ([inputString isEqualToString:@"  Add a Category"]) {
+        return NO;
+    }
+    
+    // If the entered category is empty
+    if ([inputString isEqualToString:@""]) {
+        return NO;
+    }
+    
+    return YES;
+}
+
+// Show the recently added category in the existing categories text field
+- (void) updateCategoriesDisplay {
+    
+    // If existing categories don't show
+    if ([self.showCategoriesTxtFld.text isEqualToString:@""]) {
+        self.showCategoriesTxtFld.text = self.addCategoriesTxtFld.text;
+    }
+    
+    // If they do
+    else {
+        // Do a case insensitive compare to make sure the new category doesn't already show.
+        // If it does not then add it to the beginning.
+        if ([self.showCategoriesTxtFld.text rangeOfString:self.addCategoriesTxtFld.text options:NSCaseInsensitiveSearch].location == NSNotFound) {
+            self.showCategoriesTxtFld.text = [NSString stringWithFormat:@"%@,  %@", self.addCategoriesTxtFld.text, self.showCategoriesTxtFld.text];
+        }
+    }
 }
 
 // Send a notification that the list of categories has changed (updated)
