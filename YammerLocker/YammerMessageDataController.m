@@ -126,6 +126,26 @@
     return count;
 }
 
+// Get number of messages in the data store with a particular category
+- (NSUInteger)noOfMessagesWithCategory:(NSString *)categoryTitle
+{
+    NSManagedObjectContext *dataStoreContext = [self managedObjectContext];
+    
+    NSFetchRequest *messageFetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *messageEntity = [NSEntityDescription entityForName:@"Message" inManagedObjectContext:dataStoreContext];
+    NSPredicate *categoryPredicate = [NSPredicate predicateWithFormat:@"ANY categories.title =[c] %@",categoryTitle];
+    [messageFetchRequest setEntity:messageEntity];
+    [messageFetchRequest setPredicate:categoryPredicate];
+    
+    NSError *error;
+    NSUInteger count = [dataStoreContext countForFetchRequest:messageFetchRequest error:&error];
+    if (count == NSNotFound) {
+        NSLog(@"Getting number of messages in the data store with category %@ failed: %@",categoryTitle,error.description);
+    }
+    
+    return count;
+}
+
 // Get a message at a position in the result set from querying all messages
 - (Message *)getMessageAtPositionFromAll:(NSUInteger)position
 {
@@ -138,11 +158,30 @@
     NSError *error;
     NSArray *fetchedMessages = [dataStoreContext executeFetchRequest:messageFetchRequest error:&error];
     
-    // NSLog(@"A fetched message before forcing fault: %@", [fetchedMessages objectAtIndex:position]);
+    if (error) {
+        NSLog(@"Getting all messages from data store failed: %@",error.description);
+    }
     
-    // NSSet* categories = [[fetchedMessages objectAtIndex:position] categories];
+    return [fetchedMessages objectAtIndex:position];
+}
+
+// Get a message at a position in the result set from querying messages with a particular category
+- (Message *)getMessageAtPosition:(NSUInteger)position category:(NSString *)categoryTitle
+{
+    NSManagedObjectContext *dataStoreContext = [self managedObjectContext];
     
-    // NSLog(@"A fetched message after forcing fault: %@", [fetchedMessages objectAtIndex:position]);
+    NSFetchRequest *messageFetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *messageEntity = [NSEntityDescription entityForName:@"Message" inManagedObjectContext:dataStoreContext];
+    NSPredicate *categoryPredicate = [NSPredicate predicateWithFormat:@"ANY categories.title =[c] %@",categoryTitle];
+    [messageFetchRequest setEntity:messageEntity];
+    [messageFetchRequest setPredicate:categoryPredicate];
+    
+    NSError *error;
+    NSArray *fetchedMessages = [dataStoreContext executeFetchRequest:messageFetchRequest error:&error];
+    
+    if (error) {
+        NSLog(@"Getting all messages from data store failed: %@",error.description);
+    }
     
     return [fetchedMessages objectAtIndex:position];
 }

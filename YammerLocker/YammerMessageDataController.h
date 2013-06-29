@@ -37,6 +37,13 @@
 // Add a message to the data store
 - (void)insertMessageWithContent:(NSString *)messageContent from:(NSString *)messageFrom app:(NSString *)messageApp webUrl:(NSString *)messageWebUrl fromMugshotUrl:(NSString *)messageFromMugshotUrl;
 
+// Get number of messages in the data store with a particular category
+- (NSUInteger)noOfMessagesWithCategory:(NSString *)categoryTitle;
+
+// Get a message at a position in the result set from querying messages with
+// a particular category
+- (Message *)getMessageAtPosition:(NSUInteger)position category:(NSString *)categoryTitle;
+
 /// Data manipulation methods for Categories
 
 // Get number of all categories in the data store

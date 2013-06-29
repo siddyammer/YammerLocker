@@ -19,4 +19,8 @@
 
 // Outlet for the messages view navigation table
 @property (weak, nonatomic) IBOutlet UITableView *messagesNavTable;
+
+// Store the title of the currently selected messages navigation item
+@property (strong,nonatomic) NSString *currentNavItemTitle;
+
 @end

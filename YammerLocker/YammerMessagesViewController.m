@@ -37,6 +37,10 @@
     // Initialize yamMsgDataController
     self.yamMsgDataController = [[YammerMessageDataController alloc] init];
     
+    // Set the title of the currently selected messages navigation item to be the default which
+    // is currently "All"
+    self.currentNavItemTitle = [NSString stringWithFormat:@"All"];
+    
     // Register the messages change listener
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(messageStoreChanged:)
@@ -71,9 +75,18 @@
         return ([self.yamMsgDataController noOfAllCategories]+1);
     
     // If its the messages table
-    else
-    return [self.yamMsgDataController noOfAllMessages];
-}
+    else {
+        // If the messages navigation item is the default "All"
+        if ([self.currentNavItemTitle isEqualToString:@"All"]) {
+            return [self.yamMsgDataController noOfAllMessages];
+        }
+        // If not
+        else {
+            return [self.yamMsgDataController noOfMessagesWithCategory:self.currentNavItemTitle];
+        }
+    }
+    
+    }
 
 // Configure cell to display a Navigation item or a Yammer message depending on the table
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -103,14 +116,39 @@
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
         // Configure cell to display a Yammer Message
-        Message *messageAtIndex = [self.yamMsgDataController getMessageAtPositionFromAll:indexPath.row];
+        Message *messageAtIndex;
+        // If the messages navigation item is the default "All"
+        if ([self.currentNavItemTitle isEqualToString:@"All"]) {
+            messageAtIndex = [self.yamMsgDataController getMessageAtPositionFromAll:indexPath.row];
+        }
+        // If not
+        else {
+            messageAtIndex = [self.yamMsgDataController getMessageAtPosition:indexPath.row category:self.currentNavItemTitle];
+        }
+        
         // Construct and display the message information label e.g. Sidd Singh
         NSString *msgLabel = [[NSString alloc] initWithFormat:@"%@",messageAtIndex.from];
         [[cell textLabel] setText:msgLabel];
+        
         // Display the message content
         [[cell detailTextLabel] setText:messageAtIndex.content];
     
         return cell;
+    }
+}
+
+// When a row is selected on the messages navigation table, update the messages table
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    // If its the navigation table
+    if(tableView == self.messagesNavTable){
+        
+        // Set the title of the currently selected navigation item
+        self.currentNavItemTitle = [self.messagesNavTable cellForRowAtIndexPath:indexPath].textLabel.text;
+        
+        // Reload the messages table, logic in the reload triggered methods take care of populating the messages
+        // with the category selected
+        [self.messagesTable reloadData];
     }
 }
 
