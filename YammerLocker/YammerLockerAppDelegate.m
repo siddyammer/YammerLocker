@@ -9,6 +9,16 @@
 #import "YammerLockerAppDelegate.h"
 #import "NXOAuth2.h"
 
+@interface YammerLockerAppDelegate ()
+
+// Check to see if the user has already logged in and has a token
+- (BOOL)checkForExistingToken;
+
+// Configure view controller based on name
+- (void) configViewControllerWithName:(NSString *)controllerStoryboardId;
+
+@end
+
 @implementation YammerLockerAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -20,6 +30,16 @@
                                            tokenURL:[NSURL URLWithString:@"https://www.yammer.com/oauth2/access_token.json"]
                                         redirectURL:[NSURL URLWithString:@"yammer://localhost:3000/auth/yammer/callback"]
                                      forAccountType:@"yammerOAuthService"];
+    
+    // Show the initial view controller which, if the user has not logged in, is YammerLockerViewController
+    if (![self checkForExistingToken]) {
+        [self configViewControllerWithName:@"YammerLockerViewController"];
+    }
+    // If the user is already logged in, the initial view controller is the messages navigation controller
+    else {
+        [self configViewControllerWithName:@"YammerLockerNavController"];
+    }
+    
     return YES;
 }
 
@@ -41,7 +61,30 @@
     
     return handled;
 }
-							
+
+// Check to see if the user has already logged in and has a token.
+- (BOOL)checkForExistingToken
+{
+    if ([[NXOAuth2AccountStore sharedStore] accounts].count > 0) 
+        return YES;
+    else
+        return NO;
+}
+
+// Configure view controller based on name
+- (void) configViewControllerWithName:(NSString *)controllerStoryboardId
+{
+    self.window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
+    
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+    
+    UIViewController *viewController = [storyboard instantiateViewControllerWithIdentifier:controllerStoryboardId];
+    
+    self.window.rootViewController = viewController;
+    [self.window makeKeyAndVisible];
+}
+
+
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

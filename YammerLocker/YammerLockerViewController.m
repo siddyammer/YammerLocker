@@ -27,7 +27,7 @@
     
     // Clear the user's existing Oauth tokens since the user will only see the
     // login screen if he doesn't have a valid token.
-    [self clearExistingTokens];
+    // [self clearExistingTokens];
 }
 
 - (void)didReceiveMemoryWarning
@@ -91,7 +91,6 @@
     for (NXOAuth2Account *account in [[NXOAuth2AccountStore sharedStore] accounts]) {
         ++tokenCountDeleted;
         [[NXOAuth2AccountStore sharedStore] removeAccount:account];
-        // NSLog(@"Deleted token %d",tokenCountDeleted);
     }
 }
 
