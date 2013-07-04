@@ -8,20 +8,15 @@
 //  Copyright (c) 2012 Sidd Singh. All rights reserved.
 //
 
-#import "YammerMessageDataController.h"
+#import "YammerLockerDataController.h"
+#import "User.h"
 #import "Message.h"
 #import "Category.h"
 #import "NXOAuth2.h"
 
-@interface YammerMessageDataController ()
+@interface YammerLockerDataController ()
 
-// Get messages for the initial view from the corresponding app service and add to core data store.
-- (void)getInitialMessages;
-
-// Get a list of messages that match the topic string from the Yammer search API.
-- (void)getMessages;
-
-// Parse the list of messages and format them for display.
+// Parse the list of messages from the Yammer API and format them for display.
 - (void)formatAddMessages:(NSData *)response;
 
 // Send a notification that the list of messages has changed (updated)
@@ -29,10 +24,24 @@
 
 @end
 
-@implementation YammerMessageDataController
+@implementation YammerLockerDataController
+
+// Implement this class as a Singleton to create a single data connection accessible
+// from anywhere in the app. Create and/or return the single instance of this class.
++ (YammerLockerDataController *) sharedDataController {
+    
+    static dispatch_once_t pred;
+    static YammerLockerDataController *shared = nil;
+    
+    dispatch_once(&pred, ^{
+        shared = [[YammerLockerDataController alloc] init];
+    });
+    
+    return shared;
+}
 
 // Initialize the message data controller object
-- (id)init {
+/* - (id)init {
     
     if (self = [super init]) {
         [self getInitialMessages];
@@ -40,14 +49,7 @@
     }
     
     return nil;
-}
-
-// Get messages for the initial view from the corresponding app service and add to core data store.
-- (void)getInitialMessages {
-    
-    // Get and add messages to the store
-    [self getMessages];
-}
+} */
 
 /// Implement core data setup methods that would have already been done for a project
 /// with core data enabled.
@@ -104,6 +106,50 @@
 - (NSURL *)applicationDocumentsDirectory
 {
     return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+}
+
+/// Data manipulation methods for User
+
+// Check to see if the user has an authentication token. Current design is that
+// once the user has logged in, a user is created in the data store with an auth token.
+- (BOOL)checkForExistingAuthToken
+{
+    NSManagedObjectContext *dataStoreContext = [self managedObjectContext];
+    
+    // Query for number of user objects
+    NSFetchRequest *userFetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *userEntity = [NSEntityDescription entityForName:@"User" inManagedObjectContext:dataStoreContext];
+    [userFetchRequest setEntity:userEntity];
+    
+    NSError *error;
+    NSUInteger count = [dataStoreContext countForFetchRequest:userFetchRequest error:&error];
+    if (count == NSNotFound) {
+        NSLog(@"Getting number of users in the data store failed: %@",error.description);
+    }
+    
+    // If there are no users means the user has not logged in. Current design is that
+    // once the user has logged in, a user is created in the data store with an auth token.
+    if (count == 0) {
+        return NO;
+    } else{
+        return YES;
+    }
+}
+
+// Add a user auth token  to the data store
+- (void)insertUserAuthToken:(NSString *)userAuthToken
+{
+    NSManagedObjectContext *dataStoreContext = [self managedObjectContext];
+    
+    User *user = [NSEntityDescription insertNewObjectForEntityForName:@"User" inManagedObjectContext:dataStoreContext];
+    
+    (NSLog(@"userAuthToken object in data controller type is %@",userAuthToken.class));
+    user.authToken = userAuthToken;
+    
+    NSError *error;
+    if (![dataStoreContext save:&error]) {
+        NSLog(@"Saving user token to data store failed: %@",error.description);
+    }
 }
 
 /// Data manipulation methods for Messages

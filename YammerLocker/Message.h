@@ -5,6 +5,8 @@
 //  Created by Sidd Singh on 6/24/13.
 //  Copyright (c) 2013 Sidd Singh. All rights reserved.
 //
+//  Represents the Message object in the core data model.
+//
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>

@@ -3,8 +3,11 @@
 //  YammerLocker
 //
 //  Created by Sidd Singh on 6/24/13.
-//  Copyright (c) 2013 Sidd Singh. All rights reserved.
+//  Copyright (c) 2013 Sidd Singh.
 //
+//  Represents the Message object in the core data model.
+//
+
 
 #import "Message.h"
 

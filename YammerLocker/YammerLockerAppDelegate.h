@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+@class YammerLockerDataController;
 
 @interface YammerLockerAppDelegate : UIResponder <UIApplicationDelegate>
 
@@ -15,5 +16,8 @@
 // Handle the URL scheme registered for this app.
 // Currently set to enterpriselocker://...
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url;
+
+// Data Controller for user authorization status.
+@property (strong,nonatomic) YammerLockerDataController *yamUserDataController;
 
 @end

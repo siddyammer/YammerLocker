@@ -12,7 +12,7 @@
 @class Message;
 @class Category;
 
-@interface YammerMessageDataController : NSObject
+@interface YammerLockerDataController : NSObject
 
 // To interact with data from Core Data Store
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
@@ -23,8 +23,20 @@
 // Store Coordinator for Core Data Store
 @property (strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 
+// Implement this class as a Singleton to create a single data connection accessible
+// from anywhere in the app. Create and/or return the single instance of this class.
++ (YammerLockerDataController *) sharedDataController;
+
 // Returns the URL to the application's Documents directory.
 - (NSURL *)applicationDocumentsDirectory;
+
+/// Data manipulation methods for User
+
+// Check to see if the user has a authentication token
+- (BOOL)checkForExistingAuthToken;
+
+// Add a auth token to the user data store
+- (void)insertUserAuthToken:(NSString *)userAuthToken;
 
 /// Data manipulation methods for Messages
 
@@ -54,5 +66,11 @@
 
 // Add a category to the data store or update it, to link to the message, if it exists.
 - (void)upsertCategoryWithTitle:(NSString *)categoryTitle Message:(Message *)associatedMessage;
+
+/// Methods to call Yammer REST APIs
+
+// Get a list of messages that match the topic string from the Yammer search API and add to core data store
+- (void)getMessages;
+
 
 @end

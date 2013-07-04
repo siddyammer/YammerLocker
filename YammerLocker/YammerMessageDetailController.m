@@ -12,7 +12,7 @@
 #import "YammerMessageDetailController.h"
 #import "Message.h"
 #import "Category.h"
-#import "YammerMessageDataController.h"
+#import "YammerLockerDataController.h"
 
 @interface YammerMessageDetailController ()
 

@@ -7,7 +7,7 @@
 //
 
 #import "YammerMessagesViewController.h"
-#import "YammerMessageDataController.h"
+#import "YammerLockerDataController.h"
 #import "Message.h"
 #import "Category.h"
 #import "YammerMessageDetailController.h"
@@ -27,15 +27,19 @@
     return self;
 }
 
-// Initialize the yamMsgDataController object that you declared. Should this be done in awakeFromNib?
+// Get a data controller that you will use later. Should this be done in awakeFromNib?
+// Start getting messages for display from the Yammer API.
 // Register a listener for changes to the message store in core data.
 // Register a listener for changes to the category store in core data.
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    // Initialize yamMsgDataController
-    self.yamMsgDataController = [[YammerMessageDataController alloc] init];
+    // Get a data controller that you will use later
+    self.yamMsgDataController = [YammerLockerDataController sharedDataController];
+    
+    // Start getting messages for display from the Yammer API
+    [self.yamMsgDataController getMessages];
     
     // Set the title of the currently selected messages navigation item to be the default which
     // is currently "All"

@@ -7,12 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-@class YammerMessageDataController;
+@class YammerLockerDataController;
 
 @interface YammerMessagesViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
 // Data Controller for displaying messages in this view.
-@property (strong,nonatomic) YammerMessageDataController *yamMsgDataController;
+@property (strong,nonatomic) YammerLockerDataController *yamMsgDataController;
 
 // Outlet for the messages display table
 @property (weak, nonatomic) IBOutlet UITableView *messagesTable;

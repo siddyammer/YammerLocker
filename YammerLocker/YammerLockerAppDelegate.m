@@ -8,14 +8,18 @@
 
 #import "YammerLockerAppDelegate.h"
 #import "NXOAuth2.h"
+#import "YammerLockerDataController.h"
 
 @interface YammerLockerAppDelegate ()
 
 // Check to see if the user has already logged in and has a token
-- (BOOL)checkForExistingToken;
+//- (BOOL)checkForExistingToken;
 
 // Configure view controller based on name
 - (void) configViewControllerWithName:(NSString *)controllerStoryboardId;
+
+// Clear all existing Oauth tokens from Oauth account store.
+//- (void)clearExistingTokens;
 
 @end
 
@@ -31,13 +35,18 @@
                                         redirectURL:[NSURL URLWithString:@"yammer://localhost:3000/auth/yammer/callback"]
                                      forAccountType:@"yammerOAuthService"];
     
+    // Get a data controller that you will use later to check if user is logged in
+    self.yamUserDataController = [YammerLockerDataController sharedDataController];
+    
     // Show the initial view controller which, if the user has not logged in, is YammerLockerViewController
-    if (![self checkForExistingToken]) {
+    if (![self.yamUserDataController checkForExistingAuthToken]) {
         [self configViewControllerWithName:@"YammerLockerViewController"];
+        NSLog(@"Entered user has not logged in state");
     }
     // If the user is already logged in, the initial view controller is the messages navigation controller
     else {
         [self configViewControllerWithName:@"YammerLockerNavController"];
+        NSLog(@"Entered user has logged in state");
     }
     
     return YES;
@@ -63,13 +72,20 @@
 }
 
 // Check to see if the user has already logged in and has a token.
-- (BOOL)checkForExistingToken
+/*- (BOOL)checkForExistingToken
 {
-    if ([[NXOAuth2AccountStore sharedStore] accounts].count > 0) 
-        return YES;
+    if ([[NXOAuth2AccountStore sharedStore] accounts].count > 0) {
+        NSInteger tokenCount = 0;
+        for (NXOAuth2Account *account in [[NXOAuth2AccountStore sharedStore] accounts]) {
+            ++tokenCount;
+            NXOAuth2Client *client =     [account oauthClient];
+            NXOAuth2AccessToken *tokenData = [client accessToken];
+            NSString * clientAccessToken = [tokenData accessToken];
+            NSLog(@"Existing tokens found, number %d and token %@", tokenCount,clientAccessToken);
+        } return YES;}
     else
         return NO;
-}
+}*/
 
 // Configure view controller based on name
 - (void) configViewControllerWithName:(NSString *)controllerStoryboardId
@@ -83,6 +99,16 @@
     self.window.rootViewController = viewController;
     [self.window makeKeyAndVisible];
 }
+
+// Clear all existing Oauth tokens from Oauth account store.
+/*- (void)clearExistingTokens
+{
+    NSInteger tokenCountDeleted = 0;
+    for (NXOAuth2Account *account in [[NXOAuth2AccountStore sharedStore] accounts]) {
+        ++tokenCountDeleted;
+        [[NXOAuth2AccountStore sharedStore] removeAccount:account];
+    }
+} */
 
 
 - (void)applicationWillResignActive:(UIApplication *)application

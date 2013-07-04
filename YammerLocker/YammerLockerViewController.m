@@ -10,6 +10,7 @@
 
 #import "YammerLockerViewController.h"
 #import "NXOAuth2.h"
+#import "YammerLockerDataController.h"
 
 @interface YammerLockerViewController ()
 
@@ -25,9 +26,12 @@
 	
     // Do any additional setup after loading the view, typically from a nib.
     
-    // Clear the user's existing Oauth tokens since the user will only see the
-    // login screen if he doesn't have a valid token.
-    // [self clearExistingTokens];
+    // Clear all existing Oauth tokens from Oauth account store, since currently this view is only shown to a
+    // user that's not logged in already
+    [self clearExistingTokens];
+
+    // Get a data controller that you will use later to save auth token to user data store
+    self.yamAuthDataController = [YammerLockerDataController sharedDataController];
 }
 
 - (void)didReceiveMemoryWarning
@@ -40,7 +44,7 @@
 // Establish connection with Yammer using Oauth.
 - (IBAction)establishConnection:(id)sender {
         
-    // Register to get notifications of Oauth success. On success segue to show messages.
+    // Register to get notifications of Oauth success. On success, save auth token to the core data store and then segue to show messages.
     [[NSNotificationCenter defaultCenter] addObserverForName:NXOAuth2AccountStoreAccountsDidChangeNotification
                                                       object:[NXOAuth2AccountStore sharedStore]
                                                        queue:nil
@@ -50,8 +54,12 @@
                                                           ++tokenCount;
                                                           NXOAuth2Client *client =     [account oauthClient];
                                                           NXOAuth2AccessToken *tokenData = [client accessToken];
-                                                          NSString * clientAccessToken = [tokenData accessToken];
+                                                          NSString * clientAccessToken = [tokenData valueForKeyPath:@"accessToken.token"];
                                                           NSLog(@"Oauth Success with token number %d and token %@", tokenCount,clientAccessToken);
+                                                          (NSLog(@"userAuthToken object in view controller type before save is %@",clientAccessToken.class));
+                                                          
+                                                          // Save auth token to the core data store
+                                                          [self.yamAuthDataController insertUserAuthToken:clientAccessToken];
                                                       }
                                                       
                                                       // Update the UI by segueing to show messages.
@@ -92,6 +100,7 @@
         ++tokenCountDeleted;
         [[NXOAuth2AccountStore sharedStore] removeAccount:account];
     }
+    NSLog(@"Deleted %d existing tokens",tokenCountDeleted);
 }
 
 @end
