@@ -174,9 +174,16 @@
     if ([[segue identifier] isEqualToString:@"ShowMessageDetails"]) {
         YammerMessageDetailController *detailViewController = [segue destinationViewController];
         
-        detailViewController.message = [self.yamMsgDataController getMessageAtPositionFromAll:[self.messagesTable indexPathForSelectedRow].row];
-        
-        detailViewController.categoryDataController = self.yamMsgDataController;
+        Message *messageAtIndex;
+        // If the messages navigation item is the default "All"
+        if ([self.currentNavItemTitle isEqualToString:@"All"]) {
+            messageAtIndex = [self.yamMsgDataController getMessageAtPositionFromAll:[self.messagesTable indexPathForSelectedRow].row];
+        }
+        // If not
+        else {
+            messageAtIndex = [self.yamMsgDataController getMessageAtPosition:[self.messagesTable indexPathForSelectedRow].row category:self.currentNavItemTitle];
+        }
+        detailViewController.message = messageAtIndex;
     }
 }
 

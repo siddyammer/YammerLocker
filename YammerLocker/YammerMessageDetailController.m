@@ -47,6 +47,9 @@
     
 	// Do any additional setup after loading the view.
     
+    // Get a data controller that you will use later
+    self.categoryDataController = [YammerLockerDataController sharedDataController];
+    
     // Start the web view with the message thread URL
     NSURL *messageURL = [NSURL URLWithString:self.message.webUrl];
     NSURLRequest *messageRequest = [NSURLRequest requestWithURL:messageURL];
