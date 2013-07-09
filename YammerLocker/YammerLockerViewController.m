@@ -63,7 +63,7 @@
                                                       }
                                                       
                                                       // Update the UI by segueing to show messages.
-                                                      [self performSegueWithIdentifier:@"ShowMessages" sender:self];
+                                                      [self performSegueWithIdentifier:@"ShowDataConfigOptions" sender:self];
                                                       
                                                   }];
     

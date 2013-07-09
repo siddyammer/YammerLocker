@@ -335,7 +335,6 @@
     for (NXOAuth2Account *account in [[NXOAuth2AccountStore sharedStore] accounts]) {
         userAccount = account;
     }
-    
     [NXOAuth2Request performMethod:@"GET"
                         onResource:[NSURL URLWithString:@"https://www.yammer.com/api/v1/search.json"]
                         usingParameters:[[NSDictionary alloc] initWithObjectsAndKeys: @"siddlocker", @"search", nil]
@@ -394,7 +393,7 @@
                 break;
             }
         }
-        // NSLog(@"Message Content: %@, From: %@, Web URL: %@",messageContent,messageFrom,messageWebUrl);
+        // NSLog(@"***********Message Content: %@, From: %@, Web URL: %@",messageContent,messageFrom,messageWebUrl);
         
         // Add messages to the initialized message store
         // TO DO: Remove hardcoded app type name.

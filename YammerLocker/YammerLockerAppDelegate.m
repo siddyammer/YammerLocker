@@ -71,21 +71,6 @@
     return handled;
 }
 
-// Check to see if the user has already logged in and has a token.
-/*- (BOOL)checkForExistingToken
-{
-    if ([[NXOAuth2AccountStore sharedStore] accounts].count > 0) {
-        NSInteger tokenCount = 0;
-        for (NXOAuth2Account *account in [[NXOAuth2AccountStore sharedStore] accounts]) {
-            ++tokenCount;
-            NXOAuth2Client *client =     [account oauthClient];
-            NXOAuth2AccessToken *tokenData = [client accessToken];
-            NSString * clientAccessToken = [tokenData accessToken];
-            NSLog(@"Existing tokens found, number %d and token %@", tokenCount,clientAccessToken);
-        } return YES;}
-    else
-        return NO;
-}*/
 
 // Configure view controller based on name
 - (void) configViewControllerWithName:(NSString *)controllerStoryboardId
@@ -99,6 +84,23 @@
     self.window.rootViewController = viewController;
     [self.window makeKeyAndVisible];
 }
+
+// Check to see if the user has already logged in and has a token
+/*- (BOOL)checkForExistingToken
+{
+    if ([[NXOAuth2AccountStore sharedStore] accounts].count > 0) {
+        NSInteger tokenCount = 0;
+        for (NXOAuth2Account *account in [[NXOAuth2AccountStore sharedStore] accounts]) {
+            ++tokenCount;
+            NXOAuth2Client *client =     [account oauthClient];
+            NXOAuth2AccessToken *tokenData = [client accessToken];
+            NSString * clientAccessToken = [tokenData accessToken];
+            NSLog(@"Existing tokens found, number %d and token %@", tokenCount,clientAccessToken);
+        } return YES;}
+    else
+        return NO;
+} */
+
 
 // Clear all existing Oauth tokens from Oauth account store.
 /*- (void)clearExistingTokens

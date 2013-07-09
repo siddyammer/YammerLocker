@@ -35,34 +35,56 @@
                                 <color key="textColor" red="0.0" green="0.68235294117647061" blue="0.93725490196078431" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Organize your work" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JSa-R6-At9">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="When you have messages to respond to later" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JSa-R6-At9">
                                 <constraints>
+                                    <constraint firstAttribute="width" constant="410" id="Cm3-4o-wXZ"/>
                                     <constraint firstAttribute="height" constant="30" id="ju8-K9-heG"/>
-                                    <constraint firstAttribute="width" constant="197" id="pQ5-ry-qsg"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="22"/>
+                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="20"/>
                                 <color key="textColor" red="0.83921568627450982" green="0.83921568627450982" blue="0.83921568627450982" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="put them in Locker" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IZG-qp-azg">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="2pf-yt-aCm"/>
+                                    <constraint firstAttribute="width" constant="189" id="Cvb-ao-PEI"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="20"/>
+                                <color key="textColor" red="0.83921568629999999" green="0.83921568629999999" blue="0.83921568629999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="and want to find them easily" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u9S-cQ-Q8b">
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="252" id="Kza-W4-tZB"/>
+                                    <constraint firstAttribute="height" constant="30" id="m2U-tY-qMz"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="20"/>
+                                <color key="textColor" red="0.83921568629999999" green="0.83921568629999999" blue="0.83921568629999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" red="0.20784313725490194" green="0.20784313725490194" blue="0.20784313725490194" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="hcP-Bh-jdi" firstAttribute="top" secondItem="5" secondAttribute="top" constant="317" id="4hW-AL-eqd"/>
-                            <constraint firstItem="ihr-rs-MZs" firstAttribute="centerX" secondItem="JSa-R6-At9" secondAttribute="centerX" type="default" id="AdM-SC-zmg"/>
-                            <constraint firstItem="JSa-R6-At9" firstAttribute="top" secondItem="5" secondAttribute="top" constant="419" id="NAu-cn-8dJ"/>
-                            <constraint firstItem="ihr-rs-MZs" firstAttribute="leading" secondItem="5" secondAttribute="leading" constant="280" id="W0e-5H-f70"/>
-                            <constraint firstAttribute="bottom" secondItem="ihr-rs-MZs" secondAttribute="bottom" constant="373" id="cTX-ee-J3Q"/>
-                            <constraint firstItem="hcP-Bh-jdi" firstAttribute="leading" secondItem="5" secondAttribute="leading" constant="268" id="kcm-8B-wiW"/>
+                            <constraint firstItem="JSa-R6-At9" firstAttribute="centerX" secondItem="IZG-qp-azg" secondAttribute="centerX" type="default" id="1zz-h0-drG"/>
+                            <constraint firstItem="u9S-cQ-Q8b" firstAttribute="top" secondItem="5" secondAttribute="top" constant="449" id="RIf-Wa-JeE"/>
+                            <constraint firstItem="JSa-R6-At9" firstAttribute="top" secondItem="5" secondAttribute="top" constant="413" id="Ree-Zp-enc"/>
+                            <constraint firstItem="u9S-cQ-Q8b" firstAttribute="centerX" secondItem="ihr-rs-MZs" secondAttribute="centerX" type="default" id="dhU-s5-jLs"/>
+                            <constraint firstItem="u9S-cQ-Q8b" firstAttribute="leading" secondItem="5" secondAttribute="leading" constant="247" id="fSX-lD-kt2"/>
+                            <constraint firstItem="JSa-R6-At9" firstAttribute="leading" secondItem="5" secondAttribute="leading" constant="180" id="id1-aX-5bn"/>
+                            <constraint firstItem="hcP-Bh-jdi" firstAttribute="centerX" secondItem="5" secondAttribute="centerX" type="default" id="lLJ-pj-s27"/>
+                            <constraint firstItem="hcP-Bh-jdi" firstAttribute="top" secondItem="5" secondAttribute="top" constant="263" id="otE-CZ-T4F"/>
+                            <constraint firstAttribute="bottom" secondItem="ihr-rs-MZs" secondAttribute="bottom" constant="371" id="reg-0u-iyw"/>
+                            <constraint firstItem="IZG-qp-azg" firstAttribute="top" secondItem="5" secondAttribute="top" constant="484" id="tQV-7Q-Wr5"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="o6N-uU-hn1"/>
                     <connections>
-                        <segue destination="Wvi-CA-eGj" kind="modal" identifier="ShowMessages" id="Ici-aP-cLH"/>
+                        <segue destination="Zsm-TT-sDU" kind="modal" identifier="ShowDataConfigOptions" id="NdR-2F-hp5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-6698" y="-1539"/>
+            <point key="canvasLocation" x="-7200" y="-1547"/>
         </scene>
         <!--Yammer Message Detail Controller-->
         <scene sceneID="y9X-Vm-vTQ">
@@ -200,9 +222,7 @@
                             <constraint firstItem="Lul-A1-zWJ" firstAttribute="bottom" secondItem="zDF-Mh-Sm5" secondAttribute="bottom" type="default" id="xyO-0W-5u6"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="8FU-KD-m5I">
-                        <barButtonItem key="backBarButtonItem" title="Inbox" id="48o-4Y-c4m"/>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="8FU-KD-m5I"/>
                     <connections>
                         <outlet property="addCategoriesTxtFld" destination="zDF-Mh-Sm5" id="mf2-qQ-139"/>
                         <outlet property="detailWebView" destination="KGP-L7-iOq" id="LZa-LT-0N6"/>
@@ -211,27 +231,94 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9as-bm-A58" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-4066" y="-1599"/>
+            <point key="canvasLocation" x="-3092" y="-1599"/>
         </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="wAB-sB-ynM">
+        <!--Yammer Data Config Controller - Add Messages to Locker-->
+        <scene sceneID="bzH-rJ-1dB">
             <objects>
-                <navigationController storyboardIdentifier="YammerLockerNavController" id="Wvi-CA-eGj" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="blackOpaque" prompted="NO"/>
-                    <nil key="simulatedBottomBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="blackOpaque" id="hCu-9R-vxC">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
+                <viewController id="FWg-Q5-o8m" customClass="YammerDataConfigController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="tlk-m7-Cnm">
+                        <rect key="frame" x="0.0" y="64" width="768" height="960"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Add any Yammer message from the browser or mobile app" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zGR-Um-BIe">
+                                <color key="backgroundColor" red="0.20784313725490194" green="0.20784313725490194" blue="0.20784313725490194" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="529" id="C8V-a0-X7b"/>
+                                    <constraint firstAttribute="height" constant="34" id="kyx-cx-ucN"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="20"/>
+                                <color key="textColor" red="0.83921568627450982" green="0.83921568627450982" blue="0.83921568627450982" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="#siddlocker" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="QCS-Fq-E3D">
+                                <color key="backgroundColor" red="0.20784313725490194" green="0.20784313725490194" blue="0.20784313725490194" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="38" id="iPe-WO-2eu"/>
+                                    <constraint firstAttribute="width" constant="469" id="ij8-UJ-57e"/>
+                                </constraints>
+                                <color key="textColor" red="0.0" green="0.68235294117647061" blue="0.93725490196078431" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="22"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="AddTopicGuidance.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="WUC-4m-uj6">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="394" id="4VS-F4-QhV"/>
+                                    <constraint firstAttribute="width" constant="552" id="g5C-bN-Ei5"/>
+                                </constraints>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kji-18-2mq">
+                                <color key="backgroundColor" red="0.32156862745098036" green="0.32156862745098036" blue="0.32156862745098036" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="191" id="Qzl-Hr-0jk"/>
+                                    <constraint firstAttribute="height" constant="35" id="ZLe-Fd-ZQ2"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="18"/>
+                                <state key="normal" title="Next">
+                                    <color key="titleColor" red="0.83921568627450982" green="0.83921568627450982" blue="0.83921568627450982" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="getMessages:" destination="FWg-Q5-o8m" eventType="touchUpInside" id="IUr-Q7-ASM"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="to Locker. Simply add the following topic to the message" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uON-4I-Sg6">
+                                <color key="backgroundColor" red="0.20784313730000001" green="0.20784313730000001" blue="0.20784313730000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="34" id="EBv-Cd-pbD"/>
+                                    <constraint firstAttribute="width" constant="506" id="oDc-gm-iWz"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="20"/>
+                                <color key="textColor" red="0.83921568629999999" green="0.83921568629999999" blue="0.83921568629999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="0.20784313725490194" green="0.20784313725490194" blue="0.20784313725490194" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="uON-4I-Sg6" firstAttribute="leading" secondItem="tlk-m7-Cnm" secondAttribute="leading" constant="126" id="4xw-t6-kBT"/>
+                            <constraint firstItem="zGR-Um-BIe" firstAttribute="centerX" secondItem="tlk-m7-Cnm" secondAttribute="centerX" type="default" id="9PV-74-dXq"/>
+                            <constraint firstItem="WUC-4m-uj6" firstAttribute="top" secondItem="tlk-m7-Cnm" secondAttribute="top" constant="38" id="AEb-3K-PDb"/>
+                            <constraint firstAttribute="bottom" secondItem="uON-4I-Sg6" secondAttribute="bottom" constant="433" id="En6-3s-A2S"/>
+                            <constraint firstItem="Kji-18-2mq" firstAttribute="centerX" secondItem="QCS-Fq-E3D" secondAttribute="centerX" type="default" id="G94-SY-c3c"/>
+                            <constraint firstAttribute="bottom" secondItem="Kji-18-2mq" secondAttribute="bottom" constant="312" id="RGD-kr-IX6"/>
+                            <constraint firstAttribute="bottom" secondItem="QCS-Fq-E3D" secondAttribute="bottom" constant="393" id="XwC-uQ-JcP"/>
+                            <constraint firstItem="uON-4I-Sg6" firstAttribute="centerX" secondItem="QCS-Fq-E3D" secondAttribute="centerX" type="default" id="exI-8U-osR"/>
+                            <constraint firstItem="zGR-Um-BIe" firstAttribute="top" secondItem="tlk-m7-Cnm" secondAttribute="top" constant="458" id="jgm-E5-l3l"/>
+                            <constraint firstItem="WUC-4m-uj6" firstAttribute="leading" secondItem="tlk-m7-Cnm" secondAttribute="leading" constant="105" id="nha-ot-M7X"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Add Messages to Locker" id="dy3-L2-Rn5">
+                        <barButtonItem key="backBarButtonItem" title="Add Messages" id="ctD-R4-1jE"/>
+                    </navigationItem>
                     <connections>
-                        <segue destination="5Cb-eK-aq7" kind="relationship" relationship="rootViewController" id="W4L-XY-et2"/>
+                        <segue destination="5Cb-eK-aq7" kind="push" identifier="ShowMessages" id="V5u-3S-A3z"/>
                     </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="VpH-q9-xRK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="K7K-2b-veW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-5817" y="-2703"/>
+            <point key="canvasLocation" x="-5036" y="-1599"/>
         </scene>
         <!--Yammer Messages View Controller - Inbox-->
         <scene sceneID="hWs-ws-YR9">
@@ -322,7 +409,9 @@
                             <constraint firstItem="2pc-AT-zI7" firstAttribute="leading" secondItem="ipy-ad-nTd" secondAttribute="leading" constant="8" id="ted-Yt-bQG"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Inbox" id="zN2-su-ayd"/>
+                    <navigationItem key="navigationItem" title="Inbox" id="zN2-su-ayd">
+                        <barButtonItem key="backBarButtonItem" title="Inbox" id="F22-P2-dho"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="messagesNavTable" destination="2pc-AT-zI7" id="pu8-HC-ol0"/>
                         <outlet property="messagesTable" destination="7IE-8f-vML" id="MKM-HT-WjV"/>
@@ -330,12 +419,66 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="X71-zm-FjQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-5423" y="-1519"/>
+            <point key="canvasLocation" x="-4177" y="-1547"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="mVZ-QV-cpM">
+            <objects>
+                <navigationController storyboardIdentifier="YammerLockerNavController" id="Zsm-TT-sDU" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="blackOpaque" prompted="NO"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="blackOpaque" id="VTS-nc-GX1">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="FWg-Q5-o8m" kind="relationship" relationship="rootViewController" id="KFn-cA-84j"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="co0-N2-0cG" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-6165" y="-2671"/>
         </scene>
     </scenes>
     <resources>
+        <image name="AddTopicGuidance.jpg" width="1116" height="792"/>
         <image name="YammerBlueColorSliver.png" width="14" height="98"/>
     </resources>
+    <classes>
+        <class className="NSLayoutConstraint" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        </class>
+        <class className="YammerDataConfigController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/YammerDataConfigController.h"/>
+            <relationships>
+                <relationship kind="action" name="getMessages:"/>
+            </relationships>
+        </class>
+        <class className="YammerLockerViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/YammerLockerViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="establishConnection:"/>
+            </relationships>
+        </class>
+        <class className="YammerMessageDetailController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/YammerMessageDetailController.h"/>
+            <relationships>
+                <relationship kind="action" name="addCategories:"/>
+                <relationship kind="outlet" name="addCategoriesTxtFld" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="detailWebView" candidateClass="UIWebView"/>
+                <relationship kind="outlet" name="existingCategoriesLbl" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="showCategoriesTxtFld" candidateClass="UITextField"/>
+            </relationships>
+        </class>
+        <class className="YammerMessagesViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/YammerMessagesViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="messagesNavTable" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="messagesTable" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>
