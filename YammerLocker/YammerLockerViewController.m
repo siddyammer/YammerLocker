@@ -55,8 +55,8 @@
                                                           NXOAuth2Client *client =     [account oauthClient];
                                                           NXOAuth2AccessToken *tokenData = [client accessToken];
                                                           NSString * clientAccessToken = [tokenData valueForKeyPath:@"accessToken.token"];
-                                                          NSLog(@"Oauth Success with token number %d and token %@", tokenCount,clientAccessToken);
-                                                          (NSLog(@"userAuthToken object in view controller type before save is %@",clientAccessToken.class));
+                                                          //NSLog(@"Oauth Success with token number %d and token %@", tokenCount,clientAccessToken);
+                                                          //NSLog(@"userAuthToken object in view controller type before save is %@",clientAccessToken.class);
                                                           
                                                           // Save auth token to the core data store
                                                           [self.yamAuthDataController insertUserAuthToken:clientAccessToken];
@@ -64,7 +64,6 @@
                                                       
                                                       // Update the UI by segueing to show messages.
                                                       [self performSegueWithIdentifier:@"ShowDataConfigOptions" sender:self];
-                                                      
                                                   }];
     
     // Register to get notifications of Oauth failure

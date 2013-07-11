@@ -40,13 +40,13 @@
     
     // Show the initial view controller which, if the user has not logged in, is YammerLockerViewController
     if (![self.yamUserDataController checkForExistingAuthToken]) {
-        [self configViewControllerWithName:@"YammerLockerViewController"];
         NSLog(@"Entered user has not logged in state");
+        [self configViewControllerWithName:@"YammerLockerViewController"];
     }
     // If the user is already logged in, the initial view controller is the messages navigation controller
     else {
-        [self configViewControllerWithName:@"YammerLockerNavController"];
         NSLog(@"Entered user has logged in state");
+        [self configViewControllerWithName:@"YammerLockerNavController"];
     }
     
     return YES;

@@ -16,8 +16,11 @@
 
 @interface YammerLockerDataController ()
 
-// Parse the list of messages from the Yammer API and format them for display.
+// Parse the list of messages from the Yammer API and format them for display
 - (void)formatAddMessages:(NSData *)response;
+
+// Parse out and save the user string from the current user data.
+- (void)parseAddUserString:(NSData *)response;
 
 // Send a notification that the list of messages has changed (updated)
 - (void)sendMessagesChangeNotification;
@@ -330,7 +333,7 @@
 // Get a list of messages that match the topic string from the Yammer search API
 - (void)getMessages
 {
-    NXOAuth2Account *userAccount;
+   /* NXOAuth2Account *userAccount;
     // Get the Oauthenticated account for the user
     for (NXOAuth2Account *account in [[NXOAuth2AccountStore sharedStore] accounts]) {
         userAccount = account;
@@ -346,6 +349,27 @@
                    // Process the response
                    [self formatAddMessages:responseData];
                }];
+    */
+    
+    NSError *error;
+    
+    // Get the user's access token
+    NSString *accessToken = @"EviRYoOpUQH8flUhQagvw";
+    
+    // Get the user's custom hashtag (topic) used to get messages from Yammer
+    NSString *userHashtag = @"siddlocker";
+    
+    // The API endpoint URL
+    NSString *endpointURL = @"https://www.yammer.com/api/v1/search.json";
+    
+    // Append search string and access token as parameters to the URL
+    endpointURL = [NSString stringWithFormat:@"%@?search=%@&access_token=%@",endpointURL,userHashtag,accessToken];
+    
+    // Call the endpoint with the access token
+    NSData *responseData = [[NSString stringWithContentsOfURL:[NSURL URLWithString:endpointURL] encoding:NSUTF8StringEncoding error: &error] dataUsingEncoding:NSUTF8StringEncoding];
+    
+    // Process the response */
+    [self formatAddMessages:responseData];
 }
 
 // Parse the list of messages, format them for display and add them to the
@@ -403,6 +427,52 @@
     
     // Send a notification that the store has been updated
     [self sendMessagesChangeNotification];
+}
+
+// Get the current user data, using the endpoint /api/v1/users/current.json,
+// and add the user string to the datastore. This is typically the part before @ in the username
+// e.g. in sidd@bddemo.com, the user string would be sidd
+- (void)getCurrentUserData {
+  
+    NSError *error;
+    
+    // Get the user's access token
+    NSString *accessToken = @"EviRYoOpUQH8flUhQagvw";
+    
+    // The API endpoint URL
+    NSString *endpointURL = @"https://www.yammer.com/api/v1/users/current.json";
+    
+    // Append access token as a parameter to the URL
+    endpointURL = [NSString stringWithFormat:@"%@?access_token=%@",endpointURL,accessToken];
+    
+    // Call the endpoint with the access token
+    NSData *responseData = [[NSString stringWithContentsOfURL:[NSURL URLWithString:endpointURL] encoding:NSUTF8StringEncoding error: &error] dataUsingEncoding:NSUTF8StringEncoding];
+    
+    // Process the response */
+    [self parseAddUserString:responseData];
+    
+}
+
+// Parse out and save the user string from the current user data.
+- (void)parseAddUserString:(NSData *)response {
+    
+    NSError *error;
+    
+    // Name is at the highest level of the API response
+    // {
+    //   "name":"siddvicious",
+    //   ......
+    
+    // Get the response into a parsed object
+    NSDictionary *parsedResponse = [NSJSONSerialization JSONObjectWithData:response
+                                                                   options:kNilOptions
+                                                                     error:&error];
+    
+    NSString *currUserString = [NSString stringWithFormat:@"%@",[parsedResponse objectForKey:@"name"]];
+        // Add messages to the initialized message store
+        // TO DO: Remove hardcoded app type name.
+        //[self insertMessageWithContent:messageContent from:messageFrom app:@"Yammer" webUrl:messageWebUrl fromMugshotUrl:mugshotURL];
+    NSLog(@"*********Current User String is: %@",currUserString);
 }
 
 // Send a notification that the list of messages has changed (updated)

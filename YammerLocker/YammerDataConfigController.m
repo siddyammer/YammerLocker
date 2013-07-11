@@ -10,6 +10,7 @@
 //
 
 #import "YammerDataConfigController.h"
+#import "YammerLockerDataController.h"
 
 @interface YammerDataConfigController ()
 
@@ -29,7 +30,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
+	
+    // Do any additional setup after loading the view.
+    
+    // Get a data controller that you will use later for getting current user string
+    self.currUserDataController = [YammerLockerDataController sharedDataController];
+    
+     NSLog(@"***** Loaded Data Config controller and about to get current data user");
+    // Asynchronously, get the current user string from the Yammer API and save it to the core data store
+    [self.currUserDataController performSelectorInBackground:@selector(getCurrentUserData) withObject:nil];
 }
 
 - (void)didReceiveMemoryWarning

@@ -38,8 +38,8 @@
     // Get a data controller that you will use later
     self.yamMsgDataController = [YammerLockerDataController sharedDataController];
     
-    // Start getting messages for display from the Yammer API
-    [self.yamMsgDataController getMessages];
+    // Asynchronously, start getting messages for display from the Yammer API
+    [self.yamMsgDataController performSelectorInBackground:@selector(getMessages) withObject:nil];
     
     // Set the title of the currently selected messages navigation item to be the default which
     // is currently "All"
