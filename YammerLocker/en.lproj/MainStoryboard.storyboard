@@ -387,7 +387,7 @@
                                                     <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 </label>
                                                 <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="YammerBlueColorSliver.png" id="uwd-Jp-3iv">
-                                                    <rect key="frame" x="0.0" y="0.0" width="6" height="43"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="17" height="43"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </imageView>
                                             </subviews>
@@ -444,7 +444,7 @@
     </scenes>
     <resources>
         <image name="AddTopicGuidance.jpg" width="1116" height="792"/>
-        <image name="YammerBlueColorSliver.png" width="14" height="98"/>
+        <image name="YammerBlueColorSliver.png" width="38" height="98"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>

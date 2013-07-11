@@ -439,10 +439,11 @@
     NSError *error;
     
     // Get the user's access token
-    NSString *accessToken = @"EviRYoOpUQH8flUhQagvw";
+    NSString *accessToken = [self getUserAccessToken]; // DELETE: Sample token for testing:EviRYoOpUQH8flUhQagvw
     
     // Get the user's custom hashtag (topic) used to get messages from Yammer
-    NSString *userHashtag = @"siddlocker";
+    // TO DO: locker is hardcoded. Change that.
+    NSString *userHashtag =[NSString stringWithFormat:@"%@%@",[self getUserString],@"locker"];
     
     // The API endpoint URL
     NSString *endpointURL = @"https://www.yammer.com/api/v1/search.json";
@@ -522,7 +523,7 @@
     NSError *error;
     
     // Get the user's access token
-    NSString *accessToken = @"EviRYoOpUQH8flUhQagvw";
+    NSString *accessToken = [self getUserAccessToken]; // DELETE: Sample token for testing:EviRYoOpUQH8flUhQagvw
     
     // The API endpoint URL
     NSString *endpointURL = @"https://www.yammer.com/api/v1/users/current.json";
@@ -553,9 +554,9 @@
                                                                      error:&error];
     
     NSString *currUserString = [NSString stringWithFormat:@"%@",[parsedResponse objectForKey:@"name"]];
-        // Add messages to the initialized message store
-        //[self insertMessageWithContent:messageContent from:messageFrom app:@"Yammer" webUrl:messageWebUrl fromMugshotUrl:mugshotURL];
-    NSLog(@"*********Current User String is: %@",currUserString);
+        // Add current user string to the data store
+        [self insertUserString:currUserString];
+        NSLog(@"*********Current User String is: %@",currUserString);
 }
 
 // Send a notification that the list of messages has changed (updated)

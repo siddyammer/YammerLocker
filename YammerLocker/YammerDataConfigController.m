@@ -35,12 +35,13 @@
     
     // Get a data controller that you will use later for getting current user string
     self.currUserDataController = [YammerLockerDataController sharedDataController];
-    
-     NSLog(@"***** Loaded Data Config controller and about to get current data user");
+
     // Synchronously, get the current user string from the Yammer API and save it to the core data store
     [self.currUserDataController getCurrentUserData];
     
-    
+    // Show to the user, the custom topic that they can use to add messages to Locker
+    // TO DO: locker is hardcoded. Change that.
+    self.messageTopicTxtFld.text = [NSString stringWithFormat:@"%@%@%@",self.messageTopicTxtFld.text,[self.currUserDataController getUserString],@"locker"];
 }
 
 - (void)didReceiveMemoryWarning

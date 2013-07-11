@@ -17,7 +17,7 @@
 // Show Yammer Messages when Get Messages button is clicked
 - (IBAction)getMessages:(id)sender;
 
-// Show the custom, to the user, topic that they can use to add messages to Locker
+// Show to the user, the custom topic that they can use to add messages to Locker
 @property (weak, nonatomic) IBOutlet UITextField *messageTopicTxtFld;
 
 // Data Controller for getting current user string.
