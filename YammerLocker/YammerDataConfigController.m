@@ -37,8 +37,10 @@
     self.currUserDataController = [YammerLockerDataController sharedDataController];
     
      NSLog(@"***** Loaded Data Config controller and about to get current data user");
-    // Asynchronously, get the current user string from the Yammer API and save it to the core data store
-    [self.currUserDataController performSelectorInBackground:@selector(getCurrentUserData) withObject:nil];
+    // Synchronously, get the current user string from the Yammer API and save it to the core data store
+    [self.currUserDataController getCurrentUserData];
+    
+    
 }
 
 - (void)didReceiveMemoryWarning

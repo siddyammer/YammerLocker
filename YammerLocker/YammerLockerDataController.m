@@ -113,8 +113,9 @@
 
 /// Data manipulation methods for User
 
-// Check to see if the user has an authentication token. Current design is that
-// once the user has logged in, a user is created in the data store with an auth token.
+// Check to see if the user has an authentication token. Works off the
+// assumption that there is only one user object and if it exists then
+// the user is logged in.
 - (BOOL)checkForExistingAuthToken
 {
     NSManagedObjectContext *dataStoreContext = [self managedObjectContext];
@@ -126,8 +127,12 @@
     
     NSError *error;
     NSUInteger count = [dataStoreContext countForFetchRequest:userFetchRequest error:&error];
+    
     if (count == NSNotFound) {
-        NSLog(@"Getting number of users in the data store failed: %@",error.description);
+        NSLog(@"WARNING: Getting number of users in the data store failed: %@",error.description);
+    }
+    if (count > 1) {
+        NSLog(@"SEVERE_WARNING: Found more than 1 user object in the User Data Store");
     }
     
     // If there are no users means the user has not logged in. Current design is that
@@ -139,20 +144,100 @@
     }
 }
 
-// Add a user auth token  to the data store
+// Add a user auth token to the data store
 - (void)insertUserAuthToken:(NSString *)userAuthToken
 {
     NSManagedObjectContext *dataStoreContext = [self managedObjectContext];
     
     User *user = [NSEntityDescription insertNewObjectForEntityForName:@"User" inManagedObjectContext:dataStoreContext];
-    
-    (NSLog(@"userAuthToken object in data controller type is %@",userAuthToken.class));
     user.authToken = userAuthToken;
     
     NSError *error;
     if (![dataStoreContext save:&error]) {
-        NSLog(@"Saving user token to data store failed: %@",error.description);
+        NSLog(@"ERROR: Saving user token to data store failed: %@",error.description);
     }
+}
+
+// Get the access token for the one user object.
+- (NSString *)getUserAccessToken {
+    
+    NSManagedObjectContext *dataStoreContext = [self managedObjectContext];
+    
+    NSFetchRequest *tokenFetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *userEntity = [NSEntityDescription entityForName:@"User" inManagedObjectContext:dataStoreContext];
+    [tokenFetchRequest setEntity:userEntity];
+    
+    NSError *error;
+    NSArray *fetchedUsers = [dataStoreContext executeFetchRequest:tokenFetchRequest error:&error];
+    
+    if (error) {
+        NSLog(@"ERROR: Getting user from data store failed: %@",error.description);
+    }
+    if (fetchedUsers.count > 1) {
+        NSLog(@"SEVERE_WARNING: Found more than 1 user objects in the User Data Store");
+    }
+    
+    User *fetchedUser = [fetchedUsers lastObject];
+    return fetchedUser.authToken;
+}
+
+// Add the user string to the user data store. Current design is that there can be only one data object.
+- (void)insertUserString:(NSString *)userString {
+    
+    NSManagedObjectContext *dataStoreContext = [self managedObjectContext];
+    
+    // Check to see if the user object exists by querying for it
+    NSFetchRequest *userFetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *userEntity = [NSEntityDescription entityForName:@"User" inManagedObjectContext:dataStoreContext];
+    [userFetchRequest setEntity:userEntity];
+    NSError *error;
+    User *existingUser = nil;
+    NSArray *fetchedUsers= [dataStoreContext executeFetchRequest:userFetchRequest error:&error];
+    existingUser = [fetchedUsers lastObject];
+    if (error) {
+        NSLog(@"ERROR: Getting user from data store failed: %@",error.description);
+    }
+    if (fetchedUsers.count > 1) {
+        NSLog(@"SEVERE_WARNING: Found more than 1 user objects in the User Data Store");
+    }
+    
+    // If the user does not exist
+    else if (!existingUser) {
+        NSLog(@"ERROR: User does not exist in the data store and trying to set their name string");
+    }
+    
+    // If the user exists
+    else {
+        existingUser.nameString = userString;
+    }
+    
+    // Insert or update the category
+    if (![dataStoreContext save:&error]) {
+        NSLog(@"ERROR: Saving user string to data store failed: %@",error.description);
+    }
+}
+
+// Get the user string for the one user object.
+- (NSString *)getUserString {
+    
+    NSManagedObjectContext *dataStoreContext = [self managedObjectContext];
+    
+    NSFetchRequest *tokenFetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *userEntity = [NSEntityDescription entityForName:@"User" inManagedObjectContext:dataStoreContext];
+    [tokenFetchRequest setEntity:userEntity];
+    
+    NSError *error;
+    NSArray *fetchedUsers = [dataStoreContext executeFetchRequest:tokenFetchRequest error:&error];
+    
+    if (error) {
+        NSLog(@"ERROR: Getting user from data store failed: %@",error.description);
+    }
+    if (fetchedUsers.count > 1) {
+        NSLog(@"SEVERE_WARNING: Found more than 1 user objects in the User Data Store");
+    }
+    
+    User *fetchedUser = [fetchedUsers lastObject];
+    return fetchedUser.nameString;
 }
 
 /// Data manipulation methods for Messages
@@ -450,7 +535,6 @@
     
     // Process the response */
     [self parseAddUserString:responseData];
-    
 }
 
 // Parse out and save the user string from the current user data.
@@ -470,7 +554,6 @@
     
     NSString *currUserString = [NSString stringWithFormat:@"%@",[parsedResponse objectForKey:@"name"]];
         // Add messages to the initialized message store
-        // TO DO: Remove hardcoded app type name.
         //[self insertMessageWithContent:messageContent from:messageFrom app:@"Yammer" webUrl:messageWebUrl fromMugshotUrl:mugshotURL];
     NSLog(@"*********Current User String is: %@",currUserString);
 }

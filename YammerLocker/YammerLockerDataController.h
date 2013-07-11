@@ -32,11 +32,23 @@
 
 /// Data manipulation methods for User
 
-// Check to see if the user has a authentication token
+// Check to see if the user has an authentication token. Works off the
+// assumption that there is only one user object and if it exists then
+// the user is logged in.
 - (BOOL)checkForExistingAuthToken;
 
-// Add a auth token to the user data store
+// Add a auth token to the user data store. Current design is that there can be only one data object.
 - (void)insertUserAuthToken:(NSString *)userAuthToken;
+
+// Get the access token for the one user object.
+- (NSString *)getUserAccessToken;
+
+// Add the user string to the user data store. Current design is that there can be only one data object.
+- (void)insertUserString:(NSString *)userString;
+
+// Get the user string for the one user object.
+- (NSString *)getUserString;
+
 
 /// Data manipulation methods for Messages
 
