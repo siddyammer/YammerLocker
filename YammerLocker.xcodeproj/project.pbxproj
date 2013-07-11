@@ -21,7 +21,7 @@
 		98631B90178B5A2900CD0265 /* YammerDataConfigController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98631B8F178B5A2900CD0265 /* YammerDataConfigController.m */; };
 		98631B97178E3CD800CD0265 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 98631B96178E3CD800CD0265 /* User.m */; };
 		98631B9A178E4ACF00CD0265 /* AddTopicGuidance.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 98631B98178E4ACF00CD0265 /* AddTopicGuidance.jpg */; };
-		98631B9B178E4ACF00CD0265 /* YammerBlueColorSliver.png in Resources */ = {isa = PBXBuildFile; fileRef = 98631B99178E4ACF00CD0265 /* YammerBlueColorSliver.png */; };
+		98631BB1178E5B5300CD0265 /* YammerBlueColorSliver.png in Resources */ = {isa = PBXBuildFile; fileRef = 98631BB0178E5B5300CD0265 /* YammerBlueColorSliver.png */; };
 		98753B65176A778200B0BAD7 /* YammerMessagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98753B64176A778200B0BAD7 /* YammerMessagesViewController.m */; };
 		98928ABF16BB2D0C00D4C84B /* YammerLockerDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98928ABD16BB2D0C00D4C84B /* YammerLockerDataController.m */; };
 		98C517FA16C30B31004C72D3 /* libOAuth2Client.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 98C517F616C30985004C72D3 /* libOAuth2Client.a */; };
@@ -80,7 +80,7 @@
 		98631B95178E3CD800CD0265 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		98631B96178E3CD800CD0265 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		98631B98178E4ACF00CD0265 /* AddTopicGuidance.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = AddTopicGuidance.jpg; sourceTree = "<group>"; };
-		98631B99178E4ACF00CD0265 /* YammerBlueColorSliver.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = YammerBlueColorSliver.png; sourceTree = "<group>"; };
+		98631BB0178E5B5300CD0265 /* YammerBlueColorSliver.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = YammerBlueColorSliver.png; sourceTree = "<group>"; };
 		98753B63176A778200B0BAD7 /* YammerMessagesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YammerMessagesViewController.h; sourceTree = "<group>"; };
 		98753B64176A778200B0BAD7 /* YammerMessagesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YammerMessagesViewController.m; sourceTree = "<group>"; };
 		98928ABC16BB2D0C00D4C84B /* YammerLockerDataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YammerLockerDataController.h; sourceTree = "<group>"; };
@@ -177,8 +177,8 @@
 		9838CA50164B1260006C9C6A /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				98631BB0178E5B5300CD0265 /* YammerBlueColorSliver.png */,
 				98631B98178E4ACF00CD0265 /* AddTopicGuidance.jpg */,
-				98631B99178E4ACF00CD0265 /* YammerBlueColorSliver.png */,
 				9838CA51164B1260006C9C6A /* YammerLocker-Info.plist */,
 				9838CA52164B1260006C9C6A /* InfoPlist.strings */,
 				9838CA55164B1260006C9C6A /* main.m */,
@@ -282,7 +282,7 @@
 				9838CA63164B1260006C9C6A /* MainStoryboard.storyboard in Resources */,
 				98CD5AB4177540BE0050C34B /* README in Resources */,
 				98631B9A178E4ACF00CD0265 /* AddTopicGuidance.jpg in Resources */,
-				98631B9B178E4ACF00CD0265 /* YammerBlueColorSliver.png in Resources */,
+				98631BB1178E5B5300CD0265 /* YammerBlueColorSliver.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
