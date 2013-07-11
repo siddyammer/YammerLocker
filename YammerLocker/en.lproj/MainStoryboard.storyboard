@@ -148,7 +148,7 @@
                                 <color key="textColor" red="0.83921568627450982" green="0.83921568627450982" blue="0.83921568627450982" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Presentations,User Conference" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mqT-NY-mmn">
+                            <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Presentations,User Conference" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mqT-NY-mmn">
                                 <color key="backgroundColor" red="0.20784313725490194" green="0.20784313725490194" blue="0.20784313725490194" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="285" id="5oY-Cx-dom"/>
@@ -231,7 +231,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9as-bm-A58" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3948" y="-1495"/>
+            <point key="canvasLocation" x="-4096" y="-1519"/>
         </scene>
         <!--Yammer Data Config Controller - Add Messages to Locker-->
         <scene sceneID="bzH-rJ-1dB">
@@ -251,7 +251,7 @@
                                 <color key="textColor" red="0.83921568627450982" green="0.83921568627450982" blue="0.83921568627450982" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="#" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="QCS-Fq-E3D">
+                            <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="#" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="QCS-Fq-E3D">
                                 <color key="backgroundColor" red="0.20784313725490194" green="0.20784313725490194" blue="0.20784313725490194" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="38" id="iPe-WO-2eu"/>
@@ -294,6 +294,20 @@
                                 <color key="textColor" red="0.83921568629999999" green="0.83921568629999999" blue="0.83921568629999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pjy-uc-7tJ">
+                                <color key="backgroundColor" red="0.32156862749999998" green="0.32156862749999998" blue="0.32156862749999998" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="191" id="cZq-dV-d8Z"/>
+                                    <constraint firstAttribute="height" constant="35" id="vjp-4d-rWq"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="18"/>
+                                <state key="normal" title="Signout">
+                                    <color key="titleColor" red="0.83921568629999999" green="0.83921568629999999" blue="0.83921568629999999" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.20784313725490194" green="0.20784313725490194" blue="0.20784313725490194" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -303,6 +317,8 @@
                             <constraint firstAttribute="bottom" secondItem="uON-4I-Sg6" secondAttribute="bottom" constant="433" id="En6-3s-A2S"/>
                             <constraint firstItem="Kji-18-2mq" firstAttribute="centerX" secondItem="QCS-Fq-E3D" secondAttribute="centerX" type="default" id="G94-SY-c3c"/>
                             <constraint firstAttribute="bottom" secondItem="Kji-18-2mq" secondAttribute="bottom" constant="312" id="RGD-kr-IX6"/>
+                            <constraint firstAttribute="bottom" secondItem="pjy-uc-7tJ" secondAttribute="bottom" constant="6" id="Rfm-Mk-dYN"/>
+                            <constraint firstItem="pjy-uc-7tJ" firstAttribute="leading" secondItem="tlk-m7-Cnm" secondAttribute="leading" constant="6" id="WQ9-1L-Vli"/>
                             <constraint firstAttribute="bottom" secondItem="QCS-Fq-E3D" secondAttribute="bottom" constant="393" id="XwC-uQ-JcP"/>
                             <constraint firstItem="uON-4I-Sg6" firstAttribute="centerX" secondItem="QCS-Fq-E3D" secondAttribute="centerX" type="default" id="exI-8U-osR"/>
                             <constraint firstItem="zGR-Um-BIe" firstAttribute="top" secondItem="tlk-m7-Cnm" secondAttribute="top" constant="458" id="jgm-E5-l3l"/>
@@ -310,7 +326,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Add Messages to Locker" id="dy3-L2-Rn5">
-                        <barButtonItem key="backBarButtonItem" title="Add Messages" id="ctD-R4-1jE"/>
+                        <barButtonItem key="backBarButtonItem" title="Setup" id="ctD-R4-1jE"/>
                     </navigationItem>
                     <connections>
                         <outlet property="messageTopicTxtFld" destination="QCS-Fq-E3D" id="Q9J-en-cbs"/>
@@ -319,7 +335,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="K7K-2b-veW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-5948" y="-1527"/>
+            <point key="canvasLocation" x="-6148" y="-1539"/>
         </scene>
         <!--Yammer Messages View Controller - Inbox-->
         <scene sceneID="hWs-ws-YR9">
@@ -369,7 +385,7 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="2pc-AT-zI7">
                                 <color key="backgroundColor" red="0.32156862745098036" green="0.32156862745098036" blue="0.32156862745098036" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="941" id="cj1-Dx-FWD"/>
+                                    <constraint firstAttribute="height" constant="947" id="KsW-Tc-CKk"/>
                                     <constraint firstAttribute="width" constant="178" id="wVJ-RO-Rej"/>
                                 </constraints>
                                 <color key="separatorColor" red="0.20784313725490194" green="0.20784313725490194" blue="0.20784313725490194" alpha="1" colorSpace="calibratedRGB"/>
@@ -387,7 +403,7 @@
                                                     <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 </label>
                                                 <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="YammerBlueColorSliver.png" id="uwd-Jp-3iv">
-                                                    <rect key="frame" x="0.0" y="0.0" width="17" height="43"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="21" height="43"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </imageView>
                                             </subviews>
@@ -403,15 +419,18 @@
                         </subviews>
                         <color key="backgroundColor" red="0.20784313725490194" green="0.20784313725490194" blue="0.20784313725490194" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="2pc-AT-zI7" firstAttribute="bottom" secondItem="7IE-8f-vML" secondAttribute="bottom" type="default" id="Bog-YZ-Gon"/>
-                            <constraint firstItem="7IE-8f-vML" firstAttribute="centerY" secondItem="ipy-ad-nTd" secondAttribute="centerY" type="default" id="Gwi-oT-IFG"/>
+                            <constraint firstItem="2pc-AT-zI7" firstAttribute="bottom" secondItem="7IE-8f-vML" secondAttribute="bottom" type="default" id="063-u4-HaO"/>
+                            <constraint firstItem="2pc-AT-zI7" firstAttribute="top" secondItem="7IE-8f-vML" secondAttribute="top" type="default" id="7mZ-XG-i0T"/>
                             <constraint firstItem="7IE-8f-vML" firstAttribute="leading" secondItem="ipy-ad-nTd" secondAttribute="leading" constant="187" id="P5R-Mm-zWM"/>
-                            <constraint firstItem="2pc-AT-zI7" firstAttribute="top" secondItem="7IE-8f-vML" secondAttribute="top" type="default" id="TK2-Fu-vkJ"/>
-                            <constraint firstItem="2pc-AT-zI7" firstAttribute="leading" secondItem="ipy-ad-nTd" secondAttribute="leading" constant="8" id="ted-Yt-bQG"/>
+                            <constraint firstItem="2pc-AT-zI7" firstAttribute="top" secondItem="ipy-ad-nTd" secondAttribute="top" constant="5" id="bRY-8q-9CR"/>
+                            <constraint firstItem="2pc-AT-zI7" firstAttribute="leading" secondItem="ipy-ad-nTd" secondAttribute="leading" constant="8" id="yLU-cz-ayq"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Inbox" id="zN2-su-ayd">
                         <barButtonItem key="backBarButtonItem" title="Inbox" id="F22-P2-dho"/>
+                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="refresh" id="P7y-MH-bde">
+                            <color key="tintColor" red="1" green="0.54117647058823526" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="messagesNavTable" destination="2pc-AT-zI7" id="pu8-HC-ol0"/>
@@ -420,7 +439,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="X71-zm-FjQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-4945" y="-1507"/>
+            <point key="canvasLocation" x="-5017" y="-1533"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="mVZ-QV-cpM">
@@ -443,9 +462,44 @@
         </scene>
     </scenes>
     <resources>
-        <image name="AddTopicGuidance.jpg" width="1116" height="792"/>
-        <image name="YammerBlueColorSliver.png" width="38" height="98"/>
+        <image name="AddTopicGuidance.jpg" width="1114" height="788"/>
+        <image name="YammerBlueColorSliver.png" width="68" height="142"/>
     </resources>
+    <classes>
+        <class className="NSLayoutConstraint" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        </class>
+        <class className="YammerDataConfigController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/YammerDataConfigController.h"/>
+            <relationships>
+                <relationship kind="action" name="getMessages:"/>
+                <relationship kind="outlet" name="messageTopicTxtFld" candidateClass="UITextField"/>
+            </relationships>
+        </class>
+        <class className="YammerLockerViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/YammerLockerViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="establishConnection:"/>
+            </relationships>
+        </class>
+        <class className="YammerMessageDetailController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/YammerMessageDetailController.h"/>
+            <relationships>
+                <relationship kind="action" name="addCategories:"/>
+                <relationship kind="outlet" name="addCategoriesTxtFld" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="detailWebView" candidateClass="UIWebView"/>
+                <relationship kind="outlet" name="existingCategoriesLbl" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="showCategoriesTxtFld" candidateClass="UITextField"/>
+            </relationships>
+        </class>
+        <class className="YammerMessagesViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/YammerMessagesViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="messagesNavTable" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="messagesTable" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>
