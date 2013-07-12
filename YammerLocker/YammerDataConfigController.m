@@ -11,6 +11,8 @@
 
 #import "YammerDataConfigController.h"
 #import "YammerLockerDataController.h"
+#import "YammerLockerAppDelegate.h"
+#import "NXOAuth2.h"
 
 @interface YammerDataConfigController ()
 
@@ -55,5 +57,32 @@
     
     // Update the UI by segueing to show messages.
     [self performSegueWithIdentifier:@"ShowMessages" sender:self];
+}
+
+// Signout the user, meaning they have to login again
+- (IBAction)signoutUser:(id)sender {
+    
+    // Clear the existing user object including the Oauth token
+    [self.currUserDataController deleteUser];
+    
+    // The Oauth token in the library data store will be cleared on the
+    // load of the login page view. This is due to a weird bug where on deleting the
+    // app the library data store does not get cleared.
+    NSInteger tokenCountDeleted = 0;
+    for (NXOAuth2Account *account in [[NXOAuth2AccountStore sharedStore] accounts]) {
+        ++tokenCountDeleted;
+        [[NXOAuth2AccountStore sharedStore] removeAccount:account];
+    }
+    NSLog(@"Deleted %d existing tokens",tokenCountDeleted);
+    
+    for(NSHTTPCookie *cookie in [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies]) {
+            [[NSHTTPCookieStorage sharedHTTPCookieStorage] deleteCookie:cookie];
+    } 
+    
+    // Update the UI by segueing to show the login page controller.
+    [self performSegueWithIdentifier:@"ShowLoginView" sender:self];
+    //YammerLockerAppDelegate *yamLockerAppDelegate = (YammerLockerAppDelegate *)[[UIApplication sharedApplication]delegate];
+    //[yamLockerAppDelegate configViewControllerWithName:@"YammerLockerViewController"];
+
 }
 @end

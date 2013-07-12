@@ -20,4 +20,7 @@
 // Data Controller for user authorization status.
 @property (strong,nonatomic) YammerLockerDataController *yamUserDataController;
 
+// Configure view controller based on name
+- (void) configViewControllerWithName:(NSString *)controllerStoryboardId;
+
 @end

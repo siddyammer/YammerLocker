@@ -26,12 +26,18 @@
 	
     // Do any additional setup after loading the view, typically from a nib.
     
-    // Clear all existing Oauth tokens from Oauth account store, since currently this view is only shown to a
-    // user that's not logged in already
-    [self clearExistingTokens];
-
     // Get a data controller that you will use later to save auth token to user data store
     self.yamAuthDataController = [YammerLockerDataController sharedDataController];
+    
+    // Clear all existing Oauth tokens from Oauth account store, since
+    // currently this view is only shown to a user that's not logged in already
+    [self clearExistingTokens];
+    
+    // Clear cookies since the Oauth library is stroing some kind of information in the cookies.
+    for(NSHTTPCookie *cookie in [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies]) {
+        [[NSHTTPCookieStorage sharedHTTPCookieStorage] deleteCookie:cookie];
+    }
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -43,27 +49,28 @@
 
 // Establish connection with Yammer using Oauth.
 - (IBAction)establishConnection:(id)sender {
-        
-    // Register to get notifications of Oauth success. On success, save auth token to the core data store and then segue to show messages.
+    
+    // Register to get notifications of Oauth success. On success, save auth token to the core data store 
     [[NSNotificationCenter defaultCenter] addObserverForName:NXOAuth2AccountStoreAccountsDidChangeNotification
                                                       object:[NXOAuth2AccountStore sharedStore]
                                                        queue:nil
                                                   usingBlock:^(NSNotification *aNotification){
+                                                      NSLog(@"********* Entered Oauth Change Notification");
                                                       NSInteger tokenCount = 0;
                                                       for (NXOAuth2Account *account in [[NXOAuth2AccountStore sharedStore] accounts]) {
                                                           ++tokenCount;
                                                           NXOAuth2Client *client =     [account oauthClient];
                                                           NXOAuth2AccessToken *tokenData = [client accessToken];
                                                           NSString * clientAccessToken = [tokenData valueForKeyPath:@"accessToken.token"];
-                                                          //NSLog(@"Oauth Success with token number %d and token %@", tokenCount,clientAccessToken);
+                                                          NSLog(@"Oauth Success with token number %d and token %@", tokenCount,clientAccessToken);
                                                           //NSLog(@"userAuthToken object in view controller type before save is %@",clientAccessToken.class);
                                                           
                                                           // Save auth token to the core data store
-                                                          [self.yamAuthDataController insertUserAuthToken:clientAccessToken];
+                                                          [self.yamAuthDataController upsertUserAuthToken:clientAccessToken];
+                                                          
+                                                          // Update the UI by segueing to show messages.
+                                                          [self performSegueWithIdentifier:@"ShowDataConfigOptions" sender:self];
                                                       }
-                                                      
-                                                      // Update the UI by segueing to show messages.
-                                                      [self performSegueWithIdentifier:@"ShowDataConfigOptions" sender:self];
                                                   }];
     
     // Register to get notifications of Oauth failure
@@ -88,7 +95,6 @@
                                        [webView loadRequest:[NSURLRequest requestWithURL:preparedURL]];
                                        [self.view addSubview:webView];
                                    }];
-    
 }
 
 // Clear all existing Oauth tokens from Oauth account store.

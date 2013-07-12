@@ -37,8 +37,8 @@
 // the user is logged in.
 - (BOOL)checkForExistingAuthToken;
 
-// Add a auth token to the user data store. Current design is that there can be only one data object.
-- (void)insertUserAuthToken:(NSString *)userAuthToken;
+// Add a auth token to the user data store or update it if it already exists. Current design is that there can be only one user object with a single auth token.
+- (void)upsertUserAuthToken:(NSString *)userAuthToken;
 
 // Get the access token for the one user object.
 - (NSString *)getUserAccessToken;
@@ -48,6 +48,9 @@
 
 // Get the user string for the one user object.
 - (NSString *)getUserString;
+
+// Delete the one user object
+- (void)deleteUser;
 
 
 /// Data manipulation methods for Messages

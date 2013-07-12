@@ -22,6 +22,7 @@
 		98631B97178E3CD800CD0265 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 98631B96178E3CD800CD0265 /* User.m */; };
 		98631BB7178E88A500CD0265 /* YammerBlueColorSliver.png in Resources */ = {isa = PBXBuildFile; fileRef = 98631BB6178E88A500CD0265 /* YammerBlueColorSliver.png */; };
 		98631BB9178E8BDF00CD0265 /* AddTopicGuidance.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 98631BB8178E8BDF00CD0265 /* AddTopicGuidance.jpg */; };
+		98631BBB178F649900CD0265 /* YammerBlueColorSliver_mail.png in Resources */ = {isa = PBXBuildFile; fileRef = 98631BBA178F649900CD0265 /* YammerBlueColorSliver_mail.png */; };
 		98753B65176A778200B0BAD7 /* YammerMessagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98753B64176A778200B0BAD7 /* YammerMessagesViewController.m */; };
 		98928ABF16BB2D0C00D4C84B /* YammerLockerDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98928ABD16BB2D0C00D4C84B /* YammerLockerDataController.m */; };
 		98C517FA16C30B31004C72D3 /* libOAuth2Client.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 98C517F616C30985004C72D3 /* libOAuth2Client.a */; };
@@ -81,6 +82,7 @@
 		98631B96178E3CD800CD0265 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		98631BB6178E88A500CD0265 /* YammerBlueColorSliver.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = YammerBlueColorSliver.png; sourceTree = "<group>"; };
 		98631BB8178E8BDF00CD0265 /* AddTopicGuidance.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = AddTopicGuidance.jpg; sourceTree = "<group>"; };
+		98631BBA178F649900CD0265 /* YammerBlueColorSliver_mail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = YammerBlueColorSliver_mail.png; sourceTree = "<group>"; };
 		98753B63176A778200B0BAD7 /* YammerMessagesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YammerMessagesViewController.h; sourceTree = "<group>"; };
 		98753B64176A778200B0BAD7 /* YammerMessagesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YammerMessagesViewController.m; sourceTree = "<group>"; };
 		98928ABC16BB2D0C00D4C84B /* YammerLockerDataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YammerLockerDataController.h; sourceTree = "<group>"; };
@@ -177,6 +179,7 @@
 		9838CA50164B1260006C9C6A /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				98631BBA178F649900CD0265 /* YammerBlueColorSliver_mail.png */,
 				98631BB8178E8BDF00CD0265 /* AddTopicGuidance.jpg */,
 				98631BB6178E88A500CD0265 /* YammerBlueColorSliver.png */,
 				9838CA51164B1260006C9C6A /* YammerLocker-Info.plist */,
@@ -283,6 +286,7 @@
 				98CD5AB4177540BE0050C34B /* README in Resources */,
 				98631BB7178E88A500CD0265 /* YammerBlueColorSliver.png in Resources */,
 				98631BB9178E8BDF00CD0265 /* AddTopicGuidance.jpg in Resources */,
+				98631BBB178F649900CD0265 /* YammerBlueColorSliver_mail.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

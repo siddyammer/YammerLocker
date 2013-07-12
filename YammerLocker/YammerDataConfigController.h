@@ -23,4 +23,7 @@
 // Data Controller for getting current user string.
 @property (strong,nonatomic) YammerLockerDataController *currUserDataController;
 
+// Signout the user, meaning they have to login again
+- (IBAction)signoutUser:(id)sender;
+
 @end

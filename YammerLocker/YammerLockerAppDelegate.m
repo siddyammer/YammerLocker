@@ -15,9 +15,6 @@
 // Check to see if the user has already logged in and has a token
 //- (BOOL)checkForExistingToken;
 
-// Configure view controller based on name
-- (void) configViewControllerWithName:(NSString *)controllerStoryboardId;
-
 // Clear all existing Oauth tokens from Oauth account store.
 //- (void)clearExistingTokens;
 
