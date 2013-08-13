@@ -2,6 +2,8 @@
 //  YammerMessagesViewController.m
 //  YammerLocker
 //
+//  Class that manages the table views for showing the navigation options and messages
+//
 //  Created by Sidd Singh on 6/13/13.
 //  Copyright (c) 2013 Sidd Singh. All rights reserved.
 //
@@ -18,25 +20,13 @@
 
 @implementation YammerMessagesViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
-// Get a data controller that you will use later. Should this be done in awakeFromNib?
-// Start getting messages for display from the Yammer API.
-// Register a listener for changes to the message store in core data.
-// Register a listener for changes to the category store in core data.
+// Do a set of actions like getting messages from the Yammer API after the view has loaded
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
     // Get a data controller that you will use later
-    self.yamMsgDataController = [YammerLockerDataController sharedDataController];
+    self.yamMsgDataController = [YammerLockerDataController sharedController];
     
     // Asynchronously, start getting messages for display from the Yammer API
     [self.yamMsgDataController performSelectorInBackground:@selector(getMessages) withObject:nil];
@@ -56,14 +46,9 @@
                                                  name:@"CategoryStoreUpdated" object:nil];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-/// Implementing methods needed by the messages and navigation table views, since the table views use this view controller.
-/// If you need to implement additional methods look at those available with UITableViewController.
+//////////  Implementing methods needed by the messages and navigation table views, since the table views
+//////////  use this view controller. If you need to implement additional methods look at those available
+//////////  with UITableViewController.
 
 // Get the number of sections in the table views
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -71,26 +56,33 @@
     return 1;
 }
 
-// Specify the number of rows.
+// Specify the number of rows in the table views
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // If its the navigation table
-    if(tableView == self.messagesNavTable)
-        return ([self.yamMsgDataController noOfAllCategories]+1);
-    
+    if(tableView == self.messagesNavTable) {
+        //return ([self.yamMsgDataController noOfAllCategories]+1);
+        self.categoriesController = [self.yamMsgDataController getAllCategories];
+        id navSection = [[self.categoriesController sections] objectAtIndex:section];
+        return ([navSection numberOfObjects]+1);
+    }
     // If its the messages table
     else {
         // If the messages navigation item is the default "All"
         if ([self.currentNavItemTitle isEqualToString:@"All"]) {
-            return [self.yamMsgDataController noOfAllMessages];
+            self.messagesController = [self.yamMsgDataController getAllMessages];
+            id messageSection = [[self.messagesController sections] objectAtIndex:section];
+            return [messageSection numberOfObjects];
         }
         // If not
         else {
-            return [self.yamMsgDataController noOfMessagesWithCategory:self.currentNavItemTitle];
+            // return [self.yamMsgDataController noOfMessagesWithCategory:self.currentNavItemTitle];
+            self.messagesController = [self.yamMsgDataController getAllMessagesInCategory:self.currentNavItemTitle];
+            id messageSection = [[self.messagesController sections] objectAtIndex:section];
+            return [messageSection numberOfObjects];
         }
     }
-    
-    }
+}
 
 // Configure cell to display a Navigation item or a Yammer message depending on the table
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -105,8 +97,9 @@
             [[cell textLabel] setText:@"All"];
         }
         else {
-            Category *categoryAtIndex = [self.yamMsgDataController getCategoryAtPositionFromAll:(indexPath.row)-1];
+            Category *categoryAtIndex = [[self.categoriesController fetchedObjects] objectAtIndex:(indexPath.row)-1];
             // Construct and display the categorye label e.g. Presentations
+            cell.imageView.image = [UIImage imageNamed:@"YammerBlueColorSliver_folder.png"];
             NSString *categoryLabel = [[NSString alloc] initWithFormat:@"%@",categoryAtIndex.title];
             [[cell textLabel] setText:categoryLabel];
         }
@@ -116,20 +109,13 @@
     
     // If its the messages table
     else {
+        // Configure cell to display a Yammer Message
         static NSString *CellIdentifier = @"YammerMessageCell";
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
-        // Configure cell to display a Yammer Message
         Message *messageAtIndex;
-        // If the messages navigation item is the default "All"
-        if ([self.currentNavItemTitle isEqualToString:@"All"]) {
-            messageAtIndex = [self.yamMsgDataController getMessageAtPositionFromAll:indexPath.row];
-        }
-        // If not
-        else {
-            messageAtIndex = [self.yamMsgDataController getMessageAtPosition:indexPath.row category:self.currentNavItemTitle];
-        }
-        
+        messageAtIndex = [self.messagesController objectAtIndexPath:indexPath];
+    
         // Construct and display the message information label e.g. Sidd Singh
         NSString *msgLabel = [[NSString alloc] initWithFormat:@"%@",messageAtIndex.from];
         [[cell textLabel] setText:msgLabel];
@@ -142,7 +128,7 @@
 }
 
 // When a row is selected on the messages navigation table, update the messages table
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     // If its the navigation table
     if(tableView == self.messagesNavTable){
@@ -175,16 +161,27 @@
         YammerMessageDetailController *detailViewController = [segue destinationViewController];
         
         Message *messageAtIndex;
-        // If the messages navigation item is the default "All"
-        if ([self.currentNavItemTitle isEqualToString:@"All"]) {
-            messageAtIndex = [self.yamMsgDataController getMessageAtPositionFromAll:[self.messagesTable indexPathForSelectedRow].row];
-        }
-        // If not
-        else {
-            messageAtIndex = [self.yamMsgDataController getMessageAtPosition:[self.messagesTable indexPathForSelectedRow].row category:self.currentNavItemTitle];
-        }
+        messageAtIndex = [self.messagesController objectAtIndexPath:[self.messagesTable indexPathForSelectedRow]];
+        
         detailViewController.message = messageAtIndex;
     }
+}
+
+/////////////////////////////////////  Unused methods, for future use  /////////////////////////////////////
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        // Custom initialization
+    }
+    return self;
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
 }
 
 @end

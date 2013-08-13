@@ -7,67 +7,59 @@
 //
 
 #import "YammerLockerAppDelegate.h"
-#import "NXOAuth2.h"
 #import "YammerLockerDataController.h"
+#import "LoginController.h"
 
 @interface YammerLockerAppDelegate ()
-
-// Check to see if the user has already logged in and has a token
-//- (BOOL)checkForExistingToken;
-
-// Clear all existing Oauth tokens from Oauth account store.
-//- (void)clearExistingTokens;
 
 @end
 
 @implementation YammerLockerAppDelegate
 
+// Do initial setup after the app has been launched by the OS
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Override point for customization after application launch.
-    [[NXOAuth2AccountStore sharedStore] setClientID:@"Mfv8iyzg7HGztsZsq9egaA"
-                                             secret:@"9YWNP0CRUQPUdvmJxavVwFkTp1d78uAj77p7nUYGSI"
-                                   authorizationURL:[NSURL URLWithString:@"https://www.yammer.com/dialog/oauth"]
-                                           tokenURL:[NSURL URLWithString:@"https://www.yammer.com/oauth2/access_token.json"]
-                                        redirectURL:[NSURL URLWithString:@"yammer://localhost:3000/auth/yammer/callback"]
-                                     forAccountType:@"yammerOAuthService"];
+    // Get a login Controller for setting up the parameters for the Yammer OAuth login service
+    self.yamOauthLoginController = [LoginController sharedController];
+    
+    // Setup the login service
+    [self.yamOauthLoginController setLoginServiceWithName:@"Yammer" initURL:@"https://www.yammer.com/dialog/oauth" redirectURL:@"movetolocker://a.custom.uri" clientId:@"Mfv8iyzg7HGztsZsq9egaA" clientSecret:@"9YWNP0CRUQPUdvmJxavVwFkTp1d78uAj77p7nUYGSI" tokenURL:@"https://www.yammer.com/oauth2/access_token.json"];
     
     // Get a data controller that you will use later to check if user is logged in
-    self.yamUserDataController = [YammerLockerDataController sharedDataController];
+    self.yamUserDataController = [YammerLockerDataController sharedController];
     
     // Show the initial view controller which, if the user has not logged in, is YammerLockerViewController
     if (![self.yamUserDataController checkForExistingAuthToken]) {
-        NSLog(@"Entered user has not logged in state");
         [self configViewControllerWithName:@"YammerLockerViewController"];
     }
+    
     // If the user is already logged in, the initial view controller is the messages navigation controller
     else {
-        NSLog(@"Entered user has logged in state");
         [self configViewControllerWithName:@"YammerLockerNavController"];
     }
     
     return YES;
 }
 
-// Handle the URL scheme registered for this app. Currently set to yammer://...
+// Handle the URL scheme registered for this app. Currently set to locker://...
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
 {
-    // Log the URL parts for information purposes
-    NSLog(@"url recieved: %@", url);
-    NSLog(@"query string: %@", [url query]);
-    NSLog(@"host: %@", [url host]);
-    NSLog(@"url path: %@", [url path]);
+    // Handle the Redirect URL in the Oauth2 client. Grab the code returned by the
+    // server and request for a token.
+    NSString *authToken = [self.yamOauthLoginController getAuthTokenUsingCodeFrom:url];
     
-    // Handle the Redirect URL in the Oauth2 client. Basically grab the code returned by the server
-    // and request for a token.
-    BOOL handled = [[NXOAuth2AccountStore sharedStore] handleRedirectURL:url];
-    if (!handled) {
-        NSLog(@"The URL (%@) could not be handled. Maybe you want to do something with it.", url);
-    }
+    // Save the Oauth token to the core data store
+    [self.yamUserDataController upsertUserAuthToken:authToken];
     
-    return handled;
+    // Transition to the messages view if the user has logged in successfuly.
+    if (authToken == nil) {
+        NSLog(@"ERROR: No authentication token received from the Oauth handshake.");
+        return NO;
+    } else {
+        [self configViewControllerWithName:@"YammerLockerNavController"];
+        return YES;
+    } 
 }
-
 
 // Configure view controller based on name
 - (void) configViewControllerWithName:(NSString *)controllerStoryboardId
@@ -82,33 +74,7 @@
     [self.window makeKeyAndVisible];
 }
 
-// Check to see if the user has already logged in and has a token
-/*- (BOOL)checkForExistingToken
-{
-    if ([[NXOAuth2AccountStore sharedStore] accounts].count > 0) {
-        NSInteger tokenCount = 0;
-        for (NXOAuth2Account *account in [[NXOAuth2AccountStore sharedStore] accounts]) {
-            ++tokenCount;
-            NXOAuth2Client *client =     [account oauthClient];
-            NXOAuth2AccessToken *tokenData = [client accessToken];
-            NSString * clientAccessToken = [tokenData accessToken];
-            NSLog(@"Existing tokens found, number %d and token %@", tokenCount,clientAccessToken);
-        } return YES;}
-    else
-        return NO;
-} */
-
-
-// Clear all existing Oauth tokens from Oauth account store.
-/*- (void)clearExistingTokens
-{
-    NSInteger tokenCountDeleted = 0;
-    for (NXOAuth2Account *account in [[NXOAuth2AccountStore sharedStore] accounts]) {
-        ++tokenCountDeleted;
-        [[NXOAuth2AccountStore sharedStore] removeAccount:account];
-    }
-} */
-
+/////////////////////////////////////  Unused methods, for future use  /////////////////////////////////////
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {

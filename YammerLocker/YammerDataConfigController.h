@@ -2,7 +2,7 @@
 //  YammerDataConfigController.h
 //  YammerLocker
 //
-//  Shows the default mechanism to get yammer messages into the locker. Eventually
+//  Class that shows the default mechanism to get yammer messages into the locker. Eventually
 //  will allow for defining custom mechanisms to do this.
 //
 //  Created by Sidd Singh on 7/8/13.

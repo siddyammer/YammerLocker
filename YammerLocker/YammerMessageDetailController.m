@@ -32,23 +32,13 @@
 
 @implementation YammerMessageDetailController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
+// Do setup after loading the view including showing the web view with the message details
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-	// Do any additional setup after loading the view.
-    
     // Get a data controller that you will use later
-    self.categoryDataController = [YammerLockerDataController sharedDataController];
+    self.categoryDataController = [YammerLockerDataController sharedController];
     
     // Start the web view with the message thread URL
     NSURL *messageURL = [NSURL URLWithString:self.message.webUrl];
@@ -59,15 +49,8 @@
     [self showCategories];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 // Add Categories text field should dismiss the keyboard on hitting return. The
 // categories entered should be added to the data store and associated with the message.
-// TO DO: Add empty, same text as guidance text and other validation here.
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     
     if (textField == self.addCategoriesTxtFld) {
@@ -76,6 +59,7 @@
         
         // Check to see if entered category is valid. If Yes
         if ([self categoryInputValid:self.addCategoriesTxtFld]) {
+            
             // Add category to the data store and associate with message
             [self.categoryDataController upsertCategoryWithTitle:self.addCategoriesTxtFld.text Message:self.message];
             
@@ -173,6 +157,23 @@
 - (void)sendCategoriesChangeNotification {
     
     [[NSNotificationCenter defaultCenter]postNotificationName:@"CategoryStoreUpdated" object:self];
+}
+
+/////////////////////////////////////  Unused methods, for future use  /////////////////////////////////////
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        // Custom initialization
+    }
+    return self;
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
 }
 
 @end

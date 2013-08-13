@@ -12,7 +12,6 @@
 #import "User.h"
 #import "Message.h"
 #import "Category.h"
-#import "NXOAuth2.h"
 
 @interface YammerLockerDataController ()
 
@@ -29,30 +28,29 @@
 
 @implementation YammerLockerDataController
 
+static YammerLockerDataController *sharedInstance;
+
 // Implement this class as a Singleton to create a single data connection accessible
-// from anywhere in the app. Create and/or return the single instance of this class.
-+ (YammerLockerDataController *) sharedDataController {
+// from anywhere in the app.
++ (void)initialize
+{
+    static BOOL exists = NO;
     
-    static dispatch_once_t pred;
-    static YammerLockerDataController *shared = nil;
-    
-    dispatch_once(&pred, ^{
-        shared = [[YammerLockerDataController alloc] init];
-    });
-    
-    return shared;
+    // If a data controller doesn't already exist
+    if(!exists)
+    {
+        exists = YES;
+        sharedInstance= [[YammerLockerDataController alloc] init];
+    }
 }
 
-// Initialize the message data controller object
-/* - (id)init {
+// Create and/or return the single shared data controller
++(YammerLockerDataController *)sharedController {
     
-    if (self = [super init]) {
-        [self getInitialMessages];
-        return self;
-    }
-    
-    return nil;
-} */
+    return sharedInstance;
+}
+
+////////////////////////////////////  Core Data Methods  //////////////////////////////////
 
 /// Implement core data setup methods that would have already been done for a project
 /// with core data enabled.
@@ -86,7 +84,7 @@
     
     NSError *error = nil;
     _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
-    if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error]) {NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+    if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error]) {NSLog(@"ERROR: Unresolved error trying to get persistent store coordinator for core data setup %@, %@", error, [error userInfo]);
         abort();
     }
     
@@ -111,7 +109,16 @@
     return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
 }
 
-/// Data manipulation methods for User
+// Controller containing results of queries to Core Data
+/*- (NSFetchedResultsController *)resultsController {
+    
+    if (_resultsController != nil) {
+        return _resultsController;
+    }
+    return [[NSFetchedResultsController alloc] init];
+} */
+
+////////////////////////////  Data manipulation methods for User  ///////////////////////////
 
 // Check to see if the user has an authentication token. Works off the
 // assumption that there is only one user object and if it exists then
@@ -169,8 +176,9 @@
         user.authToken = userAuthToken;
     }
     
-    // TO DO, FIX THIS WITH WHEN USING A DIFFERENT OAuth library: If the category exists, log a warning that due to some code
-    // condition, a new existing Oauth token is trying to be written.
+    // TO DO: Should you really need to check for this
+    // If the token exists, log a warning that due to some code condition, a new existing Oauth token is trying
+    // to be written.
     else {
         NSLog(@"WARNING: Trying to update an existing Oauth token with the same value. Operation ignored");
     }
@@ -289,84 +297,65 @@
     }
    }
 
-/// Data manipulation methods for Messages
+//////////////////////////////////  Data manipulation methods for Messages  ///////////////////////////////////
 
-// Get number of all messages in the data store
-- (NSUInteger)noOfAllMessages
+// Get all messages. Returns a results controller with identities of all messages recorded, but no more
+// than batchSize (currently set to 15) objects’ data will be fetched from the persistent store at a time.
+- (NSFetchedResultsController *)getAllMessages
 {
     NSManagedObjectContext *dataStoreContext = [self managedObjectContext];
     
     NSFetchRequest *messageFetchRequest = [[NSFetchRequest alloc] init];
+    
     NSEntityDescription *messageEntity = [NSEntityDescription entityForName:@"Message" inManagedObjectContext:dataStoreContext];
     [messageFetchRequest setEntity:messageEntity];
+    
+    NSSortDescriptor *sortField = [[NSSortDescriptor alloc] initWithKey:@"webUrl" ascending:NO];
+    [messageFetchRequest setSortDescriptors:[NSArray arrayWithObject:sortField]];
+    
+    [messageFetchRequest setFetchBatchSize:15];
+    
+    self.resultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:messageFetchRequest
+                                        managedObjectContext:dataStoreContext sectionNameKeyPath:nil
+                                                   cacheName:nil];
     
     NSError *error;
-    NSUInteger count = [dataStoreContext countForFetchRequest:messageFetchRequest error:&error];
-    if (count == NSNotFound) {
-        NSLog(@"Getting number of all messages in the data store failed: %@",error.description);
+    if (![self.resultsController performFetch:&error]) {
+        NSLog(@"ERROR: Getting all messages from data store failed: %@",error.description);
     }
     
-    return count;
+    return self.resultsController;
 }
 
-// Get number of messages in the data store with a particular category
-- (NSUInteger)noOfMessagesWithCategory:(NSString *)categoryTitle
+// Get all messages in a category. Returns a results controller with identities of all messages recorded, but no more
+// than batchSize (currently set to 15) objects’ data will be fetched from the persistent store at a time.
+- (NSFetchedResultsController *)getAllMessagesInCategory:(NSString *)categoryTitle
 {
     NSManagedObjectContext *dataStoreContext = [self managedObjectContext];
     
     NSFetchRequest *messageFetchRequest = [[NSFetchRequest alloc] init];
+    
     NSEntityDescription *messageEntity = [NSEntityDescription entityForName:@"Message" inManagedObjectContext:dataStoreContext];
-    NSPredicate *categoryPredicate = [NSPredicate predicateWithFormat:@"ANY categories.title =[c] %@",categoryTitle];
     [messageFetchRequest setEntity:messageEntity];
+    
+    NSPredicate *categoryPredicate = [NSPredicate predicateWithFormat:@"ANY categories.title =[c] %@",categoryTitle];
     [messageFetchRequest setPredicate:categoryPredicate];
     
-    NSError *error;
-    NSUInteger count = [dataStoreContext countForFetchRequest:messageFetchRequest error:&error];
-    if (count == NSNotFound) {
-        NSLog(@"Getting number of messages in the data store with category %@ failed: %@",categoryTitle,error.description);
-    }
+    NSSortDescriptor *sortField = [[NSSortDescriptor alloc] initWithKey:@"webUrl" ascending:NO];
+    [messageFetchRequest setSortDescriptors:[NSArray arrayWithObject:sortField]];
     
-    return count;
-}
-
-// Get a message at a position in the result set from querying all messages
-- (Message *)getMessageAtPositionFromAll:(NSUInteger)position
-{
-    NSManagedObjectContext *dataStoreContext = [self managedObjectContext];
+    [messageFetchRequest setFetchBatchSize:15];
     
-    NSFetchRequest *messageFetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *messageEntity = [NSEntityDescription entityForName:@"Message" inManagedObjectContext:dataStoreContext];
-    [messageFetchRequest setEntity:messageEntity];
+    self.resultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:messageFetchRequest
+                                                                 managedObjectContext:dataStoreContext sectionNameKeyPath:nil
+                                                                            cacheName:nil];
     
     NSError *error;
-    NSArray *fetchedMessages = [dataStoreContext executeFetchRequest:messageFetchRequest error:&error];
-    
-    if (error) {
-        NSLog(@"Getting all messages from data store failed: %@",error.description);
+    if (![self.resultsController performFetch:&error]) {
+        NSLog(@"ERROR: Getting all messages with category: %@ from data store failed: %@",categoryTitle, error.description);
     }
     
-    return [fetchedMessages objectAtIndex:position];
-}
-
-// Get a message at a position in the result set from querying messages with a particular category
-- (Message *)getMessageAtPosition:(NSUInteger)position category:(NSString *)categoryTitle
-{
-    NSManagedObjectContext *dataStoreContext = [self managedObjectContext];
-    
-    NSFetchRequest *messageFetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *messageEntity = [NSEntityDescription entityForName:@"Message" inManagedObjectContext:dataStoreContext];
-    NSPredicate *categoryPredicate = [NSPredicate predicateWithFormat:@"ANY categories.title =[c] %@",categoryTitle];
-    [messageFetchRequest setEntity:messageEntity];
-    [messageFetchRequest setPredicate:categoryPredicate];
-    
-    NSError *error;
-    NSArray *fetchedMessages = [dataStoreContext executeFetchRequest:messageFetchRequest error:&error];
-    
-    if (error) {
-        NSLog(@"Getting all messages from data store failed: %@",error.description);
-    }
-    
-    return [fetchedMessages objectAtIndex:position];
+    return self.resultsController;
 }
 
 // Add a message to the data store
@@ -384,46 +373,38 @@
     
     NSError *error;
     if (![dataStoreContext save:&error]) {
-        NSLog(@"Saving message to data store failed: %@",error.description);
+        NSLog(@"ERROR: Saving message to data store failed: %@",error.description);
     }
 }
 
-/// Data manipulation methods for Categories
+//////////////////////////////////  Data manipulation methods for Categories  //////////////////////////////////
 
-// Get number of all categories in the data store
-- (NSUInteger)noOfAllCategories
+// Get all categories. Returns a results controller with identities of all categories recorded, but no more
+// than batchSize (currently set to 15) objects’ data will be fetched from the persistent store at a time.
+- (NSFetchedResultsController *)getAllCategories
 {
     NSManagedObjectContext *dataStoreContext = [self managedObjectContext];
     
     NSFetchRequest *categoryFetchRequest = [[NSFetchRequest alloc] init];
+    
     NSEntityDescription *categoryEntity = [NSEntityDescription entityForName:@"Category" inManagedObjectContext:dataStoreContext];
     [categoryFetchRequest setEntity:categoryEntity];
+    
+    NSSortDescriptor *sortField = [[NSSortDescriptor alloc] initWithKey:@"title" ascending:NO];
+    [categoryFetchRequest setSortDescriptors:[NSArray arrayWithObject:sortField]];
+    
+    [categoryFetchRequest setFetchBatchSize:15];
+    
+    self.resultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:categoryFetchRequest
+                                                                 managedObjectContext:dataStoreContext sectionNameKeyPath:nil
+                                                                            cacheName:nil];
     
     NSError *error;
-    NSUInteger count = [dataStoreContext countForFetchRequest:categoryFetchRequest error:&error];
-    if (count == NSNotFound) {
-        NSLog(@"Getting number of all categories in the data store failed: %@",error.description);
+    if (![self.resultsController performFetch:&error]) {
+        NSLog(@"ERROR: Getting all categories from data store failed: %@",error.description);
     }
     
-    return count;
-}
-
-// Get a category at a position in the result set from querying all categories
-- (Category *)getCategoryAtPositionFromAll:(NSUInteger)position 
-{
-    NSManagedObjectContext *dataStoreContext = [self managedObjectContext];
-    
-    NSFetchRequest *categoryFetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *categoryEntity = [NSEntityDescription entityForName:@"Category" inManagedObjectContext:dataStoreContext];
-    [categoryFetchRequest setEntity:categoryEntity];
-    
-    NSError *error = nil;
-    NSArray *fetchedCategories = [dataStoreContext executeFetchRequest:categoryFetchRequest error:&error];
-    if (error) {
-        NSLog(@"Getting all categories from data store failed: %@",error.description);
-    }
-    
-    return [fetchedCategories objectAtIndex:position];
+    return self.resultsController;
 }
 
 // Add a category to the data store or update it, to link to the message, if it exists.
@@ -441,7 +422,7 @@
     Category *existingCategory = nil;
     existingCategory  = [[dataStoreContext executeFetchRequest:categoryFetchRequest error:&error] lastObject];
     if (error) {
-        NSLog(@"Getting a category from data store failed: %@",error.description);
+        NSLog(@"ERROR: Getting a category from data store failed: %@",error.description);
     }
     
     // If the category does not exist
@@ -458,37 +439,17 @@
     
     // Insert or update the category
     if (![dataStoreContext save:&error]) {
-        NSLog(@"Saving category to data store failed: %@",error.description);
+        NSLog(@"ERROR: Saving category to data store failed: %@",error.description);
     }
 }
 
-/// Methods to call Yammer REST APIs
+////////////////////////////////////////  Methods to call Yammer REST APIs  ///////////////////////////////////////
 
 // Get a list of messages that match the topic string from the Yammer search API
 - (void)getMessages
 {
-   /* NXOAuth2Account *userAccount;
-    // Get the Oauthenticated account for the user
-    for (NXOAuth2Account *account in [[NXOAuth2AccountStore sharedStore] accounts]) {
-        userAccount = account;
-    }
-    [NXOAuth2Request performMethod:@"GET"
-                        onResource:[NSURL URLWithString:@"https://www.yammer.com/api/v1/search.json"]
-                        usingParameters:[[NSDictionary alloc] initWithObjectsAndKeys: @"siddlocker", @"search", nil]
-                        withAccount:userAccount
-               sendProgressHandler:^(unsigned long long bytesSend, unsigned long long bytesTotal) {
-                   // Update progress indicator
-               }
-               responseHandler:^(NSURLResponse *response, NSData *responseData, NSError *error){
-                   // Process the response
-                   [self formatAddMessages:responseData];
-               }];
-    */
-    
-    NSError *error;
-    
     // Get the user's access token
-    NSString *accessToken = [self getUserAccessToken]; // DELETE: Sample token for testing:EviRYoOpUQH8flUhQagvw
+    NSString *accessToken = [self getUserAccessToken];
     
     // Get the user's custom hashtag (topic) used to get messages from Yammer
     // TO DO: locker is hardcoded. Change that.
@@ -497,14 +458,29 @@
     // The API endpoint URL
     NSString *endpointURL = @"https://www.yammer.com/api/v1/search.json";
     
-    // Append search string and access token as parameters to the URL
-    endpointURL = [NSString stringWithFormat:@"%@?search=%@&access_token=%@",endpointURL,userHashtag,accessToken];
+    // Append search string as parameter to the URL
+    endpointURL = [NSString stringWithFormat:@"%@?search=%@",endpointURL,userHashtag];
     
-    // Call the endpoint with the access token
-    NSData *responseData = [[NSString stringWithContentsOfURL:[NSURL URLWithString:endpointURL] encoding:NSUTF8StringEncoding error: &error] dataUsingEncoding:NSUTF8StringEncoding];
+    NSError * error = nil;
+    NSURLResponse *oAuthTokenResponse = nil;
     
-    // Process the response */
-    [self formatAddMessages:responseData];
+    // Add access token to the http authorization header as a bearer token
+    NSMutableURLRequest *messageRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:endpointURL]];
+    NSString *authHeader = [NSString stringWithFormat:@"Bearer %@",accessToken];
+    [messageRequest setValue:authHeader forHTTPHeaderField:@"Authorization"];
+    
+    // Make the call synchronously
+    NSData *responseData = [NSURLConnection sendSynchronousRequest:messageRequest returningResponse:&oAuthTokenResponse
+                                                             error:&error];
+    
+    // Process the response
+    if (error == nil)
+    {
+        // Process the response
+        [self formatAddMessages:responseData];
+    } else {
+        NSLog(@"ERROR: Could not get messages from the Yammer Search endpoint. Error description: %@",error.description);
+    }
 }
 
 // Parse the list of messages, format them for display and add them to the
@@ -520,6 +496,7 @@
     //     "threaded_extended":{},
     //     "references":[]
     // }
+    
     // Get the response into a parsed object
     NSDictionary *parsedResponse = [NSJSONSerialization JSONObjectWithData:response
                                                         options:kNilOptions
@@ -552,12 +529,10 @@
                 break;
             }
         }
-        // NSLog(@"***********Message Content: %@, From: %@, Web URL: %@",messageContent,messageFrom,messageWebUrl);
         
         // Add messages to the initialized message store
         // TO DO: Remove hardcoded app type name.
         [self insertMessageWithContent:messageContent from:messageFrom app:@"Yammer" webUrl:messageWebUrl fromMugshotUrl:mugshotURL];
-        // NSLog(@"message should have been added to the message table.");
     }
     
     // Send a notification that the store has been updated
@@ -568,23 +543,33 @@
 // and add the user string to the datastore. This is typically the part before @ in the username
 // e.g. in sidd@bddemo.com, the user string would be sidd
 - (void)getCurrentUserData {
-  
-    NSError *error;
     
     // Get the user's access token
-    NSString *accessToken = [self getUserAccessToken]; // DELETE: Sample token for testing:EviRYoOpUQH8flUhQagvw
+    NSString *accessToken = [self getUserAccessToken];
     
     // The API endpoint URL
     NSString *endpointURL = @"https://www.yammer.com/api/v1/users/current.json";
     
-    // Append access token as a parameter to the URL
-    endpointURL = [NSString stringWithFormat:@"%@?access_token=%@",endpointURL,accessToken];
+    NSError * error = nil;
+    NSURLResponse *oAuthTokenResponse = nil;
     
-    // Call the endpoint with the access token
-    NSData *responseData = [[NSString stringWithContentsOfURL:[NSURL URLWithString:endpointURL] encoding:NSUTF8StringEncoding error: &error] dataUsingEncoding:NSUTF8StringEncoding];
+    // Add access token to the http authorization header as a bearer token
+    NSMutableURLRequest *userRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:endpointURL]];
+    NSString *authHeader = [NSString stringWithFormat:@"Bearer %@",accessToken];
+    [userRequest setValue:authHeader forHTTPHeaderField:@"Authorization"];
     
-    // Process the response */
-    [self parseAddUserString:responseData];
+    // Make the call synchronously
+    NSData *responseData = [NSURLConnection sendSynchronousRequest:userRequest returningResponse:&oAuthTokenResponse
+                                                             error:&error];
+    
+    // Process the response
+    if (error == nil)
+    {
+        // Process the response
+        [self parseAddUserString:responseData];
+    } else {
+        NSLog(@"ERROR: Could not get user information from the Yammer Current User endpoint. Error description: %@",error.description);
+    }
 }
 
 // Parse out and save the user string from the current user data.
@@ -605,14 +590,29 @@
     NSString *currUserString = [NSString stringWithFormat:@"%@",[parsedResponse objectForKey:@"name"]];
         // Add current user string to the data store
         [self insertUserString:currUserString];
-        NSLog(@"*********Current User String is: %@",currUserString);
 }
 
 // Send a notification that the list of messages has changed (updated)
 - (void)sendMessagesChangeNotification {
     
     [[NSNotificationCenter defaultCenter]postNotificationName:@"MessageStoreUpdated" object:self];
-    // NSLog(@"Notification Sent that message store has been updated");
+}
+
+// Issue an http call to decline the mobile interstitial which asks the user if they had like to
+// install the ipad app
+- (void)declineMobileInterstitial {
+    
+    NSString *declineHttpAddress = @"https://www.yammer.com/home/decline_mobile_interstitial";
+    
+    NSError * error = nil;
+    NSURLResponse *declineResponse = nil;
+    
+    NSMutableURLRequest *declineRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:declineHttpAddress]];
+    [NSURLConnection sendSynchronousRequest:declineRequest returningResponse:&declineResponse error:&error];
+    
+    if (error) {
+        NSLog(@"WARNING: Could not dismiss the mobile interstitial. Error description: %@",error.description);
+    } 
 }
 
 @end
