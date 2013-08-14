@@ -85,6 +85,10 @@
 // and add to core data store
 - (void)getMessages;
 
+// Get all messages that match the topic string from the Yammer search API
+// and add to core data store
+- (void)getAllMessagesFromApi;
+
 // Get the current user data, using the endpoint /api/v1/users/current.json,
 // and add the user string to the datastore. This is typically the part before @ in the username
 // e.g. in sidd@bddemo.com, the user string would be sidd

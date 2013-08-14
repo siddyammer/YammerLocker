@@ -18,6 +18,10 @@
 // Parse the list of messages from the Yammer API and format them for display
 - (void)formatAddMessages:(NSData *)response;
 
+// Parse the search query response and return total no of pages of messages in it.
+// Assuming 20 messages are returned per page.
+- (NSInteger)getNoOfMessagePages:(NSData *)response;
+
 // Parse out and save the user string from the current user data.
 - (void)parseAddUserString:(NSData *)response;
 
@@ -481,6 +485,103 @@ static YammerLockerDataController *sharedInstance;
     } else {
         NSLog(@"ERROR: Could not get messages from the Yammer Search endpoint. Error description: %@",error.description);
     }
+}
+
+// Get all messages that match the topic string from the Yammer search API and add to core data store
+- (void)getAllMessagesFromApi
+{
+    // Get the user's access token
+    NSString *accessToken = [self getUserAccessToken];
+    
+    // Get the user's custom hashtag (topic) used to get messages from Yammer
+    // TO DO: locker is hardcoded. Change that.
+    NSString *userHashtag =[NSString stringWithFormat:@"%@%@",[self getUserString],@"locker"];
+    
+    // The API endpoint URL
+    NSString *endpointURL = @"https://www.yammer.com/api/v1/search.json";
+    
+    // Set page number of the results, with 20 messages being returned per page, to 1
+    NSInteger pageNo = 1;
+    
+    // Retrieve first page to get no of pages and then keep retrieving till you get all pages.
+    while (pageNo > 0) {
+        
+        // Append page number and search string as parameter to the API endpoint URL
+        endpointURL = [NSString stringWithFormat:@"%@?page=%d&search=%@",endpointURL,pageNo,userHashtag];
+    
+        // Add access token to the http authorization header as a bearer token
+        NSMutableURLRequest *messageRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:endpointURL]];
+        NSString *authHeader = [NSString stringWithFormat:@"Bearer %@",accessToken];
+        [messageRequest setValue:authHeader forHTTPHeaderField:@"Authorization"];
+        
+        NSError * error = nil;
+        NSURLResponse *oAuthTokenResponse = nil;
+    
+        // Make the call synchronously
+        NSData *responseData = [NSURLConnection sendSynchronousRequest:messageRequest returningResponse:&oAuthTokenResponse
+                                                             error:&error];
+    
+        // Process the response
+        if (error == nil)
+        {
+            // Process response to get total no of pages of messages in the response
+            [self getNoOfMessagePages:responseData];
+            
+            // Process the response from the first page
+            [self formatAddMessages:responseData];
+        } else {
+            NSLog(@"ERROR: Could not get messages from the Yammer Search endpoint. Error description: %@",error.description);
+        }
+        
+        --pageNo;
+    }
+}
+
+// Parse the search query response and return total no of pages of messages in it.
+// Assuming 20 messages are returned per page.
+- (NSInteger)getNoOfMessagePages:(NSData *)response {
+    
+    NSError *error;
+    NSInteger noOfPages = 1;
+    
+    // Here's the format of the search query response
+    // {
+    //    "messages":{},
+    //    "groups":[],
+    //    "topics":[],
+    //    "users":[],
+    //    "pages":[],
+    //    "search_uuid":"abc",
+    //    "count":{
+    //        "messages":32,
+    //        "praises":0,
+    //        "pages":0,
+    //        "users":0,
+    //        "topics":1,
+    //        "groups":0,
+    //        "uploaded_files":0
+    //      },
+    
+    // Get the response into a parsed object
+    NSDictionary *parsedResponse = [NSJSONSerialization JSONObjectWithData:response
+                                                                   options:kNilOptions
+                                                                     error:&error];
+    // Get the count section first from the overall response
+    NSDictionary *parsedCountSection = [parsedResponse objectForKey:@"count"];
+    
+    // Next get the no of messages in the count section
+    NSString *parsedNoOfMessages = [parsedCountSection objectForKey:@"messages"];
+    NSInteger noOfMessages = [parsedNoOfMessages integerValue];
+    NSLog(@"****************NO OF MESSAGES IN RESPONSE:%d",noOfMessages);
+    
+    // Compute no of pages assuming 20 messages per page
+    noOfPages = (noOfMessages/20) + 1;
+    if ((noOfMessages%20)== 0){
+        -- noOfPages;
+    }
+    NSLog(@"****************NO OF PAGES IN RESPONSE:%d",noOfPages);
+    
+    return noOfPages;
 }
 
 // Parse the list of messages, format them for display and add them to the
