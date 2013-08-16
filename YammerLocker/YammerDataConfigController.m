@@ -27,8 +27,12 @@
     // Get a data controller that you will use later for getting current user string
     self.currUserDataController = [YammerLockerDataController sharedController];
 
-    // Synchronously, get the current user string from the Yammer API and save it to the core data store
-    [self.currUserDataController getCurrentUserData];
+    // If the curent user string doesn't already exist in the core data store
+    NSLog(@"User string is currently:%@",[self.currUserDataController getUserString]);
+    if ([self.currUserDataController getUserString] == nil) {
+        // Synchronously, get the current user string FROM THE YAMMER API and save it to the core data store
+        [self.currUserDataController getCurrentUserData];
+    }
     
     // Asynchronously issue an http call to decline the mobile interstitial which asks the user if they had
     // like to install the ipad app
@@ -39,7 +43,7 @@
     self.messageTopicTxtFld.text = [NSString stringWithFormat:@"%@%@%@",self.messageTopicTxtFld.text,[self.currUserDataController getUserString],@"locker"];
 }
 
-// Show Yammer Messages when Get Messages button is clicked
+// Show Yammer Messages view when Get Messages button is clicked
 - (IBAction)getMessages:(id)sender {
     
     // Update the UI by segueing to show messages.
@@ -49,10 +53,10 @@
 // Signout the user, meaning they have to login again
 - (IBAction)signoutUser:(id)sender {
     
-    // Clear the existing user object including the Oauth token
-    [self.currUserDataController deleteUser];
+    // Clear the existing user Oauth token by setting it to nil
+    [self.currUserDataController upsertUserWithAuthToken:nil];
     
-    // CLear the user's cookies for the locker app
+    // Clear the user's cookies for the locker app
     for(NSHTTPCookie *cookie in [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies]) {
             [[NSHTTPCookieStorage sharedHTTPCookieStorage] deleteCookie:cookie];
     } 

@@ -2,7 +2,7 @@
 //  User.m
 //  YammerLocker
 //
-//  Created by Sidd Singh on 8/12/13.
+//  Created by Sidd Singh on 8/14/13.
 //  Copyright (c) 2013 Sidd Singh. All rights reserved.
 //
 //  Represents the User object in the core data model.
@@ -15,5 +15,6 @@
 
 @dynamic authToken;
 @dynamic nameString;
+@dynamic initialDataState;
 
 @end

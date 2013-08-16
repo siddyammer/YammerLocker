@@ -37,13 +37,10 @@
 
 ////////////////  Data manipulation methods for User  ////////////////
 
-// Check to see if the user has an authentication token. Works off the
-// assumption that there is only one user object and if it exists then
-// the user is logged in.
-- (BOOL)checkForExistingAuthToken;
-
-// Add a auth token to the user data store or update it if it already exists. Current design is that there can be only one user object with a single auth token.
-- (void)upsertUserAuthToken:(NSString *)userAuthToken;
+// Add a auth token to the user data store. Current design is that the user object is created
+// when it's authentication is done. Thus this method creates the user with the auth token if it
+// doesn't exist or updates the user with the new auth token if the user exists.
+- (void)upsertUserWithAuthToken:(NSString *)userAuthToken;
 
 // Get the access token for the one user object.
 - (NSString *)getUserAccessToken;
@@ -53,6 +50,12 @@
 
 // Get the user string for the one user object.
 - (NSString *)getUserString;
+
+// Set state of the initial data fetch on the one user object
+- (void)setInitialDataState:(BOOL)state;
+
+// Get state of the initial data fetch on the one user object
+- (BOOL)getInitialDataState;
 
 // Delete the one user object
 - (void)deleteUser;
@@ -80,10 +83,6 @@
 - (void)upsertCategoryWithTitle:(NSString *)categoryTitle Message:(Message *)associatedMessage;
 
 ///////////////  Methods to call Yammer REST APIs  ///////////////
-
-// Get a list of messages that match the topic string from the Yammer search API
-// and add to core data store
-- (void)getMessages;
 
 // Get all messages that match the topic string from the Yammer search API
 // and add to core data store

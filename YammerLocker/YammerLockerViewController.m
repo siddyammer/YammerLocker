@@ -25,9 +25,6 @@
     
     // Get a login Controller that you will use later for logging user in with Yammer OAuth
     self.yamLoginController = [LoginController sharedController];
-    
-    // Get a data controller that you will use later to save auth token to user data store
-    self.yamAuthDataController = [YammerLockerDataController sharedController];
 }
 
 // Establish connection with Yammer using Oauth.

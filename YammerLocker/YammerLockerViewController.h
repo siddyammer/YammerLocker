@@ -20,7 +20,4 @@
 // Login Controller for logging user in with Yammer OAuth.
 @property (strong,nonatomic) LoginController *yamLoginController;
 
-// Data Controller for saving user authorization token.
-@property (strong,nonatomic) YammerLockerDataController *yamAuthDataController;
-
 @end

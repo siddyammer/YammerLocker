@@ -29,7 +29,7 @@
     self.yamUserDataController = [YammerLockerDataController sharedController];
     
     // Show the initial view controller which, if the user has not logged in, is YammerLockerViewController
-    if (![self.yamUserDataController checkForExistingAuthToken]) {
+    if ([self.yamUserDataController getUserAccessToken] == nil) {
         [self configViewControllerWithName:@"YammerLockerViewController"];
     }
     
@@ -49,9 +49,9 @@
     NSString *authToken = [self.yamOauthLoginController getAuthTokenUsingCodeFrom:url];
     
     // Save the Oauth token to the core data store
-    [self.yamUserDataController upsertUserAuthToken:authToken];
+    [self.yamUserDataController upsertUserWithAuthToken:authToken];
     
-    // Transition to the messages view if the user has logged in successfuly.
+    // Transition to the data config view if the user has logged in successfuly.
     if (authToken == nil) {
         NSLog(@"ERROR: No authentication token received from the Oauth handshake.");
         return NO;

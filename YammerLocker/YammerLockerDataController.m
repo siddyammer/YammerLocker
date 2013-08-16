@@ -16,11 +16,12 @@
 @interface YammerLockerDataController ()
 
 // Parse the list of messages from the Yammer API and format them for display
-- (void)formatAddMessages:(NSData *)response;
+- (void)formatAddMessages:(NSDictionary *)response;
 
 // Parse the search query response and return total no of pages of messages in it.
-// Assuming 20 messages are returned per page.
-- (NSInteger)getNoOfMessagePages:(NSData *)response;
+// Assuming 20 messages are returned per page. Then call on to formatting and adding
+// messages to the core data store
+- (NSInteger)processResponse:(NSData *)response;
 
 // Parse out and save the user string from the current user data.
 - (void)parseAddUserString:(NSData *)response;
@@ -124,70 +125,40 @@ static YammerLockerDataController *sharedInstance;
 
 ////////////////////////////  Data manipulation methods for User  ///////////////////////////
 
-// Check to see if the user has an authentication token. Works off the
-// assumption that there is only one user object and if it exists then
-// the user is logged in.
-- (BOOL)checkForExistingAuthToken
+// Add a auth token to the user data store. Current design is that the user object is created
+// when it's authentication is done. Thus this method creates the user with the auth token if it
+// doesn't exist or updates the user with the new auth token if the user exists.
+- (void)upsertUserWithAuthToken:(NSString *)userAuthToken
 {
     NSManagedObjectContext *dataStoreContext = [self managedObjectContext];
     
-    // Query for number of user objects
+    // Check to see if the user object exists by querying for it
     NSFetchRequest *userFetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *userEntity = [NSEntityDescription entityForName:@"User" inManagedObjectContext:dataStoreContext];
     [userFetchRequest setEntity:userEntity];
-    
-    NSError *error;
-    NSUInteger count = [dataStoreContext countForFetchRequest:userFetchRequest error:&error];
-    
-    if (count == NSNotFound) {
-        NSLog(@"WARNING: Getting number of users in the data store failed: %@",error.description);
-    }
-    if (count > 1) {
-        NSLog(@"SEVERE_WARNING: Found more than 1 user object in the User Data Store");
-    }
-    
-    // If there are no users means the user has not logged in. Current design is that
-    // once the user has logged in, a user is created in the data store with an auth token.
-    if (count == 0) {
-        return NO;
-    } else{
-        return YES;
-    }
-}
-
-// Add a auth token to the user data store or update it if it already exists. Current design is that
-// there can be only one user object with a single auth token.
-- (void)upsertUserAuthToken:(NSString *)userAuthToken
-{
-    NSManagedObjectContext *dataStoreContext = [self managedObjectContext];
-    
-    // Check to see if the auth token exists by doing a case sensitive query on user's auth token
-    NSFetchRequest *userFetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *userEntity = [NSEntityDescription entityForName:@"User" inManagedObjectContext:dataStoreContext];
-    NSPredicate *userPredicate = [NSPredicate predicateWithFormat:@"authToken = %@",userAuthToken];
-    [userFetchRequest setEntity:userEntity];
-    [userFetchRequest setPredicate:userPredicate];
     NSError *error;
     User *existingUser = nil;
-    existingUser  = [[dataStoreContext executeFetchRequest:userFetchRequest error:&error] lastObject];
+    NSArray *fetchedUsers= [dataStoreContext executeFetchRequest:userFetchRequest error:&error];
+    existingUser = [fetchedUsers lastObject];
     if (error) {
         NSLog(@"ERROR: Getting user from data store failed: %@",error.description);
     }
+    if (fetchedUsers.count > 1) {
+        NSLog(@"SEVERE_WARNING: Found more than 1 user objects in the User Data Store");
+    }
     
-    // If the category does not exist
+    // If the user does not exist
     else if (!existingUser) {
         User *user = [NSEntityDescription insertNewObjectForEntityForName:@"User" inManagedObjectContext:dataStoreContext];
         user.authToken = userAuthToken;
     }
     
-    // TO DO: Should you really need to check for this
-    // If the token exists, log a warning that due to some code condition, a new existing Oauth token is trying
-    // to be written.
+    // If the user exists
     else {
-        NSLog(@"WARNING: Trying to update an existing Oauth token with the same value. Operation ignored");
+        existingUser.authToken = userAuthToken;
     }
     
-    // Insert or update the category
+    // Update the user
     if (![dataStoreContext save:&error]) {
         NSLog(@"ERROR: Saving user auth token to data store failed: %@",error.description);
     }
@@ -246,7 +217,7 @@ static YammerLockerDataController *sharedInstance;
         existingUser.nameString = userString;
     }
     
-    // Insert or update the category
+    // Update the user
     if (![dataStoreContext save:&error]) {
         NSLog(@"ERROR: Saving user string to data store failed: %@",error.description);
     }
@@ -273,6 +244,66 @@ static YammerLockerDataController *sharedInstance;
     
     User *fetchedUser = [fetchedUsers lastObject];
     return fetchedUser.nameString;
+}
+
+// Set state of the initial data fetch on the one user object
+- (void)setInitialDataState:(BOOL)state {
+    
+    NSManagedObjectContext *dataStoreContext = [self managedObjectContext];
+    
+    // Check to see if the user object exists by querying for it
+    NSFetchRequest *userFetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *userEntity = [NSEntityDescription entityForName:@"User" inManagedObjectContext:dataStoreContext];
+    [userFetchRequest setEntity:userEntity];
+    NSError *error;
+    User *existingUser = nil;
+    NSArray *fetchedUsers= [dataStoreContext executeFetchRequest:userFetchRequest error:&error];
+    existingUser = [fetchedUsers lastObject];
+    if (error) {
+        NSLog(@"ERROR: Getting user from data store failed: %@",error.description);
+    }
+    if (fetchedUsers.count > 1) {
+        NSLog(@"SEVERE_WARNING: Found more than 1 user objects in the User Data Store");
+    }
+    
+    // If the user does not exist
+    else if (!existingUser) {
+        NSLog(@"ERROR: User does not exist in the data store and trying to set their initial data fetch state");
+    }
+    
+    // If the user exists
+    else {
+        existingUser.initialDataState = [NSNumber numberWithBool:state];
+    }
+    
+    // Update the user
+    if (![dataStoreContext save:&error]) {
+        NSLog(@"ERROR: Saving user's initial data fetch state to data store failed: %@",error.description);
+    }
+
+}
+
+// Get state of the initial data fetch on the one user object
+- (BOOL)getInitialDataState {
+    
+    NSManagedObjectContext *dataStoreContext = [self managedObjectContext];
+    
+    NSFetchRequest *tokenFetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *userEntity = [NSEntityDescription entityForName:@"User" inManagedObjectContext:dataStoreContext];
+    [tokenFetchRequest setEntity:userEntity];
+    
+    NSError *error;
+    NSArray *fetchedUsers = [dataStoreContext executeFetchRequest:tokenFetchRequest error:&error];
+    
+    if (error) {
+        NSLog(@"ERROR: Getting user from data store failed: %@",error.description);
+    }
+    if (fetchedUsers.count > 1) {
+        NSLog(@"SEVERE_WARNING: Found more than 1 user objects in the User Data Store");
+    }
+    
+    User *fetchedUser = [fetchedUsers lastObject];
+    return [fetchedUser.initialDataState boolValue];
 }
 
 // Delete the one user object
@@ -449,45 +480,8 @@ static YammerLockerDataController *sharedInstance;
 
 ////////////////////////////////////////  Methods to call Yammer REST APIs  ///////////////////////////////////////
 
-// Get a list of messages that match the topic string from the Yammer search API
-- (void)getMessages
-{
-    // Get the user's access token
-    NSString *accessToken = [self getUserAccessToken];
-    
-    // Get the user's custom hashtag (topic) used to get messages from Yammer
-    // TO DO: locker is hardcoded. Change that.
-    NSString *userHashtag =[NSString stringWithFormat:@"%@%@",[self getUserString],@"locker"];
-    
-    // The API endpoint URL
-    NSString *endpointURL = @"https://www.yammer.com/api/v1/search.json";
-    
-    // Append search string as parameter to the URL
-    endpointURL = [NSString stringWithFormat:@"%@?search=%@",endpointURL,userHashtag];
-    
-    NSError * error = nil;
-    NSURLResponse *oAuthTokenResponse = nil;
-    
-    // Add access token to the http authorization header as a bearer token
-    NSMutableURLRequest *messageRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:endpointURL]];
-    NSString *authHeader = [NSString stringWithFormat:@"Bearer %@",accessToken];
-    [messageRequest setValue:authHeader forHTTPHeaderField:@"Authorization"];
-    
-    // Make the call synchronously
-    NSData *responseData = [NSURLConnection sendSynchronousRequest:messageRequest returningResponse:&oAuthTokenResponse
-                                                             error:&error];
-    
-    // Process the response
-    if (error == nil)
-    {
-        // Process the response
-        [self formatAddMessages:responseData];
-    } else {
-        NSLog(@"ERROR: Could not get messages from the Yammer Search endpoint. Error description: %@",error.description);
-    }
-}
-
-// Get all messages that match the topic string from the Yammer search API and add to core data store
+// Get all messages that match the topic string from the Yammer search API and add to core data store.
+// Also set initial data fetch state on the user object in core data store to true.
 - (void)getAllMessagesFromApi
 {
     // Get the user's access token
@@ -500,11 +494,13 @@ static YammerLockerDataController *sharedInstance;
     // The API endpoint URL
     NSString *endpointURL = @"https://www.yammer.com/api/v1/search.json";
     
-    // Set page number of the results, with 20 messages being returned per page, to 1
+    // Set no of results pages, with 20 messages being returned per page, to 1
+    NSInteger noOfPages = 1;
+    // Set page no to 1
     NSInteger pageNo = 1;
     
     // Retrieve first page to get no of pages and then keep retrieving till you get all pages.
-    while (pageNo > 0) {
+    while (pageNo <= noOfPages) {
         
         // Append page number and search string as parameter to the API endpoint URL
         endpointURL = [NSString stringWithFormat:@"%@?page=%d&search=%@",endpointURL,pageNo,userHashtag];
@@ -524,22 +520,28 @@ static YammerLockerDataController *sharedInstance;
         // Process the response
         if (error == nil)
         {
-            // Process response to get total no of pages of messages in the response
-            [self getNoOfMessagePages:responseData];
+            // Process the response that contains the first page of messages.
+            // Get back total no of pages of messages in the response.
+            noOfPages = [self processResponse:responseData];
             
-            // Process the response from the first page
-            [self formatAddMessages:responseData];
         } else {
+            // Set initial data fetch state on the user object in core data store to false.
+            [self setInitialDataState:NO];
             NSLog(@"ERROR: Could not get messages from the Yammer Search endpoint. Error description: %@",error.description);
         }
         
-        --pageNo;
+        ++pageNo;
+        endpointURL = @"https://www.yammer.com/api/v1/search.json";
     }
+    
+    // Set initial data fetch state on the user object in core data store to true.
+    [self setInitialDataState:YES];
 }
 
 // Parse the search query response and return total no of pages of messages in it.
-// Assuming 20 messages are returned per page.
-- (NSInteger)getNoOfMessagePages:(NSData *)response {
+// Assuming 20 messages are returned per page. Before returning call on to formatting
+// and adding messages to the core data store.
+- (NSInteger)processResponse:(NSData *)response {
     
     NSError *error;
     NSInteger noOfPages = 1;
@@ -566,29 +568,29 @@ static YammerLockerDataController *sharedInstance;
     NSDictionary *parsedResponse = [NSJSONSerialization JSONObjectWithData:response
                                                                    options:kNilOptions
                                                                      error:&error];
-    // Get the count section first from the overall response
+    
+    // Call on to formatting and adding messages to the core data store.
+    [self formatAddMessages:parsedResponse];
+
+    // Get the count section from the overall response
     NSDictionary *parsedCountSection = [parsedResponse objectForKey:@"count"];
     
     // Next get the no of messages in the count section
     NSString *parsedNoOfMessages = [parsedCountSection objectForKey:@"messages"];
     NSInteger noOfMessages = [parsedNoOfMessages integerValue];
-    NSLog(@"****************NO OF MESSAGES IN RESPONSE:%d",noOfMessages);
     
     // Compute no of pages assuming 20 messages per page
     noOfPages = (noOfMessages/20) + 1;
     if ((noOfMessages%20)== 0){
         -- noOfPages;
     }
-    NSLog(@"****************NO OF PAGES IN RESPONSE:%d",noOfPages);
     
     return noOfPages;
 }
 
 // Parse the list of messages, format them for display and add them to the
 // initialized message store. Send a notification that the store has been updated.
-- (void)formatAddMessages:(NSData *)response {
-    
-    NSError *error;
+- (void)formatAddMessages:(NSDictionary *)parsedResponse {
     
     // Here's the format of the messages section of the API response
     // messages":{
@@ -598,10 +600,6 @@ static YammerLockerDataController *sharedInstance;
     //     "references":[]
     // }
     
-    // Get the response into a parsed object
-    NSDictionary *parsedResponse = [NSJSONSerialization JSONObjectWithData:response
-                                                        options:kNilOptions
-                                                        error:&error];
     // Get the messages section first from the overall response
     NSDictionary *parsedMessagesSection = [parsedResponse objectForKey:@"messages"];
     
@@ -630,7 +628,6 @@ static YammerLockerDataController *sharedInstance;
                 break;
             }
         }
-        
         // Add messages to the initialized message store
         // TO DO: Remove hardcoded app type name.
         [self insertMessageWithContent:messageContent from:messageFrom app:@"Yammer" webUrl:messageWebUrl fromMugshotUrl:mugshotURL];
@@ -645,6 +642,7 @@ static YammerLockerDataController *sharedInstance;
 // e.g. in sidd@bddemo.com, the user string would be sidd
 - (void)getCurrentUserData {
     
+    NSLog(@"Getting user string from the API");
     // Get the user's access token
     NSString *accessToken = [self getUserAccessToken];
     
