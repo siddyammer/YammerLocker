@@ -28,7 +28,6 @@
     self.currUserDataController = [YammerLockerDataController sharedController];
 
     // If the curent user string doesn't already exist in the core data store
-    NSLog(@"User string is currently:%@",[self.currUserDataController getUserString]);
     if ([self.currUserDataController getUserString] == nil) {
         // Synchronously, get the current user string FROM THE YAMMER API and save it to the core data store
         [self.currUserDataController getCurrentUserData];

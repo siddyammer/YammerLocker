@@ -31,7 +31,7 @@
     // Asynchronously, start getting messages for display from the Yammer API
     // If the initial data fetch for this user has been done, get new messages
     if ([self.yamMsgDataController getInitialDataState] == YES) {
-        
+        [self.yamMsgDataController performSelectorInBackground:@selector(getNewMessagesFromApi) withObject:nil];
     // Else get all messages
     } else {
         [self.yamMsgDataController performSelectorInBackground:@selector(getAllMessagesFromApi) withObject:nil];
@@ -82,7 +82,6 @@
         }
         // If not
         else {
-            // return [self.yamMsgDataController noOfMessagesWithCategory:self.currentNavItemTitle];
             self.messagesController = [self.yamMsgDataController getAllMessagesInCategory:self.currentNavItemTitle];
             id messageSection = [[self.messagesController sections] objectAtIndex:section];
             return [messageSection numberOfObjects];

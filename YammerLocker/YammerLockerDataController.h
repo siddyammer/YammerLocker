@@ -1,5 +1,5 @@
 //
-//  YammerMessageDataController.h
+//  YammerLockerDataController.h
 //  YammerLocker
 //
 //  Class stores and provides access to Yammer Messages and Categories, stored in core data.
@@ -71,7 +71,7 @@
 - (NSFetchedResultsController *)getAllMessagesInCategory:(NSString *)categoryTitle;
 
 // Add a message to the data store
-- (void)insertMessageWithContent:(NSString *)messageContent from:(NSString *)messageFrom app:(NSString *)messageApp webUrl:(NSString *)messageWebUrl fromMugshotUrl:(NSString *)messageFromMugshotUrl;
+- (void)insertMessageWithID:(NSNumber *)messageID content:(NSString *)messageContent from:(NSString *)messageFrom app:(NSString *)messageApp webUrl:(NSString *)messageWebUrl fromMugshotUrl:(NSString *)messageFromMugshotUrl;
 
 ///////////////  Data manipulation methods for Categories  ///////////////
 
@@ -87,6 +87,10 @@
 // Get all messages that match the topic string from the Yammer search API
 // and add to core data store
 - (void)getAllMessagesFromApi;
+
+// Get the latest 2 pages worth of messages (40) that match the topic string from the Yammer search API,
+// check if these already exist in the core data store and if not add them.
+- (void)getNewMessagesFromApi;
 
 // Get the current user data, using the endpoint /api/v1/users/current.json,
 // and add the user string to the datastore. This is typically the part before @ in the username

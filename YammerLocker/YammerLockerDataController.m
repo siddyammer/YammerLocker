@@ -1,5 +1,5 @@
 //
-//  YammerMessageDataController.m
+//  YammerLockerDataController.m
 //  YammerLocker
 // 
 //  Class stores and provides access to Yammer Messages and Categories, stored in core data.
@@ -15,8 +15,13 @@
 
 @interface YammerLockerDataController ()
 
-// Parse the list of messages from the Yammer API and format them for display
+// Parse the list of messages from the Yammer API and format them for display and add them
+// to the core data message store
 - (void)formatAddMessages:(NSDictionary *)response;
+
+// Parse the list of messages, format them for display and add them to the core data message store
+// only if the message doesn't already exist.
+- (void)formatAddUniqueMessages:(NSData *)response;
 
 // Parse the search query response and return total no of pages of messages in it.
 // Assuming 20 messages are returned per page. Then call on to formatting and adding
@@ -345,7 +350,7 @@ static YammerLockerDataController *sharedInstance;
     NSEntityDescription *messageEntity = [NSEntityDescription entityForName:@"Message" inManagedObjectContext:dataStoreContext];
     [messageFetchRequest setEntity:messageEntity];
     
-    NSSortDescriptor *sortField = [[NSSortDescriptor alloc] initWithKey:@"webUrl" ascending:NO];
+    NSSortDescriptor *sortField = [[NSSortDescriptor alloc] initWithKey:@"messageId" ascending:NO];
     [messageFetchRequest setSortDescriptors:[NSArray arrayWithObject:sortField]];
     
     [messageFetchRequest setFetchBatchSize:15];
@@ -358,7 +363,6 @@ static YammerLockerDataController *sharedInstance;
     if (![self.resultsController performFetch:&error]) {
         NSLog(@"ERROR: Getting all messages from data store failed: %@",error.description);
     }
-    
     return self.resultsController;
 }
 
@@ -376,7 +380,7 @@ static YammerLockerDataController *sharedInstance;
     NSPredicate *categoryPredicate = [NSPredicate predicateWithFormat:@"ANY categories.title =[c] %@",categoryTitle];
     [messageFetchRequest setPredicate:categoryPredicate];
     
-    NSSortDescriptor *sortField = [[NSSortDescriptor alloc] initWithKey:@"webUrl" ascending:NO];
+    NSSortDescriptor *sortField = [[NSSortDescriptor alloc] initWithKey:@"messageId" ascending:NO];
     [messageFetchRequest setSortDescriptors:[NSArray arrayWithObject:sortField]];
     
     [messageFetchRequest setFetchBatchSize:15];
@@ -394,12 +398,13 @@ static YammerLockerDataController *sharedInstance;
 }
 
 // Add a message to the data store
-- (void)insertMessageWithContent:(NSString *)messageContent from:(NSString *)messageFrom app:(NSString *)messageApp webUrl:(NSString *)messageWebUrl fromMugshotUrl:(NSString *)messageFromMugshotUrl
+- (void)insertMessageWithID:(NSNumber *)messageID content:(NSString *)messageContent from:(NSString *)messageFrom app:(NSString *)messageApp webUrl:(NSString *)messageWebUrl fromMugshotUrl:(NSString *)messageFromMugshotUrl
 {
     NSManagedObjectContext *dataStoreContext = [self managedObjectContext];
     
     Message *message = [NSEntityDescription insertNewObjectForEntityForName:@"Message" inManagedObjectContext:dataStoreContext];
     
+    message.messageId = messageID;
     message.content = messageContent;
     message.from = messageFrom;
     message.app = messageApp;
@@ -538,6 +543,61 @@ static YammerLockerDataController *sharedInstance;
     [self setInitialDataState:YES];
 }
 
+// Get the latest 2 pages worth of messages (40) that match the topic string from the Yammer search API,
+// check if these already exist in the core data store and if not add them.
+- (void)getNewMessagesFromApi {
+    
+    // Call the Yammer API for new messages
+    // Get the user's access token
+    NSString *accessToken = [self getUserAccessToken];
+    
+    // Get the user's custom hashtag (topic) used to get messages from Yammer
+    // TO DO: locker is hardcoded. Change that.
+    NSString *userHashtag =[NSString stringWithFormat:@"%@%@",[self getUserString],@"locker"];
+    
+    // The API endpoint URL
+    NSString *endpointURL = @"https://www.yammer.com/api/v1/search.json";
+    
+    // Set no of results pages, with 20 messages being returned per page, to 2
+    NSInteger noOfPages = 2;
+    // Set page no to 1
+    NSInteger pageNo = 1;
+    
+    // Retrieve first page and then keep retrieving till you get all pages as set above.
+    while (pageNo <= noOfPages) {
+        
+        // Append page number and search string as parameter to the API endpoint URL
+        endpointURL = [NSString stringWithFormat:@"%@?page=%d&search=%@",endpointURL,pageNo,userHashtag];
+        
+        // Add access token to the http authorization header as a bearer token
+        NSMutableURLRequest *messageRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:endpointURL]];
+        NSString *authHeader = [NSString stringWithFormat:@"Bearer %@",accessToken];
+        [messageRequest setValue:authHeader forHTTPHeaderField:@"Authorization"];
+        
+        NSError * error = nil;
+        NSURLResponse *oAuthTokenResponse = nil;
+        
+        // Make the call synchronously
+        NSData *responseData = [NSURLConnection sendSynchronousRequest:messageRequest returningResponse:&oAuthTokenResponse
+                                                                 error:&error];
+        
+        // Process the response
+        if (error == nil)
+        {
+            // Process the response to add unique messages to the core data store
+            [self formatAddUniqueMessages:responseData];
+            
+        } else {
+            // Set initial data fetch state on the user object in core data store to false.
+            [self setInitialDataState:NO];
+            NSLog(@"ERROR: Could not get messages from the Yammer Search endpoint. Error description: %@",error.description);
+        }
+        
+        ++pageNo;
+        endpointURL = @"https://www.yammer.com/api/v1/search.json";
+    }
+}
+
 // Parse the search query response and return total no of pages of messages in it.
 // Assuming 20 messages are returned per page. Before returning call on to formatting
 // and adding messages to the core data store.
@@ -588,8 +648,8 @@ static YammerLockerDataController *sharedInstance;
     return noOfPages;
 }
 
-// Parse the list of messages, format them for display and add them to the
-// initialized message store. Send a notification that the store has been updated.
+// Parse the list of messages, format them for display and add them to the core data message store.
+// Send a notification that the store has been updated.
 - (void)formatAddMessages:(NSDictionary *)parsedResponse {
     
     // Here's the format of the messages section of the API response
@@ -604,7 +664,7 @@ static YammerLockerDataController *sharedInstance;
     NSDictionary *parsedMessagesSection = [parsedResponse objectForKey:@"messages"];
     
     // Next get the messages in the section
-    NSArray* parsedMessages = [parsedMessagesSection objectForKey:@"messages"];
+    NSArray *parsedMessages = [parsedMessagesSection objectForKey:@"messages"];
     
     // Then loop through the messages, get the appropriate fields and create messages
     // to be displayed in this app.
@@ -613,11 +673,12 @@ static YammerLockerDataController *sharedInstance;
         NSString *messageContent = [messageBody objectForKey:@"plain"];
         NSString *messageWebUrl = [message objectForKey:@"web_url"];
         NSString *messageFromId = [NSString stringWithFormat:@"%@",[message objectForKey:@"sender_id"]];
+        NSNumber *messageId = [message objectForKey:@"id"];
         // Get user full name and mugshot URL from the response using the id
         // Get the references from the messages section
         NSString *messageFrom;
         NSString *mugshotURL;
-        NSArray* parsedReferences = [parsedMessagesSection objectForKey:@"references"];
+        NSArray *parsedReferences = [parsedMessagesSection objectForKey:@"references"];
         // Then loop through the references to find the one that is the type "user" and matching the id
         for (NSDictionary *reference in parsedReferences) {
             NSString *referenceType = [reference objectForKey:@"type"];
@@ -628,9 +689,78 @@ static YammerLockerDataController *sharedInstance;
                 break;
             }
         }
-        // Add messages to the initialized message store
+        // Add messages to the core data message store
         // TO DO: Remove hardcoded app type name.
-        [self insertMessageWithContent:messageContent from:messageFrom app:@"Yammer" webUrl:messageWebUrl fromMugshotUrl:mugshotURL];
+        [self insertMessageWithID:messageId content:messageContent from:messageFrom app:@"Yammer" webUrl:messageWebUrl fromMugshotUrl:mugshotURL];
+    }
+    
+    // Send a notification that the store has been updated
+    [self sendMessagesChangeNotification];
+}
+
+// Parse the list of messages, format them for display and add them to the core data message store
+// only if the message doesn't already exist. Send a notification that the store has been updated.
+- (void)formatAddUniqueMessages:(NSData *)response {
+    
+    //Create a dictionary of message id -> message for all existing messages
+    NSArray *existingMessages = [[self getAllMessages] fetchedObjects];
+    NSMutableDictionary *existingMessageIDs = [[NSMutableDictionary alloc] init];
+    for(Message *msg in existingMessages)
+    {
+        [existingMessageIDs setObject:msg forKey:msg.messageId];
+    }
+    
+    // Here's the format of the messages section of the API response
+    // messages":{
+    //     "meta":{},
+    //     "messages":[],
+    //     "threaded_extended":{},
+    //     "references":[]
+    // }
+    
+    // Get the response into a parsed object
+    NSError *error;
+    NSDictionary *parsedResponse = [NSJSONSerialization JSONObjectWithData:response
+                                                                   options:kNilOptions
+                                                                     error:&error];
+    // Get the messages section first from the overall response
+    NSDictionary *parsedMessagesSection = [parsedResponse objectForKey:@"messages"];
+    
+    // Next get the messages in the section
+    NSArray *parsedMessages = [parsedMessagesSection objectForKey:@"messages"];
+    
+    // Then loop through the messages, get the appropriate fields and create messages
+    // to be added if they are unique
+    for (NSDictionary *message in parsedMessages) {
+        
+        if ([existingMessageIDs objectForKey:[message objectForKey:@"id"]]) {
+            continue;
+        }
+        
+        NSNumber *messageID = [message objectForKey:@"id"];
+        NSDictionary *messageBody = [message objectForKey:@"body"];
+        NSString *messageContent = [messageBody objectForKey:@"plain"];
+        NSString *messageWebUrl = [message objectForKey:@"web_url"];
+        NSString *messageFromId = [NSString stringWithFormat:@"%@",[message objectForKey:@"sender_id"]];
+        // Get user full name and mugshot URL from the response using the id
+        // Get the references from the messages section
+        NSString *messageFrom;
+        NSString *mugshotURL;
+        NSArray *parsedReferences = [parsedMessagesSection objectForKey:@"references"];
+        // Then loop through the references to find the one that is the type "user" and matching the id
+        for (NSDictionary *reference in parsedReferences) {
+            NSString *referenceType = [reference objectForKey:@"type"];
+            NSString *referenceId = [NSString stringWithFormat:@"%@",[reference objectForKey:@"id"]];
+            if ([referenceType isEqualToString:@"user"]&&[referenceId isEqualToString:messageFromId]) {
+                messageFrom = [reference objectForKey:@"full_name"];
+                mugshotURL = [reference objectForKey:@"mugshot_url"];
+                break;
+            }
+        }
+        NSLog(@"***********New Unique Message Content: %@, From: %@, Web URL: %@",messageContent,messageFrom,messageWebUrl);
+        // Add messages to the core data message store
+        // TO DO: Remove hardcoded app type name.
+        [self insertMessageWithID:messageID content:messageContent from:messageFrom app:@"Yammer" webUrl:messageWebUrl fromMugshotUrl:mugshotURL];
     }
     
     // Send a notification that the store has been updated
@@ -642,7 +772,6 @@ static YammerLockerDataController *sharedInstance;
 // e.g. in sidd@bddemo.com, the user string would be sidd
 - (void)getCurrentUserData {
     
-    NSLog(@"Getting user string from the API");
     // Get the user's access token
     NSString *accessToken = [self getUserAccessToken];
     
