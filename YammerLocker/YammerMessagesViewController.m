@@ -172,6 +172,12 @@
     }
 }
 
+// Refresh by getting new messages from the service API
+- (IBAction)refreshMessages:(id)sender
+{
+    [self.yamMsgDataController performSelectorInBackground:@selector(getNewMessagesFromApi) withObject:nil];
+}
+
 /////////////////////////////////////  Unused methods, for future use  /////////////////////////////////////
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil

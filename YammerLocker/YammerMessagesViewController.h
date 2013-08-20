@@ -32,4 +32,7 @@
 // Store the title of the currently selected messages navigation item
 @property (strong,nonatomic) NSString *currentNavItemTitle;
 
+// Refresh by getting new messages from the service API
+- (IBAction)refreshMessages:(id)sender;
+
 @end

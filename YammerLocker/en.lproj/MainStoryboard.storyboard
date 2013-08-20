@@ -377,6 +377,9 @@
                         <barButtonItem key="backBarButtonItem" title="Inbox" id="F22-P2-dho"/>
                         <barButtonItem key="rightBarButtonItem" style="plain" systemItem="refresh" id="P7y-MH-bde">
                             <color key="tintColor" red="1" green="0.54117647058823526" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="refreshMessages:" destination="5Cb-eK-aq7" id="PTx-Dv-IZQ"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
@@ -386,7 +389,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="X71-zm-FjQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-4842" y="-1764"/>
+            <point key="canvasLocation" x="-5058" y="-1799"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="mVZ-QV-cpM">

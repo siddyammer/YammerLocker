@@ -757,7 +757,6 @@ static YammerLockerDataController *sharedInstance;
                 break;
             }
         }
-        NSLog(@"***********New Unique Message Content: %@, From: %@, Web URL: %@",messageContent,messageFrom,messageWebUrl);
         // Add messages to the core data message store
         // TO DO: Remove hardcoded app type name.
         [self insertMessageWithID:messageID content:messageContent from:messageFrom app:@"Yammer" webUrl:messageWebUrl fromMugshotUrl:mugshotURL];
