@@ -4,10 +4,10 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1930"/>
     </dependencies>
     <scenes>
-        <!--Yammer Locker View Controller-->
+        <!--Auth View Controller-->
         <scene sceneID="4">
             <objects>
-                <viewController storyboardIdentifier="YammerLockerViewController" id="2" customClass="YammerLockerViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AuthViewController" id="2" customClass="AuthViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5">
                         <rect key="frame" x="0.0" y="20" width="768" height="1004"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -86,10 +86,10 @@
             </objects>
             <point key="canvasLocation" x="-7200" y="-1547"/>
         </scene>
-        <!--Yammer Message Detail Controller-->
+        <!--Message Detail View Controller-->
         <scene sceneID="y9X-Vm-vTQ">
             <objects>
-                <viewController id="r8B-Sh-Q7P" customClass="YammerMessageDetailController" sceneMemberID="viewController">
+                <viewController id="r8B-Sh-Q7P" customClass="MessageDetailViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="jyE-bN-0F4">
                         <rect key="frame" x="0.0" y="64" width="768" height="960"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -172,12 +172,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9as-bm-A58" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3840" y="-1640"/>
+            <point key="canvasLocation" x="-3792" y="-1731"/>
         </scene>
-        <!--Yammer Data Config Controller - Add Messages to Locker-->
+        <!--Data Config View Controller - Add Messages to Locker-->
         <scene sceneID="bzH-rJ-1dB">
             <objects>
-                <viewController id="FWg-Q5-o8m" customClass="YammerDataConfigController" sceneMemberID="viewController">
+                <viewController id="FWg-Q5-o8m" customClass="DataConfigViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="tlk-m7-Cnm">
                         <rect key="frame" x="0.0" y="64" width="768" height="960"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -283,10 +283,10 @@
             </objects>
             <point key="canvasLocation" x="-6010" y="-1581"/>
         </scene>
-        <!--Yammer Messages View Controller - Inbox-->
+        <!--Messages View Controller - Inbox-->
         <scene sceneID="hWs-ws-YR9">
             <objects>
-                <viewController storyboardIdentifier="" id="5Cb-eK-aq7" customClass="YammerMessagesViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="" id="5Cb-eK-aq7" customClass="MessagesViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ipy-ad-nTd">
                         <rect key="frame" x="0.0" y="64" width="768" height="960"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>

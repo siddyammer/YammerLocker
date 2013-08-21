@@ -1,5 +1,5 @@
 //
-//  YammerLockerDataController.m
+//  DataController.m
 //  YammerLocker
 // 
 //  Class stores and provides access to Yammer Messages and Categories, stored in core data.
@@ -8,12 +8,12 @@
 //  Copyright (c) 2012 Sidd Singh. All rights reserved.
 //
 
-#import "YammerLockerDataController.h"
+#import "DataController.h"
 #import "User.h"
 #import "Message.h"
 #import "Category.h"
 
-@interface YammerLockerDataController ()
+@interface DataController ()
 
 // Parse the list of messages from the Yammer API and format them for display and add them
 // to the core data message store
@@ -36,9 +36,9 @@
 
 @end
 
-@implementation YammerLockerDataController
+@implementation DataController
 
-static YammerLockerDataController *sharedInstance;
+static DataController *sharedInstance;
 
 // Implement this class as a Singleton to create a single data connection accessible
 // from anywhere in the app.
@@ -50,12 +50,12 @@ static YammerLockerDataController *sharedInstance;
     if(!exists)
     {
         exists = YES;
-        sharedInstance= [[YammerLockerDataController alloc] init];
+        sharedInstance= [[DataController alloc] init];
     }
 }
 
 // Create and/or return the single shared data controller
-+(YammerLockerDataController *)sharedController {
++(DataController *)sharedController {
     
     return sharedInstance;
 }

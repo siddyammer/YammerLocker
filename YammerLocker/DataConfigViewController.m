@@ -1,23 +1,23 @@
 //
-//  YammerDataConfigController.m
+//  DataConfigViewController.m
 //  YammerLocker
 //
-//  CLass that shows the default mechanism to get yammer messages into the locker. Eventually
+//  Class that shows the default mechanism to get yammer messages into the locker. Eventually
 //  will allow for defining custom mechanisms to do this.
 //
 //  Created by Sidd Singh on 7/8/13.
 //  Copyright (c) 2013 Sidd Singh. All rights reserved.
 //
 
-#import "YammerDataConfigController.h"
-#import "YammerLockerDataController.h"
-#import "YammerLockerAppDelegate.h"
+#import "DataConfigViewController.h"
+#import "DataController.h"
+#import "AppDelegate.h"
 
-@interface YammerDataConfigController ()
+@interface DataConfigViewController ()
 
 @end
 
-@implementation YammerDataConfigController
+@implementation DataConfigViewController
 
 // Do additional setup after loading the view. 
 - (void)viewDidLoad
@@ -25,7 +25,7 @@
     [super viewDidLoad];
     
     // Get a data controller that you will use later for getting current user string
-    self.currUserDataController = [YammerLockerDataController sharedController];
+    self.currUserDataController = [DataController sharedController];
 
     // If the curent user string doesn't already exist in the core data store
     if ([self.currUserDataController getUserString] == nil) {

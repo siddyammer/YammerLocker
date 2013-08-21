@@ -1,5 +1,5 @@
 //
-//  YammerMessageDetailController.m
+//  MessageDetailViewController.m
 //  YammerLocker
 //
 //  Class shows details of a Yammer message and lets you
@@ -9,12 +9,12 @@
 //  Copyright (c) 2013 Sidd Singh. All rights reserved.
 //
 
-#import "YammerMessageDetailController.h"
+#import "MessageDetailViewController.h"
 #import "Message.h"
 #import "Category.h"
-#import "YammerLockerDataController.h"
+#import "DataController.h"
 
-@interface YammerMessageDetailController ()
+@interface MessageDetailViewController ()
 
 // Show the categories associated with the message in the categories text field
 - (void) showCategories;
@@ -30,7 +30,7 @@
 
 @end
 
-@implementation YammerMessageDetailController
+@implementation MessageDetailViewController
 
 // Do setup after loading the view including showing the web view with the message details
 - (void)viewDidLoad
@@ -38,7 +38,7 @@
     [super viewDidLoad];
     
     // Get a data controller that you will use later
-    self.categoryDataController = [YammerLockerDataController sharedController];
+    self.categoryDataController = [DataController sharedController];
     
     // Start the web view with the message thread URL
     NSURL *messageURL = [NSURL URLWithString:self.message.webUrl];

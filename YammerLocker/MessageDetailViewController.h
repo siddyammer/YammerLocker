@@ -1,5 +1,5 @@
 //
-//  YammerMessageDetailController.h
+//  MessageDetailViewController.h
 //  YammerLocker
 //
 //  Class shows details of a Yammer message and lets
@@ -12,9 +12,9 @@
 #import <UIKit/UIKit.h>
 @class Message;
 @class Category;
-@class YammerLockerDataController;
+@class DataController;
 
-@interface YammerMessageDetailController : UIViewController
+@interface MessageDetailViewController : UIViewController
 
 // Web view that loads the message thread
 @property (weak, nonatomic) IBOutlet UIWebView *detailWebView;
@@ -23,7 +23,7 @@
 @property (strong, nonatomic) Message *message;
 
 // Data Controller to add/access categories in the data store
-@property (strong, nonatomic) YammerLockerDataController *categoryDataController;
+@property (strong, nonatomic) DataController *categoryDataController;
 
 // Display for the categories this message belongs to
 @property (weak, nonatomic) IBOutlet UILabel *existingCategoriesLbl;

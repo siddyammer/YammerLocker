@@ -1,5 +1,5 @@
 //
-//  YammerLockerViewController.m
+//  AuthViewController.m
 //  YammerLocker
 //
 //  Class that manages the authentication screen UI
@@ -8,15 +8,15 @@
 //  Copyright (c) 2012 Sidd Singh. All rights reserved.
 //
 
-#import "YammerLockerViewController.h"
-#import "YammerLockerDataController.h"
+#import "AuthViewController.h"
+#import "DataController.h"
 #import "LoginController.h"
 
-@interface YammerLockerViewController ()
+@interface AuthViewController ()
 
 @end
 
-@implementation YammerLockerViewController
+@implementation AuthViewController
 
 // Do any additional setup after loading the view. 
 - (void)viewDidLoad

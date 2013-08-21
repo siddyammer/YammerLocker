@@ -1,5 +1,5 @@
 //
-//  YammerLockerViewController.h
+//  AuthViewController.h
 //  YammerLocker
 //
 //  Class that manages the authentication screen UI
@@ -9,10 +9,10 @@
 //
 
 #import <UIKit/UIKit.h>
-@class YammerLockerDataController;
+@class DataController;
 @class LoginController;
 
-@interface YammerLockerViewController : UIViewController <UITextFieldDelegate>
+@interface AuthViewController : UIViewController <UITextFieldDelegate>
 
 // Establish Connection with Yammer
 - (IBAction)establishConnection:(id)sender;

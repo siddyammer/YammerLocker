@@ -1,5 +1,5 @@
 //
-//  YammerMessagesViewController.m
+//  MessagesViewController.m
 //  YammerLocker
 //
 //  Class that manages the table views for showing the navigation options and messages
@@ -8,17 +8,17 @@
 //  Copyright (c) 2013 Sidd Singh. All rights reserved.
 //
 
-#import "YammerMessagesViewController.h"
-#import "YammerLockerDataController.h"
+#import "MessagesViewController.h"
+#import "DataController.h"
 #import "Message.h"
 #import "Category.h"
-#import "YammerMessageDetailController.h"
+#import "MessageDetailViewController.h"
 
-@interface YammerMessagesViewController ()
+@interface MessagesViewController ()
 
 @end
 
-@implementation YammerMessagesViewController
+@implementation MessagesViewController
 
 // Do a set of actions like getting messages from the Yammer API after the view has loaded
 - (void)viewDidLoad
@@ -26,7 +26,7 @@
     [super viewDidLoad];
     
     // Get a data controller that you will use later
-    self.yamMsgDataController = [YammerLockerDataController sharedController];
+    self.yamMsgDataController = [DataController sharedController];
     
     // Asynchronously, start getting messages for display from the Yammer API
     // If the initial data fetch for this user has been done, get new messages
@@ -163,7 +163,7 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([[segue identifier] isEqualToString:@"ShowMessageDetails"]) {
-        YammerMessageDetailController *detailViewController = [segue destinationViewController];
+        MessageDetailViewController *detailViewController = [segue destinationViewController];
         
         Message *messageAtIndex;
         messageAtIndex = [self.messagesController objectAtIndexPath:[self.messagesTable indexPathForSelectedRow]];

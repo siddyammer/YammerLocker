@@ -1,20 +1,20 @@
 //
-//  YammerLockerAppDelegate.m
+//  AppDelegate.m
 //  YammerLocker
 //
 //  Created by Sidd Singh on 11/7/12.
 //  Copyright (c) 2012 Sidd Singh. All rights reserved.
 //
 
-#import "YammerLockerAppDelegate.h"
-#import "YammerLockerDataController.h"
+#import "AppDelegate.h"
+#import "DataController.h"
 #import "LoginController.h"
 
-@interface YammerLockerAppDelegate ()
+@interface AppDelegate ()
 
 @end
 
-@implementation YammerLockerAppDelegate
+@implementation AppDelegate
 
 // Do initial setup after the app has been launched by the OS
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -26,11 +26,11 @@
     [self.yamOauthLoginController setLoginServiceWithName:@"Yammer" initURL:@"https://www.yammer.com/dialog/oauth" redirectURL:@"movetolocker://a.custom.uri" clientId:@"Mfv8iyzg7HGztsZsq9egaA" clientSecret:@"9YWNP0CRUQPUdvmJxavVwFkTp1d78uAj77p7nUYGSI" tokenURL:@"https://www.yammer.com/oauth2/access_token.json"];
     
     // Get a data controller that you will use later to check if user is logged in
-    self.yamUserDataController = [YammerLockerDataController sharedController];
+    self.yamUserDataController = [DataController sharedController];
     
-    // Show the initial view controller which, if the user has not logged in, is YammerLockerViewController
+    // Show the initial view controller which, if the user has not logged in, is AuthViewController
     if ([self.yamUserDataController getUserAccessToken] == nil) {
-        [self configViewControllerWithName:@"YammerLockerViewController"];
+        [self configViewControllerWithName:@"AuthViewController"];
     }
     
     // If the user is already logged in, the initial view controller is the messages navigation controller

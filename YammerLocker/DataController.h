@@ -1,5 +1,5 @@
 //
-//  YammerLockerDataController.h
+//  DataController.h
 //  YammerLocker
 //
 //  Class stores and provides access to Yammer Messages and Categories, stored in core data.
@@ -13,10 +13,10 @@
 @class Category;
 @class NSFetchedResultsController;
 
-@interface YammerLockerDataController : NSObject
+@interface DataController : NSObject
 
 // Create and/or return the single shared data controller
-+ (YammerLockerDataController *) sharedController;
++ (DataController *) sharedController;
 
 //////////////////////  Core Data Methods  ////////////////////
 

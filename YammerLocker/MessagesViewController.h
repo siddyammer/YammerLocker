@@ -1,5 +1,5 @@
 //
-//  YammerMessagesViewController.h
+//  MessagesViewController.h
 //  YammerLocker
 //
 //  Class that manages the table views for showing the navigation options and messages
@@ -9,13 +9,13 @@
 //
 
 #import <UIKit/UIKit.h>
-@class YammerLockerDataController;
+@class DataController;
 @class NSFetchedResultsController;
 
-@interface YammerMessagesViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+@interface MessagesViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
 // Data Controller for displaying messages in this view.
-@property (strong,nonatomic) YammerLockerDataController *yamMsgDataController;
+@property (strong,nonatomic) DataController *yamMsgDataController;
 
 // Controller containing results of message queries to Core Data store
 @property (strong, nonatomic) NSFetchedResultsController *messagesController;

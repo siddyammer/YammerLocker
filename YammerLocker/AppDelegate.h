@@ -1,5 +1,5 @@
 //
-//  YammerLockerAppDelegate.h
+//  AppDelegate.h
 //  YammerLocker
 //
 //  Created by Sidd Singh on 11/7/12.
@@ -7,10 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-@class YammerLockerDataController;
+@class DataController;
 @class LoginController;
 
-@interface YammerLockerAppDelegate : UIResponder <UIApplicationDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 
@@ -22,7 +22,7 @@
 @property (strong,nonatomic) LoginController *yamOauthLoginController;
 
 // Data Controller for user authorization status.
-@property (strong,nonatomic) YammerLockerDataController *yamUserDataController;
+@property (strong,nonatomic) DataController *yamUserDataController;
 
 // Configure view controller based on name
 - (void) configViewControllerWithName:(NSString *)controllerStoryboardId;

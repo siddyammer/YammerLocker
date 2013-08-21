@@ -1,5 +1,5 @@
 //
-//  YammerDataConfigController.h
+//  DataConfigViewController.h
 //  YammerLocker
 //
 //  Class that shows the default mechanism to get yammer messages into the locker. Eventually
@@ -10,9 +10,9 @@
 //
 
 #import <UIKit/UIKit.h>
-@class YammerLockerDataController;
+@class DataController;
 
-@interface YammerDataConfigController : UIViewController
+@interface DataConfigViewController : UIViewController
 
 // Show Yammer Messages when Get Messages button is clicked
 - (IBAction)getMessages:(id)sender;
@@ -21,7 +21,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *messageTopicTxtFld;
 
 // Data Controller for getting current user string.
-@property (strong,nonatomic) YammerLockerDataController *currUserDataController;
+@property (strong,nonatomic) DataController *currUserDataController;
 
 // Signout the user, meaning they have to login again
 - (IBAction)signoutUser:(id)sender;
