@@ -101,4 +101,8 @@
 // install the ipad app
 - (void)declineMobileInterstitial;
 
+// Get an image from a Url(first object in the array) and add it to the incoming image view(second
+// object in the array)
+- (void)getImageFromUrl:(NSArray *)urlAndView;
+
 @end

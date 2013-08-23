@@ -107,7 +107,7 @@
                                     <constraint firstAttribute="width" constant="243" type="user" id="bhz-qc-kJL"/>
                                 </constraints>
                                 <color key="textColor" red="0.20784313725490194" green="0.20784313725490194" blue="0.20784313725490194" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="16"/>
+                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="15"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
                                     <outlet property="delegate" destination="r8B-Sh-Q7P" id="0Sd-pY-syS"/>
@@ -133,7 +133,7 @@
                                     <constraint firstAttribute="height" constant="21" id="4V1-7F-LW5"/>
                                     <constraint firstAttribute="width" constant="107" type="user" id="nUJ-45-RWU"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="16"/>
+                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="15"/>
                                 <color key="textColor" red="0.83921568627450982" green="0.83921568627450982" blue="0.83921568627450982" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -144,7 +144,7 @@
                                     <constraint firstAttribute="height" constant="30" id="Ydt-hc-A1J"/>
                                 </constraints>
                                 <color key="textColor" red="0.83921568627450982" green="0.83921568627450982" blue="0.83921568627450982" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="16"/>
+                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="15"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                         </subviews>
@@ -198,7 +198,7 @@
                                     <constraint firstAttribute="height" constant="38" type="user" id="IXk-YM-nMY"/>
                                     <constraint firstAttribute="width" constant="469" id="ryd-j5-Dai"/>
                                 </constraints>
-                                <color key="textColor" red="0.0" green="0.68235294117647061" blue="0.93725490196078431" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" red="1" green="0.32549019607843138" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="22"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
@@ -291,29 +291,33 @@
                         <rect key="frame" x="0.0" y="64" width="768" height="960"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="69" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="7IE-8f-vML">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="84" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="7IE-8f-vML">
                                 <color key="backgroundColor" red="0.83921568627450982" green="0.83921568627450982" blue="0.83921568627450982" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="separatorColor" red="0.68627450980392157" green="0.68627450980392157" blue="0.68627450980392157" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="gray" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="YammerMessageCell" textLabel="enU-JR-0gc" detailTextLabel="jSv-h4-VLj" rowHeight="69" style="IBUITableViewCellStyleSubtitle" id="2wh-Lj-W2o">
-                                        <rect key="frame" x="0.0" y="22" width="573" height="69"/>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="gray" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="YammerMessageCell" textLabel="enU-JR-0gc" detailTextLabel="jSv-h4-VLj" imageView="x50-pd-wbA" rowHeight="84" style="IBUITableViewCellStyleSubtitle" id="2wh-Lj-W2o">
+                                        <rect key="frame" x="0.0" y="22" width="573" height="84"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="553" height="68"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="553" height="83"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="enU-JR-0gc">
-                                                    <rect key="frame" x="10" y="14" width="33" height="20"/>
-                                                    <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="16"/>
+                                                    <rect key="frame" x="68" y="23" width="31" height="19"/>
+                                                    <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="15"/>
                                                     <color key="textColor" red="0.20784313725490194" green="0.20784313725490194" blue="0.20784313725490194" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="jSv-h4-VLj">
-                                                    <rect key="frame" x="10" y="34" width="54" height="20"/>
-                                                    <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="16"/>
+                                                    <rect key="frame" x="68" y="42" width="51" height="19"/>
+                                                    <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="15"/>
                                                     <color key="textColor" red="0.20784313725490194" green="0.20784313725490194" blue="0.20784313725490194" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 </label>
+                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="DefaultUserImage.png" id="x50-pd-wbA">
+                                                    <rect key="frame" x="10" y="17" width="48" height="48"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                </imageView>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
@@ -327,28 +331,28 @@
                                     <outlet property="delegate" destination="5Cb-eK-aq7" id="vsW-cP-3Bw"/>
                                 </connections>
                             </tableView>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="69" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="2pc-AT-zI7">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="56" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="2pc-AT-zI7">
                                 <color key="backgroundColor" red="0.32156862745098036" green="0.32156862745098036" blue="0.32156862745098036" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="178" type="user" id="76n-Tt-1Yw"/>
                                 </constraints>
                                 <color key="separatorColor" red="0.20784313725490194" green="0.20784313725490194" blue="0.20784313725490194" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="gray" indentationWidth="10" reuseIdentifier="YammerMessageNavCell" textLabel="a2I-vH-Yjr" imageView="uwd-Jp-3iv" rowHeight="69" style="IBUITableViewCellStyleDefault" id="fXo-NR-Mc0">
-                                        <rect key="frame" x="0.0" y="22" width="178" height="69"/>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="gray" indentationWidth="10" reuseIdentifier="YammerMessageNavCell" textLabel="a2I-vH-Yjr" imageView="uwd-Jp-3iv" rowHeight="56" style="IBUITableViewCellStyleDefault" id="fXo-NR-Mc0">
+                                        <rect key="frame" x="0.0" y="22" width="178" height="56"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="178" height="68"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="178" height="55"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="a2I-vH-Yjr">
-                                                    <rect key="frame" x="43" y="0.0" width="125" height="68"/>
-                                                    <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="19"/>
+                                                    <rect key="frame" x="36" y="0.0" width="132" height="55"/>
+                                                    <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="15"/>
                                                     <color key="textColor" red="0.83921568627450982" green="0.83921568627450982" blue="0.83921568627450982" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 </label>
                                                 <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="YammerBlueColorSliver_mail.png" id="uwd-Jp-3iv">
-                                                    <rect key="frame" x="0.0" y="0.0" width="33" height="68"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="26" height="55"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </imageView>
                                             </subviews>
@@ -376,7 +380,7 @@
                     <navigationItem key="navigationItem" title="Inbox" id="zN2-su-ayd">
                         <barButtonItem key="backBarButtonItem" title="Inbox" id="F22-P2-dho"/>
                         <barButtonItem key="rightBarButtonItem" style="plain" systemItem="refresh" id="P7y-MH-bde">
-                            <color key="tintColor" red="1" green="0.54117647058823526" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="tintColor" red="1" green="0.32549019607843138" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="refreshMessages:" destination="5Cb-eK-aq7" id="PTx-Dv-IZQ"/>
                             </connections>
@@ -389,7 +393,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="X71-zm-FjQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-5058" y="-1799"/>
+            <point key="canvasLocation" x="-5080" y="-1831"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="mVZ-QV-cpM">
@@ -413,8 +417,46 @@
     </scenes>
     <resources>
         <image name="AddTopicGuidance.jpg" width="1114" height="788"/>
+        <image name="DefaultUserImage.png" width="48" height="48"/>
         <image name="YammerBlueColorSliver_mail.png" width="68" height="142"/>
     </resources>
+    <classes>
+        <class className="AuthViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/AuthViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="establishConnection:"/>
+            </relationships>
+        </class>
+        <class className="DataConfigViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/DataConfigViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="getMessages:"/>
+                <relationship kind="action" name="signoutUser:"/>
+                <relationship kind="outlet" name="messageTopicTxtFld" candidateClass="UITextField"/>
+            </relationships>
+        </class>
+        <class className="MessageDetailViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/MessageDetailViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="addCategories:"/>
+                <relationship kind="outlet" name="addCategoriesTxtFld" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="detailWebView" candidateClass="UIWebView"/>
+                <relationship kind="outlet" name="existingCategoriesLbl" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="showCategoriesTxtFld" candidateClass="UITextField"/>
+            </relationships>
+        </class>
+        <class className="MessagesViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/MessagesViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="refreshMessages:"/>
+                <relationship kind="outlet" name="messagesNavTable" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="messagesTable" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+        <class className="NSLayoutConstraint" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>

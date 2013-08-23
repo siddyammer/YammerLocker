@@ -842,4 +842,17 @@ static DataController *sharedInstance;
     } 
 }
 
+// Get an image from a Url(first object in the array) and add it to the incoming image view(second
+// object in the array)
+- (void)getImageFromUrl:(NSArray *)urlAndView {
+    
+    // Get image data and convert to an image
+    NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:[urlAndView objectAtIndex:0]]];
+    UIImage *userImage = [[UIImage alloc] initWithData:imageData];
+    
+    // Set the incoming image view to the user image
+    UIImageView *imageToUpdate = [urlAndView objectAtIndex:1];
+    [imageToUpdate setImage:userImage];
+}
+
 @end

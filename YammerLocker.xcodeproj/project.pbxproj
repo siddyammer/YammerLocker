@@ -31,6 +31,7 @@
 		98928ABF16BB2D0C00D4C84B /* DataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98928ABD16BB2D0C00D4C84B /* DataController.m */; };
 		98C8569016C9B78400B510BE /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98C8568F16C9B78400B510BE /* Security.framework */; };
 		98C99FE717189A9600DB567A /* MessageDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98C99FE617189A9600DB567A /* MessageDetailViewController.m */; };
+		98CC90B617C707900003D71B /* DefaultUserImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 98CC90B517C707900003D71B /* DefaultUserImage.png */; };
 		98CD5A4D177260FF0050C34B /* Locker.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 98CD5A4B177260FF0050C34B /* Locker.xcdatamodeld */; };
 		98CD5A8C1772B1350050C34B /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98CD5A8B1772B1350050C34B /* CoreData.framework */; };
 		98CD5AB4177540BE0050C34B /* README in Resources */ = {isa = PBXBuildFile; fileRef = 98CD5AB3177540BE0050C34B /* README */; };
@@ -74,6 +75,7 @@
 		98C8568F16C9B78400B510BE /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		98C99FE517189A9600DB567A /* MessageDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageDetailViewController.h; sourceTree = "<group>"; };
 		98C99FE617189A9600DB567A /* MessageDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageDetailViewController.m; sourceTree = "<group>"; };
+		98CC90B517C707900003D71B /* DefaultUserImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DefaultUserImage.png; sourceTree = "<group>"; };
 		98CD5A4C177260FF0050C34B /* Locker.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Locker.xcdatamodel; sourceTree = "<group>"; };
 		98CD5A8B1772B1350050C34B /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		98CD5AB3177540BE0050C34B /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
@@ -162,6 +164,7 @@
 		9838CA50164B1260006C9C6A /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				98CC90B517C707900003D71B /* DefaultUserImage.png */,
 				98631BCF178FE3A300CD0265 /* LockerAppLaunchIcon_57.png */,
 				98631BCC178FE37F00CD0265 /* LockerAppLaunchIcon_114.png */,
 				98631BC2178FD73700CD0265 /* YammerBlueColorSliver_folder.png */,
@@ -243,6 +246,7 @@
 				98631BC3178FD73700CD0265 /* YammerBlueColorSliver_folder.png in Resources */,
 				98631BCE178FE39C00CD0265 /* LockerAppLaunchIcon_114.png in Resources */,
 				98631BD0178FE3A300CD0265 /* LockerAppLaunchIcon_57.png in Resources */,
+				98CC90B617C707900003D71B /* DefaultUserImage.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

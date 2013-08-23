@@ -103,7 +103,7 @@
         }
         else {
             Category *categoryAtIndex = [[self.categoriesController fetchedObjects] objectAtIndex:(indexPath.row)-1];
-            // Construct and display the categorye label e.g. Presentations
+            // Construct and display the categorye label e.g. Presentations with category icon
             cell.imageView.image = [UIImage imageNamed:@"YammerBlueColorSliver_folder.png"];
             NSString *categoryLabel = [[NSString alloc] initWithFormat:@"%@",categoryAtIndex.title];
             [[cell textLabel] setText:categoryLabel];
@@ -126,7 +126,17 @@
         [[cell textLabel] setText:msgLabel];
         
         // Display the message content
+        [[cell detailTextLabel] setNumberOfLines:2];
         [[cell detailTextLabel] setText:messageAtIndex.content];
+        
+        // Get the user images from mugshot url and display it asynchronously
+        // if the mugshot url indicates there is a photo. If not then set to default user image
+        if ([messageAtIndex.fromMugshotUrl isEqualToString:@"https://mug0.assets-yammer.com/mugshot/images/48x48/no_photo.png"]) {
+            cell.imageView.image = [UIImage imageNamed:@"DefaultUserImage.png"];
+        } else {
+            NSArray * userImageObjects = [NSArray arrayWithObjects:messageAtIndex.fromMugshotUrl, [cell imageView], nil];
+            [self.yamMsgDataController performSelectorInBackground:@selector(getImageFromUrl:) withObject:userImageObjects];
+        }
     
         return cell;
     }
