@@ -49,6 +49,18 @@
     [self showCategories];
 }
 
+// Start loading spinner and show loading text when the web view starts loading the yammer message thread.
+- (void)webViewDidStartLoad:(UIWebView *)webView {
+    [self.loadingSpinner startAnimating];
+    [self.loadingLabel setHidden:NO];
+}
+
+// Stop loading spinner and hide loading text when the web view finishes loading the yammer message thread.
+- (void)webViewDidFinishLoad:(UIWebView *)webView {
+    [self.loadingSpinner stopAnimating];
+    [self.loadingLabel setHidden:YES];
+}
+
 // Add Categories text field should dismiss the keyboard on hitting return. The
 // categories entered should be added to the data store and associated with the message.
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {

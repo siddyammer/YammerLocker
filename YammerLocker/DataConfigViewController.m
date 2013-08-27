@@ -42,8 +42,18 @@
         // Show to the user, the custom topic that they can use to add messages to Locker.
         // TO DO: locker is hardcoded. Change that.
         self.messageTopicTxtFld.text = [NSString stringWithFormat:@"%@%@%@",@"#",[self.currUserDataController getUserString],@"locker"];
+        
         // Enable the button to show messages
         self.showMessagesButton.userInteractionEnabled = YES;
+        
+        // Asynchronously, start getting messages for display on the next screen from the Yammer API
+        // If the initial data fetch for this user has been done, get new messages
+        if ([self.currUserDataController getInitialDataState] == YES) {
+            [self.currUserDataController performSelectorInBackground:@selector(getNewMessagesFromApi) withObject:nil];
+            // Else get all messages
+        } else {
+            [self.currUserDataController performSelectorInBackground:@selector(getAllMessagesFromApi) withObject:nil];
+        }
     }
     
     // Asynchronously issue an http call to decline the mobile interstitial which asks the user if they had
@@ -65,8 +75,18 @@
     // Construct the topic based on user string data
     // TO DO: locker is hardcoded. Change that.
     self.messageTopicTxtFld.text = [NSString stringWithFormat:@"%@%@%@",@"#",[self.currUserDataController getUserString],@"locker"];
+    
     // Enable the button to show messages
     self.showMessagesButton.userInteractionEnabled = YES;
+    
+    // Asynchronously, start getting messages for display on the next screen from the Yammer API
+    // If the initial data fetch for this user has been done, get new messages
+    if ([self.currUserDataController getInitialDataState] == YES) {
+        [self.currUserDataController performSelectorInBackground:@selector(getNewMessagesFromApi) withObject:nil];
+        // Else get all messages
+    } else {
+        [self.currUserDataController performSelectorInBackground:@selector(getAllMessagesFromApi) withObject:nil];
+    }
 }
 
 // Signout the user, meaning they have to login again

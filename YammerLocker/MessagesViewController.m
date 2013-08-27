@@ -28,15 +28,6 @@
     // Get a data controller that you will use later
     self.yamMsgDataController = [DataController sharedController];
     
-    // Asynchronously, start getting messages for display from the Yammer API
-    // If the initial data fetch for this user has been done, get new messages
-    if ([self.yamMsgDataController getInitialDataState] == YES) {
-        [self.yamMsgDataController performSelectorInBackground:@selector(getNewMessagesFromApi) withObject:nil];
-    // Else get all messages
-    } else {
-        [self.yamMsgDataController performSelectorInBackground:@selector(getAllMessagesFromApi) withObject:nil];
-    }
-    
     // Set the title of the currently selected messages navigation item to be the default which
     // is currently "All"
     self.currentNavItemTitle = [NSString stringWithFormat:@"All"];

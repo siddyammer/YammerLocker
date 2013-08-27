@@ -19,6 +19,12 @@
 // Web view that loads the message thread
 @property (weak, nonatomic) IBOutlet UIWebView *detailWebView;
 
+// Spinner to indicate page is loading
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loadingSpinner;
+
+// Label to show loading message
+@property (weak, nonatomic) IBOutlet UILabel *loadingLabel;
+
 // Message being loaded
 @property (strong, nonatomic) Message *message;
 
