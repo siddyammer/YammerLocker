@@ -14,8 +14,11 @@
 
 @interface DataConfigViewController : UIViewController
 
-// Show Yammer Messages when Get Messages button is clicked
-- (IBAction)getMessages:(id)sender;
+// Show Yammer Messages when button is clicked
+- (IBAction)showMessages:(id)sender;
+
+// Button for showing messages
+@property (weak, nonatomic) IBOutlet UIButton *showMessagesButton;
 
 // Show to the user, the custom topic that they can use to add messages to Locker
 @property (weak, nonatomic) IBOutlet UITextField *messageTopicTxtFld;

@@ -182,24 +182,24 @@
                         <rect key="frame" x="0.0" y="64" width="768" height="960"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Add any Yammer message from the browser or mobile app" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zGR-Um-BIe">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Add any message from the Yammer web or mobile app to Locker." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zGR-Um-BIe">
                                 <color key="backgroundColor" red="0.20784313725490194" green="0.20784313725490194" blue="0.20784313725490194" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="529" id="I4b-wz-Kbd"/>
                                     <constraint firstAttribute="height" constant="34" type="user" id="cNA-lu-vBf"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="20"/>
+                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="18"/>
                                 <color key="textColor" red="0.83921568627450982" green="0.83921568627450982" blue="0.83921568627450982" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="#" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="QCS-Fq-E3D">
+                            <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Fetching topic data from Yammer..." textAlignment="center" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="QCS-Fq-E3D">
                                 <color key="backgroundColor" red="0.20784313725490194" green="0.20784313725490194" blue="0.20784313725490194" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="38" type="user" id="IXk-YM-nMY"/>
                                     <constraint firstAttribute="width" constant="469" id="ryd-j5-Dai"/>
                                 </constraints>
                                 <color key="textColor" red="1" green="0.32549019607843138" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="22"/>
+                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="18"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="AddTopicGuidance.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="WUC-4m-uj6">
@@ -208,10 +208,9 @@
                                     <constraint firstAttribute="height" constant="394" type="user" id="OBl-vH-dLO"/>
                                 </constraints>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kji-18-2mq">
+                            <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kji-18-2mq">
                                 <color key="backgroundColor" red="0.32156862745098036" green="0.32156862745098036" blue="0.32156862745098036" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="191" id="Vwz-kE-Wyn"/>
                                     <constraint firstAttribute="height" constant="35" type="user" id="XQE-UX-j8v"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="18"/>
@@ -222,22 +221,22 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="getMessages:" destination="FWg-Q5-o8m" eventType="touchUpInside" id="IUr-Q7-ASM"/>
+                                    <action selector="showMessages:" destination="FWg-Q5-o8m" eventType="touchUpInside" id="2oD-fE-nz3"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="to Locker. Simply add the following topic to the message" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uON-4I-Sg6">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Simply tag the message with the following topic. Then click Next." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uON-4I-Sg6">
                                 <color key="backgroundColor" red="0.20784313730000001" green="0.20784313730000001" blue="0.20784313730000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="506" id="dtU-pX-DpI"/>
                                     <constraint firstAttribute="height" constant="34" type="user" id="wK9-3s-ghn"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="20"/>
+                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="18"/>
                                 <color key="textColor" red="0.83921568629999999" green="0.83921568629999999" blue="0.83921568629999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pjy-uc-7tJ">
                                 <color key="backgroundColor" red="0.32156862749999998" green="0.32156862749999998" blue="0.32156862749999998" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
+                                    <constraint firstAttribute="width" constant="190" id="VGz-zz-aEC"/>
                                     <constraint firstAttribute="height" constant="35" id="cAn-Jo-gdS"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="18"/>
@@ -255,17 +254,17 @@
                         <color key="backgroundColor" red="0.20784313725490194" green="0.20784313725490194" blue="0.20784313725490194" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="centerX" secondItem="pjy-uc-7tJ" secondAttribute="centerX" type="user" id="1Sd-x0-zvg"/>
-                            <constraint firstAttribute="centerX" secondItem="uON-4I-Sg6" secondAttribute="centerX" type="user" id="45o-yn-s8R"/>
+                            <constraint firstItem="uON-4I-Sg6" firstAttribute="top" secondItem="tlk-m7-Cnm" secondAttribute="top" constant="470" type="user" id="ATm-T0-Srg"/>
                             <constraint firstItem="Kji-18-2mq" firstAttribute="leading" secondItem="pjy-uc-7tJ" secondAttribute="leading" type="default" id="Aal-1r-kZu"/>
+                            <constraint firstItem="uON-4I-Sg6" firstAttribute="centerX" secondItem="QCS-Fq-E3D" secondAttribute="centerX" type="default" id="Eky-gy-oij"/>
+                            <constraint firstItem="zGR-Um-BIe" firstAttribute="centerX" secondItem="uON-4I-Sg6" secondAttribute="centerX" type="default" id="IK4-he-JGu"/>
                             <constraint firstItem="WUC-4m-uj6" firstAttribute="top" secondItem="tlk-m7-Cnm" secondAttribute="top" constant="20" type="user" id="Kk1-sY-IUY"/>
+                            <constraint firstItem="zGR-Um-BIe" firstAttribute="top" secondItem="tlk-m7-Cnm" secondAttribute="top" constant="434" id="LS2-pa-KMT"/>
                             <constraint firstAttribute="centerX" secondItem="QCS-Fq-E3D" secondAttribute="centerX" type="user" id="Mz7-QJ-ECw"/>
-                            <constraint firstItem="uON-4I-Sg6" firstAttribute="top" secondItem="zGR-Um-BIe" secondAttribute="bottom" constant="1" type="user" id="Nz2-yT-hh5"/>
                             <constraint firstItem="Kji-18-2mq" firstAttribute="top" secondItem="QCS-Fq-E3D" secondAttribute="bottom" constant="20" type="user" id="R1M-BU-x0p"/>
                             <constraint firstAttribute="centerX" secondItem="WUC-4m-uj6" secondAttribute="centerX" type="user" id="SVa-Le-9oL"/>
+                            <constraint firstItem="QCS-Fq-E3D" firstAttribute="top" secondItem="uON-4I-Sg6" secondAttribute="bottom" constant="1" type="user" id="f69-rV-8Bq"/>
                             <constraint firstAttribute="centerX" secondItem="Kji-18-2mq" secondAttribute="centerX" type="user" id="gEU-6q-tDJ"/>
-                            <constraint firstItem="zGR-Um-BIe" firstAttribute="top" secondItem="WUC-4m-uj6" secondAttribute="bottom" constant="20" type="user" id="kpk-zg-8l0"/>
-                            <constraint firstItem="QCS-Fq-E3D" firstAttribute="top" secondItem="uON-4I-Sg6" secondAttribute="bottom" constant="2" type="user" id="lun-VH-1zI"/>
-                            <constraint firstAttribute="centerX" secondItem="zGR-Um-BIe" secondAttribute="centerX" type="user" id="meH-Ld-exP"/>
                             <constraint firstAttribute="bottom" secondItem="pjy-uc-7tJ" secondAttribute="bottom" constant="12" id="mr1-do-uwM"/>
                             <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="pjy-uc-7tJ" secondAttribute="bottom" constant="12" type="user" id="vTb-HE-eQq"/>
                         </constraints>
@@ -275,6 +274,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="messageTopicTxtFld" destination="QCS-Fq-E3D" id="Q9J-en-cbs"/>
+                        <outlet property="showMessagesButton" destination="Kji-18-2mq" id="2Dj-U0-CAb"/>
                         <segue destination="5Cb-eK-aq7" kind="push" identifier="ShowMessages" id="V5u-3S-A3z"/>
                         <segue destination="2" kind="modal" identifier="ShowLoginView" id="7zZ-Cn-LM8"/>
                     </connections>
@@ -416,7 +416,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="AddTopicGuidance.jpg" width="1114" height="788"/>
+        <image name="AddTopicGuidance.jpg" width="1116" height="790"/>
         <image name="DefaultUserImage.png" width="48" height="48"/>
         <image name="YammerBlueColorSliver_mail.png" width="68" height="142"/>
     </resources>
@@ -433,6 +433,7 @@
                 <relationship kind="action" name="getMessages:"/>
                 <relationship kind="action" name="signoutUser:"/>
                 <relationship kind="outlet" name="messageTopicTxtFld" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="showMessagesButton" candidateClass="UIButton"/>
             </relationships>
         </class>
         <class className="MessageDetailViewController" superclassName="UIViewController">

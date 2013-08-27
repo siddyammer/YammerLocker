@@ -24,29 +24,49 @@
 {
     [super viewDidLoad];
     
+    // Register the user string data obtained listener
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(userStringObtained:)
+                                                 name:@"UserStringObtained" object:nil];
+    
     // Get a data controller that you will use later for getting current user string
     self.currUserDataController = [DataController sharedController];
 
-    // If the curent user string doesn't already exist in the core data store
+    // If the current user string doesn't already exist in the core data store
     if ([self.currUserDataController getUserString] == nil) {
-        // Synchronously, get the current user string FROM THE YAMMER API and save it to the core data store
-        [self.currUserDataController getCurrentUserData];
+        // Asynchronously, get the current user string FROM THE YAMMER API and save it to the core data store
+        [self.currUserDataController performSelectorInBackground:@selector(getCurrentUserData) withObject:nil];
+    }
+    // If it does exist
+    else {
+        // Show to the user, the custom topic that they can use to add messages to Locker.
+        // TO DO: locker is hardcoded. Change that.
+        self.messageTopicTxtFld.text = [NSString stringWithFormat:@"%@%@%@",@"#",[self.currUserDataController getUserString],@"locker"];
+        // Enable the button to show messages
+        self.showMessagesButton.userInteractionEnabled = YES;
     }
     
     // Asynchronously issue an http call to decline the mobile interstitial which asks the user if they had
     // like to install the ipad app
     [self.currUserDataController performSelectorInBackground:@selector(declineMobileInterstitial) withObject:nil];
-    
-    // Show to the user, the custom topic that they can use to add messages to Locker
-    // TO DO: locker is hardcoded. Change that.
-    self.messageTopicTxtFld.text = [NSString stringWithFormat:@"%@%@%@",self.messageTopicTxtFld.text,[self.currUserDataController getUserString],@"locker"];
 }
 
-// Show Yammer Messages view when Get Messages button is clicked
-- (IBAction)getMessages:(id)sender {
+// Show Yammer Messages view when Next button is clicked
+- (IBAction)showMessages:(id)sender {
     
     // Update the UI by segueing to show messages.
     [self performSegueWithIdentifier:@"ShowMessages" sender:self];
+}
+
+// Show to the user, the custom topic that they can use to add messages to Locker.
+// Custom topic is constructed from user string data obtained from the Yammer API.
+- (void)userStringObtained:(NSNotification *)notification {
+    
+    // Construct the topic based on user string data
+    // TO DO: locker is hardcoded. Change that.
+    self.messageTopicTxtFld.text = [NSString stringWithFormat:@"%@%@%@",@"#",[self.currUserDataController getUserString],@"locker"];
+    // Enable the button to show messages
+    self.showMessagesButton.userInteractionEnabled = YES;
 }
 
 // Signout the user, meaning they have to login again

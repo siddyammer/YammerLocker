@@ -34,6 +34,9 @@
 // Send a notification that the list of messages has changed (updated)
 - (void)sendMessagesChangeNotification;
 
+// Send a notification that the user string has been obtained
+- (void)sendUserStringObtainedNotification;
+
 @end
 
 @implementation DataController
@@ -815,14 +818,24 @@ static DataController *sharedInstance;
                                                                      error:&error];
     
     NSString *currUserString = [NSString stringWithFormat:@"%@",[parsedResponse objectForKey:@"name"]];
-        // Add current user string to the data store
-        [self insertUserString:currUserString];
+    
+    // Add current user string to the data store
+    [self insertUserString:currUserString];
+    
+    // Send a notification that the user string has been obtained
+    [self sendUserStringObtainedNotification];
 }
 
 // Send a notification that the list of messages has changed (updated)
 - (void)sendMessagesChangeNotification {
     
     [[NSNotificationCenter defaultCenter]postNotificationName:@"MessageStoreUpdated" object:self];
+}
+
+// Send a notification that the user string has been obtained
+- (void)sendUserStringObtainedNotification {
+    
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"UserStringObtained" object:self];
 }
 
 // Issue an http call to decline the mobile interstitial which asks the user if they had like to
