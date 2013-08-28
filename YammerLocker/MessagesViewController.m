@@ -50,7 +50,65 @@
 // Get the number of sections in the table views
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
+    
+    NSInteger noOfSections = 1;
+    
+    // If its the navigation table, 2 sections
+    if(tableView == self.messagesNavTable) {
+        noOfSections = 2;
+    }
+
+    return noOfSections;
+}
+
+// Set the section headers on the table views
+/*- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    NSString *headerText = nil;
+    
+    // If its the navigation table
+    if(tableView == self.messagesNavTable) {
+        // If its the messages section of the nav table
+        if (section == 0) {
+            headerText = @"Messages";
+          //  self.sectionHeaderLabel.text = @"Messages";
+        }
+        // If it's the categories section
+        else {
+            headerText = @"Categories";
+          //  self.sectionHeaderLabel2.text = @"Categories";
+        }
+    }
+    
+    return headerText;
+} */
+
+-(UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    
+    
+    UITableViewCell *headerView = nil;
+    
+    // If its the navigation table
+    if(tableView == self.messagesNavTable) {
+        
+       headerView = [tableView dequeueReusableCellWithIdentifier:@"NavTableSectionHeader"];
+        
+        // If its the messages section of the nav table
+        if (section == 0) {
+            [[headerView textLabel] setText:@"MESSAGES"];
+        }
+        
+        // If it's the categories section
+        else {
+            [[headerView textLabel] setText:@"CATEGORIES"];
+        }
+    }
+    // If its the messages table
+    else {
+        headerView = [tableView dequeueReusableCellWithIdentifier:@"MessagesTableSectionHeader"];
+    }
+    
+    return headerView;
 }
 
 // Specify the number of rows in the table views
@@ -58,10 +116,16 @@
 {
     // If its the navigation table
     if(tableView == self.messagesNavTable) {
-        //return ([self.yamMsgDataController noOfAllCategories]+1);
-        self.categoriesController = [self.yamMsgDataController getAllCategories];
-        id navSection = [[self.categoriesController sections] objectAtIndex:section];
-        return ([navSection numberOfObjects]+1);
+        // If its the messages section of the nav table, there's only 1 row for now: All
+        if (section == 0) {
+            return 1;
+        }
+        // Else no of categories
+        else {
+            self.categoriesController = [self.yamMsgDataController getAllCategories];
+            id navSection = [[self.categoriesController sections] objectAtIndex:(section-1)];
+            return [navSection numberOfObjects];
+        }
     }
     // If its the messages table
     else {
@@ -88,17 +152,30 @@
         static NSString *CellIdentifier = @"YammerMessageNavCell";
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
         
+        
+        // If it's the messages section, display the "All" navigation item
+        if (indexPath.section == 0) {
+            [[cell textLabel] setText:@"All"];
+        }
+        // If it's the categories section, display all the categories
+        else {
+            Category *categoryAtIndex = [[self.categoriesController fetchedObjects] objectAtIndex:(indexPath.row)];
+            // Construct and display the categorye label e.g. Presentations with category icon
+            // cell.imageView.image = [UIImage imageNamed:@"YammerBlueColorSliver_folder.png"];
+            NSString *categoryLabel = [[NSString alloc] initWithFormat:@"%@",categoryAtIndex.title];
+            [[cell textLabel] setText:categoryLabel];
+        }
         // Configure the first cell to display the "All" navigation item
-        if (indexPath.row == 0) {
+  /*      if (indexPath.row == 0) {
             [[cell textLabel] setText:@"All"];
         }
         else {
             Category *categoryAtIndex = [[self.categoriesController fetchedObjects] objectAtIndex:(indexPath.row)-1];
             // Construct and display the categorye label e.g. Presentations with category icon
-            cell.imageView.image = [UIImage imageNamed:@"YammerBlueColorSliver_folder.png"];
+            // cell.imageView.image = [UIImage imageNamed:@"YammerBlueColorSliver_folder.png"];
             NSString *categoryLabel = [[NSString alloc] initWithFormat:@"%@",categoryAtIndex.title];
             [[cell textLabel] setText:categoryLabel];
-        }
+        } */
             
         return cell;
     }
