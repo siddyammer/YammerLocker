@@ -55,10 +55,6 @@
             [self.currUserDataController performSelectorInBackground:@selector(getAllMessagesFromApi) withObject:nil];
         }
     }
-    
-    // Asynchronously issue an http call to decline the mobile interstitial which asks the user if they had
-    // like to install the ipad app
-    [self.currUserDataController performSelectorInBackground:@selector(declineMobileInterstitial) withObject:nil];
 }
 
 // Show Yammer Messages view when Next button is clicked

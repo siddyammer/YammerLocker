@@ -19,6 +19,13 @@
 // Do initial setup after the app has been launched by the OS
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    
+    // Change the user agent for all requests from the app to be locker/1.0. This prevents the get mobile app
+    // interstitial (which asks the user if they had like to install the ipad app) from showing, when the user
+    // views message details
+    NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:@"locker/1.0", @"UserAgent", nil];
+    [[NSUserDefaults standardUserDefaults] registerDefaults:dictionary];
+    
     // Get a login Controller for setting up the parameters for the Yammer OAuth login service
     self.yamOauthLoginController = [LoginController sharedController];
     
@@ -47,6 +54,8 @@
     // Handle the Redirect URL in the Oauth2 client. Grab the code returned by the
     // server and request for a token.
     NSString *authToken = [self.yamOauthLoginController getAuthTokenUsingCodeFrom:url];
+    
+    NSLog(@"The OAuth token is:%@",authToken);
     
     // Save the Oauth token to the core data store
     [self.yamUserDataController upsertUserWithAuthToken:authToken];

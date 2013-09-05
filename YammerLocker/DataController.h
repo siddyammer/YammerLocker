@@ -97,10 +97,6 @@
 // e.g. in sidd@bddemo.com, the user string would be sidd
 - (void)getCurrentUserData;
 
-// Issue an http call to decline the mobile interstitial which asks the user if they had like to
-// install the ipad app
-- (void)declineMobileInterstitial;
-
 // Get an image from a Url(first object in the array) and add it to the incoming image view(second
 // object in the array)
 - (void)getImageFromUrl:(NSArray *)urlAndView;

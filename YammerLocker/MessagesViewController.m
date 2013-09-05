@@ -61,28 +61,7 @@
     return noOfSections;
 }
 
-// Set the section headers on the table views
-/*- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-{
-    NSString *headerText = nil;
-    
-    // If its the navigation table
-    if(tableView == self.messagesNavTable) {
-        // If its the messages section of the nav table
-        if (section == 0) {
-            headerText = @"Messages";
-          //  self.sectionHeaderLabel.text = @"Messages";
-        }
-        // If it's the categories section
-        else {
-            headerText = @"Categories";
-          //  self.sectionHeaderLabel2.text = @"Categories";
-        }
-    }
-    
-    return headerText;
-} */
-
+// Set the headers for the table views to special table cells that serve as headers.
 -(UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     
     
@@ -106,6 +85,7 @@
     // If its the messages table
     else {
         headerView = [tableView dequeueReusableCellWithIdentifier:@"MessagesTableSectionHeader"];
+        [[headerView textLabel] setText:self.currentNavItemTitle];
     }
     
     return headerView;
@@ -272,5 +252,28 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+// Set the section headers on the table views
+/*- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+ {
+ NSString *headerText = nil;
+ 
+ // If its the navigation table
+ if(tableView == self.messagesNavTable) {
+ // If its the messages section of the nav table
+ if (section == 0) {
+ headerText = @"Messages";
+ //  self.sectionHeaderLabel.text = @"Messages";
+ }
+ // If it's the categories section
+ else {
+ headerText = @"Categories";
+ //  self.sectionHeaderLabel2.text = @"Categories";
+ }
+ }
+ 
+ return headerText;
+ } */
+
 
 @end

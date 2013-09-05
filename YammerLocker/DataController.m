@@ -838,23 +838,6 @@ static DataController *sharedInstance;
     [[NSNotificationCenter defaultCenter]postNotificationName:@"UserStringObtained" object:self];
 }
 
-// Issue an http call to decline the mobile interstitial which asks the user if they had like to
-// install the ipad app
-- (void)declineMobileInterstitial {
-    
-    NSString *declineHttpAddress = @"https://www.yammer.com/home/decline_mobile_interstitial";
-    
-    NSError * error = nil;
-    NSURLResponse *declineResponse = nil;
-    
-    NSMutableURLRequest *declineRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:declineHttpAddress]];
-    [NSURLConnection sendSynchronousRequest:declineRequest returningResponse:&declineResponse error:&error];
-    
-    if (error) {
-        NSLog(@"WARNING: Could not dismiss the mobile interstitial. Error description: %@",error.description);
-    } 
-}
-
 // Get an image from a Url(first object in the array) and add it to the incoming image view(second
 // object in the array)
 - (void)getImageFromUrl:(NSArray *)urlAndView {

@@ -134,7 +134,6 @@
                                 <color key="backgroundColor" red="0.20784313725490194" green="0.20784313725490194" blue="0.20784313725490194" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="DIP-ml-MTU"/>
-                                    <constraint firstAttribute="width" constant="100" id="Emg-4I-ZUq"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="14"/>
                                 <color key="textColor" red="0.0" green="0.68235294117647061" blue="0.93725490196078431" alpha="1" colorSpace="calibratedRGB"/>
@@ -170,7 +169,8 @@
                             <constraint firstItem="zDF-Mh-Sm5" firstAttribute="top" secondItem="mqT-NY-mmn" secondAttribute="top" type="default" id="3rE-eB-Mw8"/>
                             <constraint firstItem="O4o-DE-XfH" firstAttribute="top" secondItem="jyE-bN-0F4" secondAttribute="top" constant="349" id="5bE-iW-pLM"/>
                             <constraint firstItem="mqT-NY-mmn" firstAttribute="baseline" secondItem="Tng-MX-ju7" secondAttribute="baseline" type="default" id="FvN-U6-eTq"/>
-                            <constraint firstItem="O4o-DE-XfH" firstAttribute="centerX" secondItem="jyE-bN-0F4" secondAttribute="centerX" type="default" id="O2f-yx-N0Q"/>
+                            <constraint firstItem="KGP-L7-iOq" firstAttribute="centerX" secondItem="jyE-bN-0F4" secondAttribute="centerX" type="default" id="GUa-di-iw5"/>
+                            <constraint firstItem="KGP-L7-iOq" firstAttribute="centerX" secondItem="NKS-bd-zP5" secondAttribute="centerX" type="default" id="H4f-9k-A3l"/>
                             <constraint firstItem="mqT-NY-mmn" firstAttribute="leading" secondItem="Tng-MX-ju7" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="Sju-L9-Ja7"/>
                             <constraint firstItem="Lul-A1-zWJ" firstAttribute="leading" secondItem="zDF-Mh-Sm5" secondAttribute="trailing" type="user" id="Toc-PU-SAH"/>
                             <constraint firstItem="KGP-L7-iOq" firstAttribute="top" secondItem="jyE-bN-0F4" secondAttribute="top" constant="66" id="VSC-8F-J45"/>
@@ -179,7 +179,6 @@
                             <constraint firstItem="Tng-MX-ju7" firstAttribute="leading" secondItem="KGP-L7-iOq" secondAttribute="leading" type="default" id="cOy-b8-7qt"/>
                             <constraint firstItem="Lul-A1-zWJ" firstAttribute="bottom" secondItem="zDF-Mh-Sm5" secondAttribute="bottom" type="default" id="ek1-o8-3Rh"/>
                             <constraint firstItem="zDF-Mh-Sm5" firstAttribute="baseline" secondItem="mqT-NY-mmn" secondAttribute="baseline" type="default" id="gJX-Ww-WK4"/>
-                            <constraint firstItem="KGP-L7-iOq" firstAttribute="centerX" secondItem="O4o-DE-XfH" secondAttribute="centerX" type="default" id="nRf-j5-WMd"/>
                             <constraint firstItem="zDF-Mh-Sm5" firstAttribute="leading" secondItem="mqT-NY-mmn" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="pMP-es-wYh"/>
                             <constraint firstItem="Tng-MX-ju7" firstAttribute="top" secondItem="jyE-bN-0F4" secondAttribute="top" constant="19" id="pqI-JF-gLQ"/>
                         </constraints>
@@ -378,7 +377,7 @@
                                 </constraints>
                                 <color key="separatorColor" red="0.20784313725490194" green="0.20784313725490194" blue="0.20784313725490194" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="gray" indentationWidth="10" reuseIdentifier="YammerMessageNavCell" textLabel="a2I-vH-Yjr" rowHeight="56" style="IBUITableViewCellStyleDefault" id="fXo-NR-Mc0">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="YammerMessageNavCell" textLabel="a2I-vH-Yjr" rowHeight="56" style="IBUITableViewCellStyleDefault" id="fXo-NR-Mc0">
                                         <rect key="frame" x="0.0" y="22" width="178" height="56"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -436,7 +435,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Inbox" id="zN2-su-ayd">
                         <barButtonItem key="backBarButtonItem" title="Inbox" id="F22-P2-dho"/>
-                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="refresh" id="P7y-MH-bde">
+                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="P7y-MH-bde">
                             <color key="tintColor" red="1" green="0.32549019607843138" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="refreshMessages:" destination="5Cb-eK-aq7" id="PTx-Dv-IZQ"/>
@@ -497,9 +496,11 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/MessageDetailViewController.h"/>
             <relationships>
                 <relationship kind="action" name="addCategories:"/>
+                <relationship kind="action" name="goURLBtn:"/>
                 <relationship kind="outlet" name="addCategoriesTxtFld" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="detailWebView" candidateClass="UIWebView"/>
                 <relationship kind="outlet" name="existingCategoriesLbl" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="goURLTxtFld" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="loadingLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="loadingSpinner" candidateClass="UIActivityIndicatorView"/>
                 <relationship kind="outlet" name="showCategoriesTxtFld" candidateClass="UITextField"/>
