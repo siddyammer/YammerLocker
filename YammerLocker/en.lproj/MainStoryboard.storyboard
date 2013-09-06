@@ -18,9 +18,9 @@
                                     <constraint firstAttribute="height" constant="38" id="5Ha-Eq-F1c"/>
                                     <constraint firstAttribute="width" constant="202" id="9dL-CL-vbi"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="18"/>
-                                <state key="normal" title="Login with Yammer">
-                                    <color key="titleColor" red="0.83921568627450982" green="0.83921568627450982" blue="0.83921568627450982" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="14"/>
+                                <state key="normal" title="LOGIN WITH YAMMER">
+                                    <color key="titleColor" red="0.0" green="0.68235294117647061" blue="0.93725490196078431" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -97,20 +97,20 @@
                             <webView opaque="NO" contentMode="right" translatesAutoresizingMaskIntoConstraints="NO" id="KGP-L7-iOq">
                                 <color key="backgroundColor" red="0.20784313725490194" green="0.20784313725490194" blue="0.20784313725490194" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="700" id="34P-pc-BDZ"/>
+                                    <constraint firstAttribute="width" constant="700" type="user" id="34P-pc-BDZ"/>
                                     <constraint firstAttribute="height" constant="620" id="ckH-UT-UOE"/>
                                 </constraints>
                                 <connections>
                                     <outlet property="delegate" destination="r8B-Sh-Q7P" id="fWm-bS-zob"/>
                                 </connections>
                             </webView>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="  Add Category" borderStyle="line" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zDF-Mh-Sm5">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text=" ADD CATEGORY" borderStyle="line" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zDF-Mh-Sm5">
                                 <color key="backgroundColor" red="0.83921568627450982" green="0.83921568627450982" blue="0.83921568627450982" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="243" type="user" id="bhz-qc-kJL"/>
                                 </constraints>
-                                <color key="textColor" red="0.20784313725490194" green="0.20784313725490194" blue="0.20784313725490194" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="15"/>
+                                <color key="textColor" red="1" green="0.32549019607843138" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
                                     <outlet property="delegate" destination="r8B-Sh-Q7P" id="0Sd-pY-syS"/>
@@ -134,8 +134,9 @@
                                 <color key="backgroundColor" red="0.20784313725490194" green="0.20784313725490194" blue="0.20784313725490194" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="DIP-ml-MTU"/>
+                                    <constraint firstAttribute="width" constant="106" id="h18-Jw-2ew"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="14"/>
+                                <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="14"/>
                                 <color key="textColor" red="0.0" green="0.68235294117647061" blue="0.93725490196078431" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -164,23 +165,23 @@
                         </subviews>
                         <color key="backgroundColor" red="0.20784313725490194" green="0.20784313725490194" blue="0.20784313725490194" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstItem="Tng-MX-ju7" firstAttribute="leading" secondItem="jyE-bN-0F4" secondAttribute="leading" constant="34" type="user" id="20D-hj-QQq"/>
                             <constraint firstItem="NKS-bd-zP5" firstAttribute="top" secondItem="jyE-bN-0F4" secondAttribute="top" constant="292" id="3PL-ZE-QSm"/>
                             <constraint firstItem="zDF-Mh-Sm5" firstAttribute="bottom" secondItem="mqT-NY-mmn" secondAttribute="bottom" type="default" id="3Sf-O8-hFQ"/>
                             <constraint firstItem="zDF-Mh-Sm5" firstAttribute="top" secondItem="mqT-NY-mmn" secondAttribute="top" type="default" id="3rE-eB-Mw8"/>
                             <constraint firstItem="O4o-DE-XfH" firstAttribute="top" secondItem="jyE-bN-0F4" secondAttribute="top" constant="349" id="5bE-iW-pLM"/>
                             <constraint firstItem="mqT-NY-mmn" firstAttribute="baseline" secondItem="Tng-MX-ju7" secondAttribute="baseline" type="default" id="FvN-U6-eTq"/>
-                            <constraint firstItem="KGP-L7-iOq" firstAttribute="centerX" secondItem="jyE-bN-0F4" secondAttribute="centerX" type="default" id="GUa-di-iw5"/>
-                            <constraint firstItem="KGP-L7-iOq" firstAttribute="centerX" secondItem="NKS-bd-zP5" secondAttribute="centerX" type="default" id="H4f-9k-A3l"/>
+                            <constraint firstItem="O4o-DE-XfH" firstAttribute="centerX" secondItem="jyE-bN-0F4" secondAttribute="centerX" type="user" id="Ihw-Ea-1R0"/>
                             <constraint firstItem="mqT-NY-mmn" firstAttribute="leading" secondItem="Tng-MX-ju7" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="Sju-L9-Ja7"/>
                             <constraint firstItem="Lul-A1-zWJ" firstAttribute="leading" secondItem="zDF-Mh-Sm5" secondAttribute="trailing" type="user" id="Toc-PU-SAH"/>
                             <constraint firstItem="KGP-L7-iOq" firstAttribute="top" secondItem="jyE-bN-0F4" secondAttribute="top" constant="66" id="VSC-8F-J45"/>
                             <constraint firstItem="NKS-bd-zP5" firstAttribute="centerX" secondItem="O4o-DE-XfH" secondAttribute="centerX" type="default" id="Zqt-fK-4ju"/>
                             <constraint firstItem="Lul-A1-zWJ" firstAttribute="top" secondItem="jyE-bN-0F4" secondAttribute="top" constant="8" type="user" id="b9n-6K-Ye7"/>
-                            <constraint firstItem="Tng-MX-ju7" firstAttribute="leading" secondItem="KGP-L7-iOq" secondAttribute="leading" type="default" id="cOy-b8-7qt"/>
                             <constraint firstItem="Lul-A1-zWJ" firstAttribute="bottom" secondItem="zDF-Mh-Sm5" secondAttribute="bottom" type="default" id="ek1-o8-3Rh"/>
                             <constraint firstItem="zDF-Mh-Sm5" firstAttribute="baseline" secondItem="mqT-NY-mmn" secondAttribute="baseline" type="default" id="gJX-Ww-WK4"/>
-                            <constraint firstItem="zDF-Mh-Sm5" firstAttribute="leading" secondItem="mqT-NY-mmn" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="pMP-es-wYh"/>
+                            <constraint firstAttribute="trailing" secondItem="Lul-A1-zWJ" secondAttribute="trailing" constant="22" id="kJx-mf-OLZ"/>
                             <constraint firstItem="Tng-MX-ju7" firstAttribute="top" secondItem="jyE-bN-0F4" secondAttribute="top" constant="19" id="pqI-JF-gLQ"/>
+                            <constraint firstItem="O4o-DE-XfH" firstAttribute="centerX" secondItem="KGP-L7-iOq" secondAttribute="centerX" type="user" id="ztW-AJ-KBu"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="8FU-KD-m5I"/>
@@ -235,12 +236,10 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" type="user" id="XQE-UX-j8v"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="18"/>
-                                <state key="normal" title="Next">
-                                    <color key="titleColor" red="0.83921568627450982" green="0.83921568627450982" blue="0.83921568627450982" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <state key="highlighted">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="14"/>
+                                <state key="normal" title="NEXT">
+                                    <color key="titleColor" red="0.0" green="0.68235294117647061" blue="0.93725490196078431" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
                                     <action selector="showMessages:" destination="FWg-Q5-o8m" eventType="touchUpInside" id="2oD-fE-nz3"/>
@@ -261,9 +260,9 @@
                                     <constraint firstAttribute="width" constant="190" id="VGz-zz-aEC"/>
                                     <constraint firstAttribute="height" constant="35" id="cAn-Jo-gdS"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="18"/>
-                                <state key="normal" title="Signout">
-                                    <color key="titleColor" red="0.83921568629999999" green="0.83921568629999999" blue="0.83921568629999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="14"/>
+                                <state key="normal" title="SIGNOUT">
+                                    <color key="titleColor" red="0.0" green="0.68235294117647061" blue="0.93725490196078431" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -317,7 +316,7 @@
                                 <color key="backgroundColor" red="0.83921568627450982" green="0.83921568627450982" blue="0.83921568627450982" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="separatorColor" red="0.68627450980392157" green="0.68627450980392157" blue="0.68627450980392157" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="gray" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="YammerMessageCell" textLabel="enU-JR-0gc" detailTextLabel="jSv-h4-VLj" imageView="x50-pd-wbA" rowHeight="84" style="IBUITableViewCellStyleSubtitle" id="2wh-Lj-W2o">
+                                    <tableViewCell alpha="0.90000000000000002" contentMode="scaleToFill" selectionStyle="gray" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="YammerMessageCell" textLabel="enU-JR-0gc" detailTextLabel="jSv-h4-VLj" imageView="x50-pd-wbA" rowHeight="84" style="IBUITableViewCellStyleSubtitle" id="2wh-Lj-W2o">
                                         <rect key="frame" x="0.0" y="22" width="573" height="84"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -347,7 +346,7 @@
                                             <segue destination="r8B-Sh-Q7P" kind="push" identifier="ShowMessageDetails" id="OIJ-8h-jCH"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="MessagesTableSectionHeader" textLabel="ii0-ow-AbG" rowHeight="22" style="IBUITableViewCellStyleDefault" id="eXw-67-c1r">
+                                    <tableViewCell alpha="0.70000000000000007" contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="MessagesTableSectionHeader" textLabel="ii0-ow-AbG" rowHeight="22" style="IBUITableViewCellStyleDefault" id="eXw-67-c1r">
                                         <rect key="frame" x="0.0" y="106" width="573" height="22"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -373,11 +372,11 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="56" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="2pc-AT-zI7">
                                 <color key="backgroundColor" red="0.32156862745098036" green="0.32156862745098036" blue="0.32156862745098036" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="178" type="user" id="76n-Tt-1Yw"/>
+                                    <constraint firstAttribute="width" constant="178" id="KVu-xB-MaF"/>
                                 </constraints>
                                 <color key="separatorColor" red="0.20784313725490194" green="0.20784313725490194" blue="0.20784313725490194" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="YammerMessageNavCell" textLabel="a2I-vH-Yjr" rowHeight="56" style="IBUITableViewCellStyleDefault" id="fXo-NR-Mc0">
+                                    <tableViewCell alpha="0.70000000000000007" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="YammerMessageNavCell" textLabel="a2I-vH-Yjr" rowHeight="56" style="IBUITableViewCellStyleDefault" id="fXo-NR-Mc0">
                                         <rect key="frame" x="0.0" y="22" width="178" height="56"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -394,7 +393,7 @@
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NavTableSectionHeader" textLabel="i5z-Eg-5bn" imageView="xfE-OQ-yZj" rowHeight="23" style="IBUITableViewCellStyleDefault" id="mdq-OY-nMw">
+                                    <tableViewCell alpha="0.70000000000000007" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NavTableSectionHeader" textLabel="i5z-Eg-5bn" imageView="xfE-OQ-yZj" rowHeight="23" style="IBUITableViewCellStyleDefault" id="mdq-OY-nMw">
                                         <rect key="frame" x="0.0" y="78" width="178" height="23"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -403,7 +402,7 @@
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i5z-Eg-5bn">
                                                     <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="14"/>
-                                                    <color key="textColor" red="0.0" green="0.68235294117647061" blue="0.93725490196078431" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="textColor" red="0.83921568627450982" green="0.83921568627450982" blue="0.83921568627450982" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 </label>
                                                 <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="YammerBlueColorSliver.png" id="xfE-OQ-yZj">
@@ -413,7 +412,7 @@
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
-                                        <color key="backgroundColor" red="0.24313725490196078" green="0.24313725490196078" blue="0.24313725490196078" alpha="1" colorSpace="deviceRGB"/>
+                                        <color key="backgroundColor" red="0.12941176470588234" green="0.12941176470588234" blue="0.12941176470588234" alpha="1" colorSpace="calibratedRGB"/>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -421,35 +420,63 @@
                                     <outlet property="delegate" destination="5Cb-eK-aq7" id="FfB-tk-Mc9"/>
                                 </connections>
                             </tableView>
+                            <searchBar alpha="0.90000000000000002" contentMode="redraw" barStyle="blackOpaque" text="" placeholder="SEARCH" translatesAutoresizingMaskIntoConstraints="NO" id="BGF-fg-bMF">
+                                <color key="backgroundColor" red="0.20784313725490194" green="0.20784313725490194" blue="0.20784313725490194" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="390" id="G0e-e4-FmK"/>
+                                </constraints>
+                                <color key="tintColor" red="0.20784313725490194" green="0.20784313725490194" blue="0.20784313725490194" alpha="1" colorSpace="calibratedRGB"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no"/>
+                                <connections>
+                                    <outlet property="delegate" destination="5Cb-eK-aq7" id="201-n0-Jns"/>
+                                </connections>
+                            </searchBar>
+                            <button opaque="NO" alpha="0.90000000000000002" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YYn-be-Jbl">
+                                <color key="backgroundColor" red="0.32156862745098036" green="0.32156862745098036" blue="0.32156862745098036" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="133" id="N16-lv-2pW"/>
+                                    <constraint firstAttribute="height" constant="30" id="Xnu-ho-TlR"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="14"/>
+                                <state key="normal" title="REFRESH">
+                                    <color key="titleColor" red="0.0" green="0.68235294117647061" blue="0.93725490196078431" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="refreshMessages:" destination="5Cb-eK-aq7" eventType="touchUpInside" id="V3U-j7-3VT"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.20784313725490194" green="0.20784313725490194" blue="0.20784313725490194" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="7IE-8f-vML" secondAttribute="trailing" constant="8" type="user" id="0i8-8P-dqj"/>
-                            <constraint firstItem="2pc-AT-zI7" firstAttribute="top" secondItem="ipy-ad-nTd" secondAttribute="top" constant="8" type="user" id="8wV-WJ-OMW"/>
-                            <constraint firstItem="7IE-8f-vML" firstAttribute="leading" secondItem="2pc-AT-zI7" secondAttribute="trailing" constant="1" type="user" id="Oxr-2X-TsI"/>
-                            <constraint firstAttribute="bottom" secondItem="2pc-AT-zI7" secondAttribute="bottom" constant="8" type="user" id="Zb4-BK-1F0"/>
-                            <constraint firstItem="2pc-AT-zI7" firstAttribute="leading" secondItem="ipy-ad-nTd" secondAttribute="leading" constant="8" type="user" id="efK-is-QIn"/>
-                            <constraint firstAttribute="bottom" secondItem="7IE-8f-vML" secondAttribute="bottom" constant="8" type="user" id="qRl-84-rLZ"/>
-                            <constraint firstItem="7IE-8f-vML" firstAttribute="top" secondItem="ipy-ad-nTd" secondAttribute="top" constant="8" type="user" id="sUz-Br-w1l"/>
+                            <constraint firstItem="2pc-AT-zI7" firstAttribute="top" secondItem="7IE-8f-vML" secondAttribute="top" type="default" id="0c4-hk-9oC"/>
+                            <constraint firstItem="7IE-8f-vML" firstAttribute="trailing" secondItem="BGF-fg-bMF" secondAttribute="trailing" type="default" id="5lt-YK-uwh"/>
+                            <constraint firstAttribute="bottom" secondItem="7IE-8f-vML" secondAttribute="bottom" constant="8" type="user" id="D3D-SU-eWx"/>
+                            <constraint firstItem="2pc-AT-zI7" firstAttribute="leading" secondItem="ipy-ad-nTd" secondAttribute="leading" constant="8" type="user" id="FZx-32-gTj"/>
+                            <constraint firstAttribute="bottom" secondItem="2pc-AT-zI7" secondAttribute="bottom" constant="8" type="user" id="ML4-Z0-OaX"/>
+                            <constraint firstItem="7IE-8f-vML" firstAttribute="leading" secondItem="2pc-AT-zI7" secondAttribute="trailing" constant="1" type="user" id="VCE-PY-5Xq"/>
+                            <constraint firstAttribute="trailing" secondItem="7IE-8f-vML" secondAttribute="trailing" constant="8" type="user" id="Y5g-ti-ZQq"/>
+                            <constraint firstItem="YYn-be-Jbl" firstAttribute="leading" secondItem="ipy-ad-nTd" secondAttribute="leading" constant="25" id="dyL-7v-47T"/>
+                            <constraint firstItem="BGF-fg-bMF" firstAttribute="top" secondItem="ipy-ad-nTd" secondAttribute="top" type="default" id="r2q-ur-1Lm"/>
+                            <constraint firstItem="YYn-be-Jbl" firstAttribute="top" secondItem="ipy-ad-nTd" secondAttribute="top" constant="9" id="tYX-Lo-C4I"/>
+                            <constraint firstItem="2pc-AT-zI7" firstAttribute="top" secondItem="ipy-ad-nTd" secondAttribute="top" constant="48" type="user" id="v23-Zr-Ndb"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Inbox" id="zN2-su-ayd">
                         <barButtonItem key="backBarButtonItem" title="Inbox" id="F22-P2-dho"/>
-                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="P7y-MH-bde">
-                            <color key="tintColor" red="1" green="0.32549019607843138" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                            <connections>
-                                <action selector="refreshMessages:" destination="5Cb-eK-aq7" id="PTx-Dv-IZQ"/>
-                            </connections>
-                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="messagesNavTable" destination="2pc-AT-zI7" id="pu8-HC-ol0"/>
+                        <outlet property="messagesSearchBar" destination="BGF-fg-bMF" id="Jmw-nV-6FC"/>
                         <outlet property="messagesTable" destination="7IE-8f-vML" id="MKM-HT-WjV"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="X71-zm-FjQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-5122" y="-1893"/>
+            <point key="canvasLocation" x="-5391" y="-2522"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="mVZ-QV-cpM">
@@ -496,11 +523,9 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/MessageDetailViewController.h"/>
             <relationships>
                 <relationship kind="action" name="addCategories:"/>
-                <relationship kind="action" name="goURLBtn:"/>
                 <relationship kind="outlet" name="addCategoriesTxtFld" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="detailWebView" candidateClass="UIWebView"/>
                 <relationship kind="outlet" name="existingCategoriesLbl" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="goURLTxtFld" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="loadingLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="loadingSpinner" candidateClass="UIActivityIndicatorView"/>
                 <relationship kind="outlet" name="showCategoriesTxtFld" candidateClass="UITextField"/>
@@ -511,6 +536,7 @@
             <relationships>
                 <relationship kind="action" name="refreshMessages:"/>
                 <relationship kind="outlet" name="messagesNavTable" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="messagesSearchBar" candidateClass="UISearchBar"/>
                 <relationship kind="outlet" name="messagesTable" candidateClass="UITableView"/>
             </relationships>
         </class>

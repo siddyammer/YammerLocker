@@ -25,6 +25,19 @@
 {
     [super viewDidLoad];
     
+    // Make the Messages Search Bar transparent
+    self.messagesSearchBar.translucent = YES;
+    self.messagesSearchBar.backgroundImage = [UIImage new];
+    self.messagesSearchBar.scopeBarBackgroundImage = [UIImage new];
+    
+    // Change the color of the search bar placeholder text and text entered.
+    UITextField *searchBarInputFld = [self.messagesSearchBar valueForKey:@"_searchField"];
+    [searchBarInputFld setValue:[UIColor colorWithRed:255.0f/255.0f green:83.0f/255.0f blue:0.0f/255.0f alpha:1.0f] forKeyPath:@"_placeholderLabel.textColor"];
+    searchBarInputFld.textColor = [UIColor colorWithRed:255.0f/255.0f green:83.0f/255.0f blue:0.0f/255.0f alpha:1.0f];
+    
+    // Set the search bar placeholder text font
+    [searchBarInputFld setValue:[UIFont fontWithName:@"Helvetica" size:14] forKeyPath:@"_placeholderLabel.font"];
+    
     // Get a data controller that you will use later
     self.yamMsgDataController = [DataController sharedController];
     
@@ -231,8 +244,8 @@
 }
 
 // Refresh by getting new messages from the service API
-- (IBAction)refreshMessages:(id)sender
-{
+- (IBAction)refreshMessages:(id)sender {
+    
     [self.yamMsgDataController performSelectorInBackground:@selector(getNewMessagesFromApi) withObject:nil];
 }
 

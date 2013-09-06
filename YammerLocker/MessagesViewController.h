@@ -12,7 +12,7 @@
 @class DataController;
 @class NSFetchedResultsController;
 
-@interface MessagesViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+@interface MessagesViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate>
 
 // Data Controller for displaying messages in this view.
 @property (strong,nonatomic) DataController *yamMsgDataController;
@@ -31,6 +31,9 @@
 
 // Store the title of the currently selected messages navigation item
 @property (strong,nonatomic) NSString *currentNavItemTitle;
+
+// Outlet for the messages search bar
+@property (weak, nonatomic) IBOutlet UISearchBar *messagesSearchBar;
 
 // Refresh by getting new messages from the service API
 - (IBAction)refreshMessages:(id)sender;
